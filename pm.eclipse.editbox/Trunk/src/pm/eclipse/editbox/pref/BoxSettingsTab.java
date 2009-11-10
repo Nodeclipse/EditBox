@@ -65,6 +65,7 @@ public class BoxSettingsTab {
 	private Combo borderColorType;
 	private Combo highlightColorType;
 	private ColorSelector highlightColorSelector;
+	private Button genGradientBut;
 
 	public BoxSettingsTab() {
 	}
@@ -413,16 +414,27 @@ public class BoxSettingsTab {
 
 		newLabel(c, "Gradient tool");
 		newLabel(c, "from color");
+
 		fromColorLab = new ColorSelector(c);
 		fromColorLab.getButton().setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING));
 		
 		newLabel(c,"to");
 		toColorLab = new ColorSelector(c);
-
-		newButton(c, "Generate", new SelectionAdapter() {
+		
+		IPropertyChangeListener listener = new IPropertyChangeListener() {
+			public void propertyChange(PropertyChangeEvent event) {
+				genGradientBut.setEnabled(toColorLab.getColorValue() != null && fromColorLab.getColorValue() != null);
+			}
+		};
+		fromColorLab.addListener(listener);
+		toColorLab.addListener(listener);
+		
+		genGradientBut = newButton(c, "Generate", new SelectionAdapter() {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				if (fromColorLab.getColorValue() == null || toColorLab.getColorValue()==null)
+					return;
 				Color[] colors = settings.getColors();
 				if (colors == null || colors.length < 2)
 					return;
@@ -519,13 +531,17 @@ public class BoxSettingsTab {
 		if (c != null && c.length > 1) {
 			updateBackground(fromColorLab, c[0]);
 			updateBackground(toColorLab, c[c.length - 1]);
-		}
+		} else 
+			genGradientBut.setEnabled(false);
 	}
 
 	protected void updateBackground(ColorSelector ctrl, Color c) {
-		if (c == null)
-			return;
-		ctrl.setColorValue(c.getRGB());
+		if (c == null){
+			ctrl.setColorValue(null);
+			genGradientBut.setEnabled(false);
+		} else
+			ctrl.setColorValue(c.getRGB());
+		
 	}
 
     /*
