@@ -387,6 +387,9 @@ public class BoxSettingsImpl implements IBoxSettings {
 		if (boxColors == null)
 			return null;
 		
+		if (borderColors != null && borderColors.length != boxColors.length)
+			borderColors = disposeColors(borderColors);
+		
 		if (borderColors == null)
 			borderColors = new Color[boxColors.length];
 		
@@ -413,6 +416,9 @@ public class BoxSettingsImpl implements IBoxSettings {
 		
 		if (boxColors == null)
 			return null;
+		
+		if (highlightColors != null && highlightColors.length != boxColors.length)
+			highlightColors = disposeColors(highlightColors);
 		
 		if (highlightColors == null)
 			highlightColors = new Color[boxColors.length];
