@@ -147,8 +147,10 @@ public class BoxSettingsImpl implements IBoxSettings {
 	}
 
 	public void load(InputStream stream) throws Exception{
-		if (stream==null) load((String)null);
-		new StringExternalization().load(stream,this);
+		if (stream==null) 
+			load((String)null);
+		else
+			new StringExternalization().load(stream,this);
 		notifyChange(PropertiesKeys.ALL.name(), null, null);
 	}
 

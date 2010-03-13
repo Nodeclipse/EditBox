@@ -537,25 +537,12 @@ public class BoxSettingsTab {
 
 	protected void updateBackground(ColorSelector ctrl, Color c) {
 		if (c == null){
-			ctrl.setColorValue(null);
 			genGradientBut.setEnabled(false);
 		} else
 			ctrl.setColorValue(c.getRGB());
 		
 	}
 
-    /*
-	@Override
-	protected void performDefaults() {
-		decorator.enableUpdates(false);
-		store.load(provider.getId(), settings);
-		settings.setEnabled(true);   
-		updateContents();
-		decorator.enableUpdates(true);
-		super.performDefaults();
-	}
-    */
-		
 	protected void disposeColor(Color oldColor) {
 		if (oldColor != null)
 			oldColor.dispose();
