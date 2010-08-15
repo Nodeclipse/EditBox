@@ -69,6 +69,7 @@ public class BoxDecoratorImpl implements IBoxDecorator {
 	protected int fillBoxLevel = -1;
 	protected int stateMask;
 	public boolean keyPressed;
+	protected int charCount;
 	
 	public void enableUpdates(boolean flag) {
 		boolean update = flag && !this.visible;
@@ -98,7 +99,6 @@ public class BoxDecoratorImpl implements IBoxDecorator {
 	}
 
 	protected void buildBoxes() {
-		
 		IBoxBuilder boxBuilder = getBuilder();
 		if (boxBuilder == null)
 			return;
@@ -114,7 +114,8 @@ public class BoxDecoratorImpl implements IBoxDecorator {
 		
 		boxBuilder.setText(text);
 		boxes = boxBuilder.build();
-
+		
+		charCount = boxText.getCharCount();
 	}
 
 	protected void updateOffsetColors() {
@@ -150,7 +151,6 @@ public class BoxDecoratorImpl implements IBoxDecorator {
 	}
 
 	void drawBackgroundBoxes() {
-		
 		if (boxes == null || !visible)
 			return;
 
@@ -204,7 +204,6 @@ public class BoxDecoratorImpl implements IBoxDecorator {
 		oldClientArea = r0;
 		oldXOffset = xOffset;
 		oldYOffset = yOffset;
-		
 	}
 
 	protected void drawBox(GC gc, int yOffset, int xOffset, Box b) {
@@ -497,7 +496,8 @@ public class BoxDecoratorImpl implements IBoxDecorator {
 				return;
 			paintMode = true;
 			try {
-				if (boxes == null) {
+				//check charCount as workaround for no event when StyledText.setContent()
+				if (boxes == null || charCount != boxText.getCharCount()) {
 					buildBoxes();
 					updateCaret();
 					drawBackgroundBoxes();
