@@ -66,6 +66,8 @@ public class BoxSettingsTab {
 	private Combo highlightColorType;
 	private ColorSelector highlightColorSelector;
 	private Button genGradientBut;
+	private Combo borderLineStyle;
+	private Combo highlightLineStyle;
 
 	public BoxSettingsTab() {
 	}
@@ -103,6 +105,8 @@ public class BoxSettingsTab {
 		Composite c = new Composite(parent, SWT.NONE);
 		this.composite = c;
 		GridLayout layout = new GridLayout();
+		layout.horizontalSpacing = 1;
+		layout.marginWidth = 1;
 		layout.numColumns = N;
 		c.setLayout(layout);
 		c.setSize(200,400);
@@ -211,9 +215,38 @@ public class BoxSettingsTab {
 			}
 		});
 
-		newLabel(c, "Border          color");
+		Label bl = newLabel(c,"Box border:");
+		gd = new GridData();
+		gd.horizontalSpan = N;
+		gd.horizontalAlignment = SWT.FILL;
+		bl.setLayoutData(gd);
+		
+		Composite c1 = new Composite(c, SWT.NONE);
+		GridLayout ly = new GridLayout();
+		ly.horizontalSpacing = 0;
+		ly.marginWidth = 0; 
+		ly.numColumns = 2;
+		c1.setLayout(layout);
+		c1.setLayoutData(new GridData());
+		
+		newLabel(c1, " style");
+		borderLineStyle = newCombo(c1, new String[]{"Solid","Dot","Dash","DashDot", "DashDotDot"}, new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				settings.setBorderLineStyle(borderLineStyle.getSelectionIndex());
+			}
+		});
+		borderLineStyle.select(0);
 
-		borderColorType = newCombo(c, new String[]{"Custom","Dark","Darker","Darkest"}, new SelectionAdapter() {
+		Composite c2 = new Composite(c, SWT.NONE);
+		GridLayout ly2 = new GridLayout();
+		ly2.horizontalSpacing = 0;
+		ly2.numColumns = 2;
+		c2.setLayout(layout);
+		c2.setLayoutData(new GridData());
+		
+		newLabel(c2, "color");
+		borderColorType = newCombo(c2, new String[]{"Custom","Dark","Darker","Darkest"}, new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				int idx = borderColorType.getSelectionIndex();
@@ -250,8 +283,39 @@ public class BoxSettingsTab {
 		});
 		
 
-		newLabel(c, "Highlight       color");
-		highlightColorType = newCombo(c, new String[]{"Custom","Dark","Darker","Darkest"},new SelectionAdapter() {
+		Label hl = newLabel(c,"Highlight selected box:");
+		gd = new GridData();
+		gd.horizontalSpan = N;
+		gd.horizontalAlignment = SWT.FILL;
+		hl.setLayoutData(gd);
+
+		Composite c3 = new Composite(c, SWT.NONE);
+		GridLayout ly3 = new GridLayout();
+		ly3.horizontalSpacing = 0;
+		ly3.marginWidth = 0; 
+		ly3.numColumns = 2;
+		c3.setLayout(layout);
+		c3.setLayoutData(new GridData());
+		
+		newLabel(c3, " style");
+		highlightLineStyle = newCombo(c3, new String[]{"Solid","Dot","Dash","DashDot", "DashDotDot"}, new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				settings.setHighlightLineStyle(highlightLineStyle.getSelectionIndex());
+			}
+		});
+		highlightLineStyle.select(0);
+
+		Composite c4 = new Composite(c, SWT.NONE);
+		GridLayout ly5 = new GridLayout();
+		ly5.horizontalSpacing = 0;
+		ly5.numColumns = 2;
+		c4.setLayout(layout);
+		c4.setLayoutData(new GridData());
+		
+
+		newLabel(c4, "color");
+		highlightColorType = newCombo(c4, new String[]{"Custom","Dark","Darker","Darkest"},new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				int idx = highlightColorType.getSelectionIndex();
@@ -340,6 +404,8 @@ public class BoxSettingsTab {
 				settings.setFillOnMove(fillOnMove.getSelection());
 			}
 		});
+
+		newLabel(c, "with key");
 		gd = new GridData();
 		gd.horizontalSpan = 2;
 		fillOnMove.setLayoutData(gd);
@@ -349,7 +415,6 @@ public class BoxSettingsTab {
 				settings.setFillKeyModifier(fillKey.getText());
 			}
 		});
-		newLabel(c, "Key modifier");
 		
 		fillGradient = new Button(c, SWT.CHECK);
 		fillGradient.setText("Make gradient");
@@ -413,9 +478,18 @@ public class BoxSettingsTab {
 		});
 
 		newLabel(c, "Gradient tool");
-		newLabel(c, "from color");
 
-		fromColorLab = new ColorSelector(c);
+		Composite c6 = new Composite(c, SWT.NONE);
+		GridLayout ly6 = new GridLayout();
+		ly6.horizontalSpacing = 0;
+		ly6.marginWidth = 0; 
+		ly6.numColumns = 2;
+		c6.setLayout(layout);
+		c6.setLayoutData(new GridData());
+
+		newLabel(c6, "from color");
+
+		fromColorLab = new ColorSelector(c6);
 		fromColorLab.getButton().setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING));
 		
 		newLabel(c,"to");
@@ -442,12 +516,19 @@ public class BoxSettingsTab {
 			}
 		});
 
-		st = new StyledText(c, SWT.H_SCROLL | SWT.V_SCROLL | SWT.READ_ONLY);
+		Label l1 = newLabel(c, "Preview - double click on any box to change color:");
+		gd = new GridData();
+		gd.horizontalSpan = N;
+		gd.horizontalAlignment = SWT.FILL;
+		l1. setLayoutData(gd);
+		
+		st = new StyledText(c, SWT.H_SCROLL | SWT.V_SCROLL | SWT.READ_ONLY | SWT.BORDER | SWT.FULL_SELECTION);
 		gd = new GridData();
 		gd.horizontalSpan = N;
 		gd.grabExcessVerticalSpace = true;
 		gd.verticalAlignment = SWT.FILL;
 		gd.horizontalAlignment = SWT.FILL;
+		gd.heightHint = 50;
 		st.setLayoutData(gd);
 		st.setEditable(false);
 		st.setToolTipText("Double click to change color");
@@ -524,6 +605,8 @@ public class BoxSettingsTab {
 		highlightColorType.select(settings.getHighlightColorType());
 		highlightColorSelector.getButton().setEnabled(settings.getHighlightColorType() == 0);
 		borderColorSelector.getButton().setEnabled(settings.getBorderColorType() == 0);
+		borderLineStyle.select(settings.getBorderLineStyle());
+		highlightLineStyle.select(settings.getHighlightLineStyle());
 	}
 
 	private void updateFromToColors() {

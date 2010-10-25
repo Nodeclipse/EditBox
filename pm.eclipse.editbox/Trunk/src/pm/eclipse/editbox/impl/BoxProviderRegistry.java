@@ -63,6 +63,7 @@ public class BoxProviderRegistry {
 		List<IBoxProvider> result = new ArrayList<IBoxProvider>();
 		// order important (see supports())
 		result.add(javaProvider());
+		result.add(pythonProvider());
 		result.add(markupProvider());
 		result.add(textProvider());
 		return result;
@@ -92,8 +93,17 @@ public class BoxProviderRegistry {
 		return provider;
 	}
 
+	protected BoxProviderImpl pythonProvider() {
+		BoxProviderImpl provider = createProvider("python");
+		provider.setDefaultSettingsCatalog(Arrays.asList("Default", "Whitebox"));
+		if (provider.getEditorsBoxSettings().getFileNames() == null)
+			provider.getEditorsBoxSettings().setFileNames(Arrays.asList("*.py"));
+		return provider;
+	}
+	
 	protected BoxProviderImpl textProvider() {
 		BoxProviderImpl provider = createProvider("text");
+		provider.setDefaultSettingsCatalog(Arrays.asList("Default", "Whitebox"));
 		if (provider.getEditorsBoxSettings().getFileNames() == null)
 			provider.getEditorsBoxSettings().setFileNames(Arrays.asList("*.txt", "*.*"));
 		return provider;

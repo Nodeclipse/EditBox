@@ -60,9 +60,12 @@ public class BoxSettingsImpl implements IBoxSettings {
 	protected Collection<String> fileNames;
 	protected int highlightColorType;
 	protected int borderColorType;
+	protected int borderLineStyle;
+	protected int highlightLineStyle;
 
 	private transient Color[] borderColors;
 	private transient Color[] highlightColors;
+
 
 	public void copyFrom(IBoxSettings other) {
 		BoxSettingsImpl o = (BoxSettingsImpl) other;
@@ -93,6 +96,8 @@ public class BoxSettingsImpl implements IBoxSettings {
 		highlightColorType = o.highlightColorType;
 		borderColors = disposeColors(borderColors);
 		highlightColors = disposeColors(highlightColors);
+		highlightLineStyle = o.highlightLineStyle;
+		borderLineStyle = o.borderLineStyle;
 		notifyChange(PropertiesKeys.ALL.name(), null, null);
 	}
 
@@ -195,6 +200,8 @@ public class BoxSettingsImpl implements IBoxSettings {
 	}
 
 	protected Color setColor0(Color old, RGB c) {
+		if (c == null)
+			return old;
 		return setColor0(old, new Color(null, c));
 	}
 
@@ -559,6 +566,8 @@ public class BoxSettingsImpl implements IBoxSettings {
 			b.fillKeyModifier = parseString(p.get(PropertiesKeys.FillKeyModifier.name()));
 			b.borderColorType = parseInt(p.get(PropertiesKeys.BorderColorType.name()));
 			b.highlightColorType = parseInt(p.get(PropertiesKeys.HighlightColorType.name()));
+			b.highlightLineStyle = parseInt(p.get(PropertiesKeys.HighlightLineStyle.name()));
+			b.borderLineStyle = parseInt(p.get(PropertiesKeys.BorderLineStyle.name()));
 		}
 		
 		private Properties toProperies(BoxSettingsImpl b) {
@@ -583,6 +592,8 @@ public class BoxSettingsImpl implements IBoxSettings {
 			p.put(PropertiesKeys.FillKeyModifier.name(), toS(b.fillKeyModifier));
 			p.put(PropertiesKeys.BorderColorType.name(), toS(b.borderColorType));
 			p.put(PropertiesKeys.HighlightColorType.name(), toS(b.highlightColorType));
+			p.put(PropertiesKeys.HighlightLineStyle.name(), toS(b.highlightLineStyle));
+			p.put(PropertiesKeys.BorderLineStyle.name(), toS(b.borderLineStyle));
 			return p;
 		}
 
@@ -702,6 +713,43 @@ public class BoxSettingsImpl implements IBoxSettings {
 			for (IPropertyChangeListener listener : listeners) 
 				listener.propertyChange(e);
 		}
+	}
+
+	public void setBorderLineStyle(int selectionIndex) {
+		this.borderLineStyle = selectionIndex;
+		notifyChange(PropertiesKeys.BorderLineStyle.name(), null, null);
+	}
+
+	public void setHighlightLineStyle(int selectionIndex) {
+		this.highlightLineStyle = selectionIndex;
+		notifyChange(PropertiesKeys.HighlightLineStyle.name(), null, null);
+	}
+
+	public int getBorderLineStyle() {
+		return borderLineStyle;
+	}
+
+	public int getBorderLineStyleSWTInt() {
+		return swtLineStyle(borderLineStyle);
+	}
+
+	private int swtLineStyle(int index) {
+		switch (index) {
+		case 0: return SWT.LINE_SOLID;
+		case 1: return SWT.LINE_DOT;
+		case 2: return SWT.LINE_DASH;
+		case 3: return SWT.LINE_DASHDOT;
+		case 4: return SWT.LINE_DASHDOTDOT;
+		}
+		return 0;
+	}
+
+	public int getHighlightLineStyle() {
+		return highlightLineStyle;
+	}
+
+	public int getHighlightLineStyleSWTInt() {
+		return swtLineStyle(highlightLineStyle);
 	}
 
 }

@@ -75,14 +75,16 @@ public class BoxProviderImpl implements IBoxProvider {
 	}
 
 	public boolean supports(IWorkbenchPart editorPart) {
-		return editorPart instanceof AbstractTextEditor && supportsFile(editorPart.getTitle());
+		return editorPart instanceof AbstractTextEditor && 
+			   (supportsFile(editorPart.getTitle()) || supportsFile(editorPart.getTitleToolTip()));
 	}
 
 	protected boolean supportsFile(String fileName) {
-		for (Matcher matcher : getMatchers()) {
-			if (matcher.matches(fileName))
-				return true;
-		}
+		if (fileName != null)
+			for (Matcher matcher : getMatchers()) {
+				if (matcher.matches(fileName))
+					return true;
+			}
 		return false;
 	}
 

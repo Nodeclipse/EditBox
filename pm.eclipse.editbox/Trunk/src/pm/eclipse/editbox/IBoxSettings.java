@@ -13,7 +13,8 @@ import org.eclipse.swt.graphics.RGB;
 public interface IBoxSettings {
 	enum PropertiesKeys {
 		ALL,Enabled, Name, BorderColor, HighlightColor, BorderWidth, HighlightWidth, RoundBox, HighlightOne, FillSelected, FillSelectedColor, Builder, Colors, Color,
-		HighlightDrawLine, BorderDrawLine, FillGradient, FillGradientColor, FillOnMove, CirculateLevelColors, FillKeyModifier, FileNames, HighlightColorType, BorderColorType
+		HighlightDrawLine, BorderDrawLine, FillGradient, FillGradientColor, FillOnMove, CirculateLevelColors, FillKeyModifier, FileNames, HighlightColorType, BorderColorType,
+		HighlightLineStyle,BorderLineStyle,
 	};
 	
 	void addPropertyChangeListener(IPropertyChangeListener listener);
@@ -85,4 +86,10 @@ public interface IBoxSettings {
 	int getBorderColorType();
 	void setHighlightColorType(int selectionIndex);
 	int getHighlightColorType();
+	void setBorderLineStyle(int selectionIndex);
+	void setHighlightLineStyle(int selectionIndex);
+	int getBorderLineStyle();
+	int getBorderLineStyleSWTInt();
+	int getHighlightLineStyle();
+	int getHighlightLineStyleSWTInt();
 }

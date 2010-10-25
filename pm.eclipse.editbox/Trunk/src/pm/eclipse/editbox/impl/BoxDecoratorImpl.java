@@ -212,19 +212,27 @@ public class BoxDecoratorImpl implements IBoxDecorator {
 
 	private void drawRect(GC gc, Box b, int x, int y, int width, int height) {
 		if (b.isOn && settings.getHighlightWidth() > 0 && settings.getHighlightColor(b.level) != null) {
+			gc.setLineStyle(settings.getHighlightLineStyleSWTInt());
 			gc.setLineWidth(settings.getHighlightWidth());
 			gc.setForeground(settings.getHighlightColor(b.level));
 			if (settings.getHighlightDrawLine())
 				gc.drawLine(x, y, x,  y + b.rec.height);
-			else
+			else{
+				//3D
+				//gc.drawLine(x-1, y+3, x-1,  y + b.rec.height+1);
+				//gc.drawLine(x-1, y + b.rec.height +1, x+b.rec.width-1,  y + b.rec.height +1);
+				//gc.drawPoint(x, y+b.rec.height);
 				drawRectangle(gc, x, y, width, height);
+			}
 		} else if (!b.isOn && settings.getBorderWidth() > 0 && settings.getBorderColor(b.level) != null) {
+			gc.setLineStyle(settings.getBorderLineStyleSWTInt());
 			gc.setLineWidth(settings.getBorderWidth());
 			gc.setForeground(settings.getBorderColor(b.level));
 			if (settings.getBorderDrawLine())
-				gc.drawLine(x, y, x,  y + b.rec.height);
-			else
+				gc.drawLine(x, y+1, x,  y + b.rec.height-1);
+			else{
 				drawRectangle(gc, x, y, width, height);
+			}
 		}
 	}
 
