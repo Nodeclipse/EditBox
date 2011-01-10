@@ -14,7 +14,7 @@ public interface IBoxSettings {
 	enum PropertiesKeys {
 		ALL,Enabled, Name, BorderColor, HighlightColor, BorderWidth, HighlightWidth, RoundBox, HighlightOne, FillSelected, FillSelectedColor, Builder, Colors, Color,
 		HighlightDrawLine, BorderDrawLine, FillGradient, FillGradientColor, FillOnMove, CirculateLevelColors, FillKeyModifier, FileNames, HighlightColorType, BorderColorType,
-		HighlightLineStyle,BorderLineStyle,
+		HighlightLineStyle,BorderLineStyle,NoBackground,ExpandBox,Alpha,
 	};
 	
 	void addPropertyChangeListener(IPropertyChangeListener listener);
@@ -92,4 +92,11 @@ public interface IBoxSettings {
 	int getBorderLineStyleSWTInt();
 	int getHighlightLineStyle();
 	int getHighlightLineStyleSWTInt();
+	
+	boolean getNoBackground();
+	void setNoBackground(boolean flag);
+	boolean getExpandBox();
+	void setExpandBox(boolean flag);
+	int getAlpha();
+	void setAlpha(int alpha);
 }

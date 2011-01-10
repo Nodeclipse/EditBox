@@ -59,7 +59,7 @@ public class EditBox extends AbstractUIPlugin {
 			src = ((Class) source).getName();
 		else if (source != null)
 			src = source.getClass().getName();
-		getDefault().getLog().log(new Status(IStatus.ERROR, PLUGIN_ID, "[" + src + "] " + msg, error));
+		getDefault().getLog().log(new Status(IStatus.ERROR, PLUGIN_ID, 1, "[" + src + "] " + msg, error));
 	}
 
 }

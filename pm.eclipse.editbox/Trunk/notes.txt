@@ -18,3 +18,4 @@
     - no update when font changed
     - no update when back for 'source element only' mode
 
+- log files browser

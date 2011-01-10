@@ -1,53 +1,55 @@
 package pm.eclipse.editbox.actions;
 
-import java.util.Map;
-
 import org.eclipse.core.commands.AbstractHandler;
-import org.eclipse.core.commands.Command;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.ui.IPartListener2;
-import org.eclipse.ui.IPartService;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchPartReference;
 import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.IWorkbenchWindowActionDelegate;
 import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.commands.ICommandService;
-import org.eclipse.ui.commands.IElementUpdater;
-import org.eclipse.ui.menus.UIElement;
 
 import pm.eclipse.editbox.EditBox;
 import pm.eclipse.editbox.IBoxDecorator;
 import pm.eclipse.editbox.IBoxProvider;
 import pm.eclipse.editbox.impl.BoxProviderRegistry;
 
-public class EnableEditBox extends AbstractHandler implements IElementUpdater{
+//keep it stateless since called from commands
+public class EnableEditBox extends AbstractHandler implements IWorkbenchWindowActionDelegate {
 
 	public static final String COMMAND_ID = "pm.eclipse.editbox.actions.EnableEditBoxCmd";
 	
 	private IWorkbenchWindow win;
-	private BoxDecoratorPartListener listener;
-	private BoxProviderRegistry registry;
-	private boolean checked;
-	
-	public Object execute(ExecutionEvent ee) throws ExecutionException {
-		win = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
-		if (win == null)
-			return null;
+	private BoxProviderRegistry registry; //only caching
 
-		Command command = ee.getCommand();
-		checked  = !EditBox.getDefault().isEnabled();
-		runCommand(checked);
-		((ICommandService)win.getWorkbench().getService(ICommandService.class)).refreshElements(command.getId(), null);
+	public void init(IWorkbenchWindow window) {
+		win = window;
+	}
+
+	public Object execute(ExecutionEvent event) throws ExecutionException {
+		runCommand(!EditBox.getDefault().isEnabled());
 		return null;
+	}
+	
+	public void run(IAction action) {
+		boolean checked = !EditBox.getDefault().isEnabled();
+		runCommand(checked);
+		action.setChecked(checked);
+	}
+
+	public void selectionChanged(IAction action, ISelection selection) {
 	}
 
 	private void runCommand(boolean isChecked) {
+		if (win == null)
+			win = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
 		if (!isChecked)
 			releaseDecorators();
 		else {
-			listener = new BoxDecoratorPartListener();
-			win.getPartService().addPartListener(listener);
+			getRegistry().setPartListener(win.getPartService(),new BoxDecoratorPartListener());
 			IWorkbenchPart part = win.getActivePage().getActiveEditor();
 			if (part != null)
 				setVisible(part, true);
@@ -60,17 +62,15 @@ public class EnableEditBox extends AbstractHandler implements IElementUpdater{
 	}
 
 	private void releaseDecorators() {
-		if (listener != null && win != null) {
-			IPartService partService = win.getPartService();
-			if (partService != null)
-				partService.removePartListener(listener);
-			listener = null;
-		}
-		EditBox.getDefault().getProviderRegistry().releaseDecorators();
+		if (win != null)
+			getRegistry().removePartListener(win.getPartService());
+		getRegistry().releaseDecorators();
 	}
 
-	public void updateElement(UIElement element, Map parameters) {
-		element.setChecked(checked);
+	protected BoxProviderRegistry getRegistry() {
+		if (registry == null)
+			registry = EditBox.getDefault().getProviderRegistry();
+		return registry;
 	}
 
 	protected void setVisible(IWorkbenchPartReference partRef, boolean visible) {
@@ -109,12 +109,6 @@ public class EnableEditBox extends AbstractHandler implements IElementUpdater{
 		}
 	}
 
-	protected BoxProviderRegistry getRegistry() {
-		if (registry == null)
-			registry = EditBox.getDefault().getProviderRegistry();
-		return registry;
-	}
-
 	class BoxDecoratorPartListener implements IPartListener2 {
 
 		public void partActivated(IWorkbenchPartReference partRef) {
@@ -148,5 +142,4 @@ public class EnableEditBox extends AbstractHandler implements IElementUpdater{
 			setVisible(partRef, true);
 		}
 	}
-
 }

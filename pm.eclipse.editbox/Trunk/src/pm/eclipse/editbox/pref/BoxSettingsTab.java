@@ -22,7 +22,11 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.MessageBox;
+import org.eclipse.swt.widgets.Sash;
+import org.eclipse.swt.widgets.Scale;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Slider;
+import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.ui.IWorkbench;
 
 import pm.eclipse.editbox.EditBox;
@@ -68,6 +72,10 @@ public class BoxSettingsTab {
 	private Button genGradientBut;
 	private Combo borderLineStyle;
 	private Combo highlightLineStyle;
+	private Button noBackground;
+	private Button eolBox;
+	private Scale scale;
+	private Spinner spinner;
 
 	public BoxSettingsTab() {
 	}
@@ -93,6 +101,8 @@ public class BoxSettingsTab {
 				changed = true;
 				if (event.getProperty().equals(IBoxSettings.PropertiesKeys.Color.name()))
 					updateFromToColors();
+				
+				provider.getEditorsBoxSettings().copyFrom(settings);
 			}
 		});
 		
@@ -373,10 +383,32 @@ public class BoxSettingsTab {
 				settings.setHighlightOne(highlightOne.getSelection());
 			}
 		});
-		
+
+		eolBox = new Button(c, SWT.CHECK);
+		eolBox.setText("Expand box");
+		eolBox.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				settings.setExpandBox(eolBox.getSelection());
+			}
+		});
+
 		gd = new GridData();
-		gd.horizontalSpan = 5;
-		highlightOne.setLayoutData(gd);
+		gd.horizontalSpan = 2;
+		eolBox.setLayoutData(gd);
+		
+		noBackground = new Button(c, SWT.CHECK);
+		noBackground.setText("No background");
+		noBackground.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				settings.setNoBackground(noBackground.getSelection());
+			}
+		});
+
+		gd = new GridData();
+		gd.horizontalSpan = 2;
+		noBackground.setLayoutData(gd);
 		
 		fillSelected = new Button(c, SWT.CHECK);
 		fillSelected.setText("Fill selected box");
@@ -437,10 +469,40 @@ public class BoxSettingsTab {
 				settings.setFillGradientColorRGB(fillGradientColor.getColorValue());				
 			}
 		}); 
+
+
+		Label la = newLabel(c, "Alpha (slow!)");
 		gd = new GridData();
-		gd.horizontalSpan = 5;
-		fillGradientColor.getButton().setLayoutData(gd);
+		gd.horizontalSpan = 2;
+		la.setLayoutData(gd);
 		
+		scale = new Scale(c, SWT.HORIZONTAL);
+		scale.setMinimum(0);
+		scale.setMinimum(255);
+		scale.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				int alpha = scale.getSelection() * 255/100;
+				spinner.setSelection(alpha);
+				settings.setAlpha(alpha);
+			}
+		});
+		
+		spinner = new Spinner(c, SWT.NONE);
+		spinner.setMinimum(0);
+		spinner.setMaximum(255);
+		spinner.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				scale.setSelection(spinner.getSelection() * 100/255);
+				settings.setAlpha(spinner.getSelection());
+			}
+		});
+		
+		gd = new GridData();
+		gd.horizontalSpan = 1;
+		spinner.setLayoutData(gd);
+
 		newLabel(c, "Color levels");
 		levels = newCombo(c, new String[] { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14" }, new SelectionAdapter() {
 			@Override
@@ -607,6 +669,10 @@ public class BoxSettingsTab {
 		borderColorSelector.getButton().setEnabled(settings.getBorderColorType() == 0);
 		borderLineStyle.select(settings.getBorderLineStyle());
 		highlightLineStyle.select(settings.getHighlightLineStyle());
+		noBackground.setSelection(settings.getNoBackground());
+		eolBox.setSelection(settings.getExpandBox());
+		spinner.setSelection(settings.getAlpha());
+		scale.setSelection(settings.getAlpha() * 100/255);
 	}
 
 	private void updateFromToColors() {
@@ -685,5 +751,12 @@ public class BoxSettingsTab {
 			store.saveDefaults(settings);
 			provider.getEditorsBoxSettings().copyFrom(settings);
 		}
+	}
+
+	public void cancel() {
+		if (changed) {
+			store.loadDefaults(provider.getEditorsBoxSettings());
+		}
+		
 	}
 }

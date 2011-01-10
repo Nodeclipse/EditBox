@@ -12,32 +12,11 @@
             defaultHandler="pm.eclipse.editbox.actions.UnselectBox"
             id="pm.eclipse.editbox.UnselectBox"
             name="EditBox Unselect box"/>
-       <command
+        <command
             categoryId="org.eclipse.ui.category.window"
             id="pm.eclipse.editbox.actions.EnableEditBoxCmd"
             defaultHandler="pm.eclipse.editbox.actions.EnableEditBox"
-            name="EditBox on/off">
-       </command>
-    </extension>
-
-    <extension
-         id="pm.eclipse.editbox.menu.EditBoxCmdId"
-         point="org.eclipse.ui.menus">
-
-        <menuContribution
-            locationURI="toolbar:org.eclipse.ui.main.toolbar">
-         <toolbar
-                id="pm.eclipse.editbox.actions.EnableEditBoxToolbarId">
-            <command
-                  commandId="pm.eclipse.editbox.actions.EnableEditBoxCmd"
-                  icon="icons/editbox.gif"
-                  id="pm.eclipse.editbox.actions.EnableEditBoxToolbarContributionId"
-                  style="toggle"
-                  tooltip="Editbox on/off" >
-            </command>      
-         </toolbar>
-        </menuContribution>
-      
+            name="EditBox on/off"/>
     </extension>
 
     <extension point="org.eclipse.ui.preferencePages">
@@ -45,15 +24,29 @@
              class="pm.eclipse.editbox.pref.EditboxPreferencePage"
              name="EditBox">
        </page>
-   </extension>
+    </extension>
    
     <extension point="org.eclipse.ui.bindings">
         <key commandId="pm.eclipse.editbox.SelectBox" sequence="ALT+Z"
              schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
     </extension>
-  
-   <extension point="org.eclipse.ui.startup">
-     <startup class="pm.eclipse.editbox.actions.EditBoxStartup"/>
-   </extension>
+
+    <extension point="org.eclipse.ui.startup">
+      <startup class="pm.eclipse.editbox.actions.EditBoxStartup"/>
+    </extension>
+
+	<extension point = "org.eclipse.ui.actionSets">
+	   <actionSet id="pm.eclipse.editbox.ActionSetId" label="EditBox" visible="true">
+		   <action id="pm.eclipse.editbox.EnableEditboxActionId"
+			            label="EditBox" 
+						toolbarPath="EditBox"
+						style="toggle"
+						icon="icons/editbox.gif" 
+						tooltip="Editbox on/off"  
+						class="pm.eclipse.editbox.actions.EnableEditBox"
+						definitionId="pm.eclipse.editbox.actions.EnableEditBoxCmd" >
+		   </action>
+	   </actionSet>
+	</extension>
 
 </plugin>

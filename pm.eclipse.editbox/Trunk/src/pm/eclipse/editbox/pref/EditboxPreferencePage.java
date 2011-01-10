@@ -198,7 +198,15 @@ public class EditboxPreferencePage extends PreferencePage implements IWorkbenchP
 	
 	@Override
 	public boolean performCancel() {
-		if (providersChanged)
+		TabItem[] items = folder.getItems();
+		for (int i=1;i<items.length;i++) {
+			Object o =items[i].getData();
+			if (o instanceof BoxSettingsTab){
+				((BoxSettingsTab)o).cancel();
+			}
+		}
+
+		if (providersChanged) 
 			EditBox.getDefault().getProviderRegistry().setProvideres(null);
 		return true;
 	}

@@ -25,6 +25,7 @@ import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.ColorDialog;
 import org.eclipse.swt.widgets.Event;
@@ -52,7 +53,7 @@ public class BoxDecoratorImpl implements IBoxDecorator {
 	protected BoxMouseClickListener boxMouseClick;
 	protected FillBoxMouseClick fillMouseClick;
 	protected SettingsChangeListener settingsChangeListener;
-	protected Color oldBackground;
+	protected RGB oldBackground;
 	protected int oldIndent;
 	protected boolean decorated;
 	protected List<Box> boxes;
@@ -164,36 +165,44 @@ public class BoxDecoratorImpl implements IBoxDecorator {
 
 		Image newImage = new Image(null, r0.width, r0.height);
 		GC gc = new GC(newImage);
+		if (settings.getAlpha()>0)
+			gc.setAlpha(settings.getAlpha());
 
 		// fill background
-		Rectangle rec = newImage.getBounds();
-		fillRectangle(settings.getColor(0), gc, rec.x, rec.y, rec.width, rec.height);
-
+		if (!settings.getNoBackground()){
+			Rectangle rec = newImage.getBounds();		
+			fillRectangle(settings.getColor(0), gc, rec.x, rec.y, rec.width, rec.height);
+		}
+		
 		// fill boxes
 		Box fillBox = null;
 		boolean checkFillbox = !settings.getFillOnMove();
 		Collection<Box> visibleBoxes = visibleBoxes();
+
+		boolean ex = settings.getExpandBox();
+		
 		for (Box b : visibleBoxes) {
 			if (checkFillbox && b.level == fillBoxLevel && b.start <= fillBoxStart && b.end >=fillBoxEnd)
 				fillBox = b;
-			fillRectangle(settings.getColor(b.level + 1), gc, b.rec.x - xOffset, b.rec.y - yOffset, b.rec.width, b.rec.height);
+			if (!settings.getNoBackground())
+				fillRectangle(settings.getColor(b.level + 1), gc, b.rec.x - xOffset, b.rec.y - yOffset, ex?r0.width:b.rec.width, b.rec.height);
 		}
 		
 		// fill selected
 		if (settings.getFillSelected() ) {
 			if (settings.getFillOnMove() && currentBox != null && stateMask == settings.getFillKeyModifierSWTInt())
-				fillRectangle(settings.getFillSelectedColor(), gc, currentBox.rec.x - xOffset, currentBox.rec.y - yOffset, currentBox.rec.width + 1, currentBox.rec.height + 1);
+				fillRectangle(settings.getFillSelectedColor(), gc, currentBox.rec.x - xOffset, currentBox.rec.y - yOffset, ex?r0.width:(currentBox.rec.width + 1), (currentBox.rec.height + 1));
 			else if (fillBox != null)
-				fillRectangle(settings.getFillSelectedColor(), gc, fillBox.rec.x - xOffset, fillBox.rec.y - yOffset, fillBox.rec.width + 1, fillBox.rec.height + 1);
+				fillRectangle(settings.getFillSelectedColor(), gc, fillBox.rec.x - xOffset, fillBox.rec.y - yOffset, ex?r0.width:(fillBox.rec.width + 1), (fillBox.rec.height + 1));
 		}
 		
 		for (Box b : visibleBoxes)
 			if (!b.isOn)
-				drawBox(gc, yOffset, xOffset, b);
+				drawBox(gc, yOffset, xOffset, b, r0.width);
 		
 		for (Box b : visibleBoxes)
 			if (b.isOn)
-				drawBox(gc, yOffset, xOffset, b);
+				drawBox(gc, yOffset, xOffset, b, r0.width);
 		
 		Image oldImage = boxText.getBackgroundImage();
 		boxText.setBackgroundImage(newImage);
@@ -206,8 +215,8 @@ public class BoxDecoratorImpl implements IBoxDecorator {
 		oldYOffset = yOffset;
 	}
 
-	protected void drawBox(GC gc, int yOffset, int xOffset, Box b) {
-		drawRect(gc, b, b.rec.x - xOffset, b.rec.y - yOffset, b.rec.width, b.rec.height);
+	protected void drawBox(GC gc, int yOffset, int xOffset, Box b, int exWidth) {
+		drawRect(gc, b, b.rec.x - xOffset, b.rec.y - yOffset, settings.getExpandBox() ? exWidth : b.rec.width, b.rec.height);
 	}
 
 	private void drawRect(GC gc, Box b, int x, int y, int width, int height) {
@@ -246,6 +255,7 @@ public class BoxDecoratorImpl implements IBoxDecorator {
 	void fillRectangle(Color c, GC gc, int x, int y, int width, int height) {
 		if (c == null)
 			return;
+		
 		gc.setBackground(c);
 		if (settings.getRoundBox()){
 			gc.fillRoundRectangle(x, y, width, height, ROUND_BOX_ARC, ROUND_BOX_ARC);
@@ -277,7 +287,9 @@ public class BoxDecoratorImpl implements IBoxDecorator {
 		if (mouseDbClickColorChange)
 			boxMouseClick = new BoxMouseClickListener();
 
-		oldBackground = boxText.getBackground();
+		Color c = boxText.getBackground();
+		if (c != null)
+			oldBackground = c.getRGB();
 		oldIndent = boxText.getIndent();
 		if (oldIndent < 3)
 			boxText.setIndent(3);
@@ -310,7 +322,10 @@ public class BoxDecoratorImpl implements IBoxDecorator {
 		boxText.removeKeyListener(boxKey);
 		boxText.setIndent(oldIndent);
 		boxText.setBackgroundImage(null);
-		boxText.setBackground(oldBackground);
+		if (oldBackground != null)
+			boxText.setBackground(new Color(null,oldBackground));
+		else
+			boxText.setBackground(null);
 		if (settingsChangeListener!=null)
 			settings.removePropertyChangeListener(settingsChangeListener);
 	}
@@ -335,7 +350,7 @@ public class BoxDecoratorImpl implements IBoxDecorator {
 	protected void calcBounds(Collection<Box> boxes0) {
 		int yOffset = boxText.getTopPixel();
 		int xOffset = boxText.getHorizontalPixel();
-
+		int ex = boxText.getClientArea().width;
 		for (Box b : boxes0) {
 			if (b.rec == null) {
 				Point s = boxText.getLocationAtOffset(b.start);

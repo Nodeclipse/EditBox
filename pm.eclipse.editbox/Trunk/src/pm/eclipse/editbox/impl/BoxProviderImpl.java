@@ -9,7 +9,7 @@ import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.IWorkbenchPart;
-import org.eclipse.ui.texteditor.AbstractTextEditor;
+//import org.eclipse.ui.texteditor.AbstractTextEditor;
 
 import pm.eclipse.editbox.EditBox;
 import pm.eclipse.editbox.IBoxBuilder;
@@ -75,7 +75,7 @@ public class BoxProviderImpl implements IBoxProvider {
 	}
 
 	public boolean supports(IWorkbenchPart editorPart) {
-		return editorPart instanceof AbstractTextEditor && 
+		return editorPart.getAdapter(Control.class) instanceof StyledText &&
 			   (supportsFile(editorPart.getTitle()) || supportsFile(editorPart.getTitleToolTip()));
 	}
 

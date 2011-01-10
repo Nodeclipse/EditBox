@@ -62,9 +62,13 @@ public class BoxSettingsImpl implements IBoxSettings {
 	protected int borderColorType;
 	protected int borderLineStyle;
 	protected int highlightLineStyle;
+	protected boolean noBackground;
+	protected boolean expandBox;
+	protected int alpha;
 
 	private transient Color[] borderColors;
 	private transient Color[] highlightColors;
+
 
 
 	public void copyFrom(IBoxSettings other) {
@@ -98,6 +102,9 @@ public class BoxSettingsImpl implements IBoxSettings {
 		highlightColors = disposeColors(highlightColors);
 		highlightLineStyle = o.highlightLineStyle;
 		borderLineStyle = o.borderLineStyle;
+		noBackground = o.noBackground;
+		expandBox = o.expandBox;
+		alpha = o.alpha;
 		notifyChange(PropertiesKeys.ALL.name(), null, null);
 	}
 
@@ -568,6 +575,9 @@ public class BoxSettingsImpl implements IBoxSettings {
 			b.highlightColorType = parseInt(p.get(PropertiesKeys.HighlightColorType.name()));
 			b.highlightLineStyle = parseInt(p.get(PropertiesKeys.HighlightLineStyle.name()));
 			b.borderLineStyle = parseInt(p.get(PropertiesKeys.BorderLineStyle.name()));
+			b.noBackground = parseBool(p.get(PropertiesKeys.NoBackground.name()));
+			b.expandBox = parseBool(p.get(PropertiesKeys.ExpandBox.name()));
+			b.alpha = parseInt(p.get(PropertiesKeys.Alpha.name()));
 		}
 		
 		private Properties toProperies(BoxSettingsImpl b) {
@@ -594,6 +604,9 @@ public class BoxSettingsImpl implements IBoxSettings {
 			p.put(PropertiesKeys.HighlightColorType.name(), toS(b.highlightColorType));
 			p.put(PropertiesKeys.HighlightLineStyle.name(), toS(b.highlightLineStyle));
 			p.put(PropertiesKeys.BorderLineStyle.name(), toS(b.borderLineStyle));
+			p.put(PropertiesKeys.NoBackground.name(), toS(b.noBackground));
+			p.put(PropertiesKeys.ExpandBox.name(), toS(b.expandBox));
+			p.put(PropertiesKeys.Alpha.name(), toS(b.alpha));
 			return p;
 		}
 
@@ -750,6 +763,33 @@ public class BoxSettingsImpl implements IBoxSettings {
 
 	public int getHighlightLineStyleSWTInt() {
 		return swtLineStyle(highlightLineStyle);
+	}
+
+	public boolean getNoBackground() {
+		return noBackground;
+	}
+
+	public void setNoBackground(boolean flag) {
+		this.noBackground = flag;
+		notifyChange(PropertiesKeys.NoBackground.name(), null, null);
+	}
+
+	public boolean getExpandBox() {
+		return expandBox;
+	}
+
+	public void setExpandBox(boolean flag) {
+		this.expandBox = flag;
+		notifyChange(PropertiesKeys.ExpandBox.name(), null, null);
+	}
+
+	public int getAlpha() {
+		return alpha;
+	}
+
+	public void setAlpha(int alpha) {
+		this.alpha = alpha;
+		notifyChange(PropertiesKeys.Alpha.name(), null, null);
 	}
 
 }

@@ -8,6 +8,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.ui.IPartListener2;
+import org.eclipse.ui.IPartService;
 import org.eclipse.ui.IWorkbenchPart;
 
 import pm.eclipse.editbox.EditBox;
@@ -21,6 +23,7 @@ public class BoxProviderRegistry {
 
 	protected Collection<IBoxProvider> providers;
 	protected Map<IWorkbenchPart, IBoxDecorator> decorators;
+	protected Map<IPartService, IPartListener2> partListeners;
 
 	public Collection<IBoxProvider> getBoxProviders() {
 		if (providers == null)
@@ -167,5 +170,25 @@ public class BoxProviderRegistry {
 			if (it.next().getName().equals(name))
 				it.remove();
 		}
+	}
+
+	public void setPartListener(IPartService partService, IPartListener2 listener) {
+		if (partService == null)
+			return;
+		if (partListeners == null)
+			partListeners = new HashMap<IPartService, IPartListener2>();
+		IPartListener2 oldListener = partListeners.get(partService);
+		if (oldListener != null)
+			partService.removePartListener(oldListener);
+		partService.addPartListener(listener);
+		partListeners.put(partService, listener);
+	}
+
+	public void removePartListener(IPartService partService) {
+		if (partService == null || partListeners == null)
+			return;
+		IPartListener2 oldListener = partListeners.remove(partService);
+		if (oldListener != null)
+			partService.removePartListener(oldListener);
 	}
 }
