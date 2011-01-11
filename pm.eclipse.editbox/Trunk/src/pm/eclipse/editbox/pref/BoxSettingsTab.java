@@ -477,6 +477,10 @@ public class BoxSettingsTab {
 		la.setLayoutData(gd);
 		
 		scale = new Scale(c, SWT.HORIZONTAL);
+		gd = new GridData();
+		gd.horizontalSpan = 1;
+		gd.widthHint = 80;
+		scale.setLayoutData(gd);
 		scale.setMinimum(0);
 		scale.setMinimum(255);
 		scale.addSelectionListener(new SelectionAdapter() {

@@ -1,15 +1,13 @@
 #Editbox Eclipse Plugin Settings
-#Tue Jan 11 11:07:31 CET 2011
+#Sun Aug 15 14:46:24 CEST 2010
 HighlightOne=false
 FillGradient=false
 FillSelected=true
 RoundBox=true
 BorderColorType=1
-Name=Default
-ExpandBox=false
+Name=Java_v_20
 BorderDrawLine=false
 FillOnMove=true
-Alpha=0
 HighlightWidth=1
 BorderWidth=1
 HighlightColor=acb3b7
@@ -20,8 +18,6 @@ FillGradientColor=dadcc2
 Builder=Java
 HighlightDrawLine=false
 FillSelectedColor=ffffff
-BorderLineStyle=2
-Colors=ffffff-c5d0ac-d9e3b7-e8ecd9
-HighlightLineStyle=0
-NoBackground=false
+Colors=dadcc2-d0dd9b-c4d0ac-dcf2b3
 CirculateLevelColors=false
+BorderLineStyle=2

@@ -350,7 +350,6 @@ public class BoxDecoratorImpl implements IBoxDecorator {
 	protected void calcBounds(Collection<Box> boxes0) {
 		int yOffset = boxText.getTopPixel();
 		int xOffset = boxText.getHorizontalPixel();
-		int ex = boxText.getClientArea().width;
 		for (Box b : boxes0) {
 			if (b.rec == null) {
 				Point s = boxText.getLocationAtOffset(b.start);

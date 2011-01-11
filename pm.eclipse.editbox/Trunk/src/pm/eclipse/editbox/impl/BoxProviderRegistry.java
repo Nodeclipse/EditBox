@@ -90,7 +90,7 @@ public class BoxProviderRegistry {
 
 	protected BoxProviderImpl javaProvider() {
 		BoxProviderImpl provider = createProvider("java");
-		provider.setDefaultSettingsCatalog(Arrays.asList("Default", "OnClick", "GreyGradient"));
+		provider.setDefaultSettingsCatalog(Arrays.asList("Default", "OnClick", "GreyGradient", "Java_v_20"));
 		if (provider.getEditorsBoxSettings().getFileNames() == null)
 			provider.getEditorsBoxSettings().setFileNames(Arrays.asList("*.java", "*.class"));
 		return provider;
