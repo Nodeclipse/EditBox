@@ -468,6 +468,8 @@ public class BoxSettingsImpl implements IBoxSettings {
 	}
 	
 	public int getColorIndex(int level){
+		if (boxColors.length == 1 && noBackground && level > 0)
+			return -1;
 		if (!circulateLevelColors && boxColors != null && boxColors.length <= level && boxColors.length>0)
 			return boxColors.length - 1;
 		if (boxColors!=null && boxColors.length>0 && level > -1) {

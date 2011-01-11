@@ -471,12 +471,14 @@ public class BoxSettingsTab {
 		}); 
 
 
-		Label la = newLabel(c, "Alpha (slow!)");
+		Label la = newLabel(c, "Alpha blending");
+		la.setToolTipText("Can slow down box drawing");
 		gd = new GridData();
 		gd.horizontalSpan = 2;
 		la.setLayoutData(gd);
 		
 		scale = new Scale(c, SWT.HORIZONTAL);
+		scale.setToolTipText("Can slow down box drawing");
 		gd = new GridData();
 		gd.horizontalSpan = 1;
 		gd.widthHint = 80;
@@ -493,6 +495,7 @@ public class BoxSettingsTab {
 		});
 		
 		spinner = new Spinner(c, SWT.NONE);
+		spinner.setToolTipText("Can slow down box drawing");
 		spinner.setMinimum(0);
 		spinner.setMaximum(255);
 		spinner.addSelectionListener(new SelectionAdapter() {
@@ -693,7 +696,6 @@ public class BoxSettingsTab {
 			genGradientBut.setEnabled(false);
 		} else
 			ctrl.setColorValue(c.getRGB());
-		
 	}
 
 	protected void disposeColor(Color oldColor) {
@@ -728,7 +730,7 @@ public class BoxSettingsTab {
 		for (int i = 0;i<n;i++){
 			for (int j=0;j<i;j++)
 				sb.append("  ");
-			sb.append("level "+(i+1));
+			sb.append("level "+(i+1 == n ? "n" : i+1));
 			sb.append("\n");
 		}
 		return sb.toString();
@@ -761,6 +763,5 @@ public class BoxSettingsTab {
 		if (changed) {
 			store.loadDefaults(provider.getEditorsBoxSettings());
 		}
-		
 	}
 }

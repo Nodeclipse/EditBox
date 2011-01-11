@@ -165,15 +165,19 @@ public class BoxDecoratorImpl implements IBoxDecorator {
 
 		Image newImage = new Image(null, r0.width, r0.height);
 		GC gc = new GC(newImage);
+
+		// fill background
+		Color bc = settings.getColor(0);
+		if (settings.getNoBackground() && oldBackground != null) 
+			bc = new Color(null,oldBackground);
+		if (bc!=null){
+			Rectangle rec = newImage.getBounds();		
+			fillRectangle(bc, gc, rec.x, rec.y, rec.width, rec.height);
+		}
+		
 		if (settings.getAlpha()>0)
 			gc.setAlpha(settings.getAlpha());
 
-		// fill background
-		if (!settings.getNoBackground()){
-			Rectangle rec = newImage.getBounds();		
-			fillRectangle(settings.getColor(0), gc, rec.x, rec.y, rec.width, rec.height);
-		}
-		
 		// fill boxes
 		Box fillBox = null;
 		boolean checkFillbox = !settings.getFillOnMove();
@@ -184,8 +188,7 @@ public class BoxDecoratorImpl implements IBoxDecorator {
 		for (Box b : visibleBoxes) {
 			if (checkFillbox && b.level == fillBoxLevel && b.start <= fillBoxStart && b.end >=fillBoxEnd)
 				fillBox = b;
-			if (!settings.getNoBackground())
-				fillRectangle(settings.getColor(b.level + 1), gc, b.rec.x - xOffset, b.rec.y - yOffset, ex?r0.width:b.rec.width, b.rec.height);
+			fillRectangle(settings.getColor(b.level + 1), gc, b.rec.x - xOffset, b.rec.y - yOffset, ex?r0.width:b.rec.width, b.rec.height);
 		}
 		
 		// fill selected
@@ -363,7 +366,7 @@ public class BoxDecoratorImpl implements IBoxDecorator {
 					Point e1 = boxText.getLocationAtOffset(b.maxEndOffset);
 					e.x = e1.x;
 				}
-				Rectangle rec2 = new Rectangle(s.x + xOffset -2, s.y + yOffset, e.x - s.x + 6, e.y - s.y + boxText.getLineHeight(b.end));
+				Rectangle rec2 = new Rectangle(s.x + xOffset -2, s.y + yOffset-1, e.x - s.x + 6, e.y - s.y + boxText.getLineHeight(b.end));
 				b.rec = rec2;
 				updateWidth(b);
 				updateWidth3(b);
