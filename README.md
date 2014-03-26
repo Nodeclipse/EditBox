@@ -15,9 +15,16 @@ And emailed the author. Whether author will answer or not, having project on Git
 
 ## Themes
 
+- Default is like on image above
+- Whitebox - only border highlight for mouse-over
+- OnClick - border highlight for mouse-over, and the current block highlight like Default when clicking inside
+- RainbowDrops - for blackbackground themes
+
 ![](https://camo.githubusercontent.com/1baa2b61ed624e6cac336a675737c280d5bddb1a/687474703a2f2f7075752e73682f3742636e442f653131373166633065652e706e67)
 
-**Black Eclipse themes support:** Download [RainbowDrops.eb inside Moonrise theme](https://github.com/guari/eclipse-ui-theme/blob/master/com.github.eclipseuitheme.themes.plugin/bin/color-scheme/RainbowDrops.eb?raw=true) (by right-clicking the link and selecting ```Save link as...```), then import it with Eclipse EditBox Plugin.
+It is included in newer version.
+For EditBox version <=0.22 download [RainbowDrops.eb inside Moonrise theme](https://github.com/guari/eclipse-ui-theme/blob/master/com.github.eclipseuitheme.themes.plugin/bin/color-scheme/RainbowDrops.eb?raw=true)
+ (by right-clicking the link and selecting ```Save link as...```), then import it with Eclipse EditBox Plugin.
 
 All themes are inside `pm.eclipse.editbox\src`
 
@@ -25,6 +32,12 @@ All themes are inside `pm.eclipse.editbox\src`
 
 Default themes for a Category are defined in `pm.eclipse.editbox\src\pm\eclipse\editbox\impl\BoxProviderRegistry.java`
 
+In eclipse with PDE (e.g. Enide Studio)
+open `plugin.xml` , click `Launch an Eclipse application`.
+
+### Build
+
+`mvn package` to make update site and zip archive.
 
 ### Convertion to git notes
 
