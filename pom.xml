@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>pm.eclipse.editbox</groupId>
+	<artifactId>pm.eclipse.editbox.parent</artifactId>
+	<version>0.0.22-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<name>EditBox (parent)</name>
+
+	<developers>
+		<developer>
+			<id>mentos13</id>
+			<name>Piotr Metel</name>
+			<email></email>
+			<organization></organization>
+			<roles>
+				<role>Author</role>
+			</roles>
+			<timezone>+1</timezone>
+		</developer>
+	</developers>
+	<contributors>
+		<contributor>
+			<name>Paul Verest</name>
+			<organization>Nodeclipse organization</organization>
+			<organizationUrl>http://www.nodeclipse.org/</organizationUrl>
+			<timezone>+8</timezone>
+		</contributor>
+	</contributors>
+
+	<prerequisites>
+		<maven>3.0</maven>
+	</prerequisites>
+
+	<properties>
+		<tycho-version>0.19.0</tycho-version>
+
+		<!-- PROJECT SETTINGS -->
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+	</properties>
+
+
+	<modules>
+		<module>pm.eclipse.editbox</module>
+		<module>pm.eclipse.editbox.feature</module>
+		<module>pm.eclipse.editbox.site</module>
+	</modules>
+
+	<repositories>
+		<repository>
+			<id>kepler</id>
+			<layout>p2</layout>
+			<url>http://download.eclipse.org/releases/kepler</url>
+		</repository>
+		 
+	</repositories>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-maven-plugin</artifactId>
+				<version>${tycho-version}</version>
+				<extensions>true</extensions>
+			</plugin>
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-compiler-plugin</artifactId>
+				<version>${tycho-version}</version>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>target-platform-configuration</artifactId>
+				<version>${tycho-version}</version>
+				<configuration>
+					<environments>
+						<environment>
+							<os>linux</os>
+							<ws>gtk</ws>
+							<arch>x86</arch>
+						</environment>
+						<environment>
+							<os>linux</os>
+							<ws>gtk</ws>
+							<arch>x86_64</arch>
+						</environment>
+						<environment>
+							<os>win32</os>
+							<ws>win32</ws>
+							<arch>x86</arch>
+						</environment>
+						<environment>
+							<os>win32</os>
+							<ws>win32</ws>
+							<arch>x86_64</arch>
+						</environment>
+						<environment>
+							<os>macosx</os>
+							<ws>cocoa</ws>
+							<arch>x86_64</arch>
+						</environment>
+					</environments>
+				</configuration>
+			</plugin>
+			
+		</plugins>
+	</build>
+
+
+</project>

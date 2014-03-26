@@ -2,7 +2,7 @@
 <feature
       id="pm.eclipse.editbox.feature"
       label="EditBox"
-      version="0.0.22"
+      version="0.0.22.qualifier"
       provider-name="Piotr Metel">
 
    <description url="http://editbox.sourceforge.net">

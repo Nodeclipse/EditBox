@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <feature url="features/pm.eclipse.editbox.feature_0.0.22.jar" id="pm.eclipse.editbox.feature" version="0.0.22.qualifier">
+      <category name="pm.eclipse.editbox"/>
+   </feature>
+   <category-def name="pm.eclipse.editbox" label="EditBox">
+      <description>
+      </description>
+   </category-def>
+</site>
+<!-- 
+   <description name="EditBox" url="http://editbox.sourceforge.net/updates">
+      EditBox Update Site
+   </description>
+   <feature url="http://downloads.sourceforge.net/editbox/pm.eclipse.editbox.feature_0.0.22.jar" id="pm.eclipse.editbox.feature" version="0.0.22">
+      <category name="pm.eclipse.editbox"/>
+   </feature>
+   <archive path="plugins/pm.eclipse.editbox_0.0.22.jar" url="http://downloads.sourceforge.net/editbox/pm.eclipse.editbox_0.0.22.jar"/>
+ -->   
