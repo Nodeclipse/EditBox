@@ -15,6 +15,8 @@ And emailed the author. Whether author will answer or not, having project on Git
 
 ## Themes
 
+![](https://camo.githubusercontent.com/1baa2b61ed624e6cac336a675737c280d5bddb1a/687474703a2f2f7075752e73682f3742636e442f653131373166633065652e706e67)
+
 **Black Eclipse themes support:** Download [RainbowDrops.eb inside Moonrise theme](https://github.com/guari/eclipse-ui-theme/blob/master/com.github.eclipseuitheme.themes.plugin/bin/color-scheme/RainbowDrops.eb?raw=true) (by right-clicking the link and selecting ```Save link as...```), then import it with Eclipse EditBox Plugin.
 
 ### Convertion to git notes
