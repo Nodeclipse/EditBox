@@ -1,4 +1,3 @@
-
 # EditBox Eclipse plugin
 
 This is converted to git and mavenized EditBox Eclipse plugin created by Piotr Metel.
@@ -13,6 +12,10 @@ Named as 0.22 Alpha.
 
 Paul Verest has discovered about EditBox though "Added EditBox support #52" <https://github.com/guari/eclipse-ui-theme/pull/52>.
 And emailed the author. Whether author will answer or not, having project on GitHub hopefully will revive it.
+
+## Themes
+
+**Black Eclipse themes support:** Download [RainbowDrops.eb inside Moonrise theme](https://github.com/guari/eclipse-ui-theme/blob/master/com.github.eclipseuitheme.themes.plugin/bin/color-scheme/RainbowDrops.eb?raw=true) (by right-clicking the link and selecting ```Save link as...```), then import it with Eclipse EditBox Plugin.
 
 ### Convertion to git notes
 
