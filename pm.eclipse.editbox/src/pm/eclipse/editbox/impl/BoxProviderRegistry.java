@@ -70,8 +70,9 @@ public class BoxProviderRegistry {
 		List<IBoxProvider> result = new ArrayList<IBoxProvider>();
 		// order important (see supports())
 		result.add(javaProvider());
-		result.add(pythonProvider());
+		result.add(jsProvider());
 		result.add(markupProvider());
+		result.add(pythonProvider());
 		result.add(textProvider());
 		return result;
 	}
@@ -102,6 +103,18 @@ public class BoxProviderRegistry {
 		return provider;
 	}
 
+	//+ added like javaProvider()
+	protected BoxProviderImpl jsProvider() {
+		BoxProviderImpl provider = createProvider("js");
+		provider.setDefaultSettingsCatalog(Arrays.asList("Default", "Whitebox", "RainbowDrops", "OnClick", "GreyGradient", "Java_v_20"));
+		if (provider.getEditorsBoxSettings().getFileNames() == null)
+			// as in Nodeclipse JSHint settings file com.eclipsesource.jshint.ui.prefs
+			// included=//*.jjs\://*.js\://*.jshintrc\://*.mjs\://*.njs\://*.pjs\://*.vjs			
+			provider.getEditorsBoxSettings().setFileNames(Arrays.asList(
+					"*.js", "*.jjs", "*.jshintrc", "*.mjs", "*.njs", "*.pjs", "*.vjs"));
+		return provider;
+	}
+	
 	protected BoxProviderImpl pythonProvider() {
 		BoxProviderImpl provider = createProvider("python");
 		provider.setDefaultSettingsCatalog(Arrays.asList("Default", "Whitebox", "RainbowDrops"));
