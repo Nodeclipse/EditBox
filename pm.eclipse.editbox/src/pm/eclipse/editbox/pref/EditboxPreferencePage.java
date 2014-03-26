@@ -33,6 +33,10 @@ import pm.eclipse.editbox.EditBox;
 import pm.eclipse.editbox.IBoxProvider;
 
 
+/**
+ * @author Piotr Metel
+ * @author Paul Verest
+ */
 public class EditboxPreferencePage extends PreferencePage implements IWorkbenchPreferencePage {
 
 	private List categoryList;
@@ -142,7 +146,8 @@ public class EditboxPreferencePage extends PreferencePage implements IWorkbenchP
 		item.setText(value);
 		BoxSettingsTab p = new BoxSettingsTab();
 		IBoxProvider provider = EditBox.getDefault().getProviderRegistry().providerForName(value);
-		item.setControl(p.createContro(folder, provider));
+		//: see BoxProviderRegistry
+		item.setControl(p.createContro(folder, provider));			
 		item.setData(p);
 		if (categoryFiles == null)
 			categoryFiles = new LinkedHashMap<String, LinkedHashSet<String>>();

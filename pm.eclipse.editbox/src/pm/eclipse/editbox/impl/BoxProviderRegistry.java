@@ -16,6 +16,10 @@ import pm.eclipse.editbox.EditBox;
 import pm.eclipse.editbox.IBoxDecorator;
 import pm.eclipse.editbox.IBoxProvider;
 
+/**
+ * @author Piotr Metel
+ * @author Paul Verest : added "RainbowDrops" and more
+ */
 public class BoxProviderRegistry {
 
 	private static final String PROIVDERS = "proivders";
@@ -83,14 +87,16 @@ public class BoxProviderRegistry {
 
 	protected BoxProviderImpl markupProvider() {
 		BoxProviderImpl provider = createProvider("markup");
+		provider.setDefaultSettingsCatalog(Arrays.asList("Default", "Whitebox", "RainbowDrops")); //+ added
 		if (provider.getEditorsBoxSettings().getFileNames() == null)
 			provider.getEditorsBoxSettings().setFileNames(Arrays.asList("*.*ml", "*.jsp"));
 		return provider;
 	}
 
+	//{ + added "RainbowDrops" to all 3 and "Whitebox" to Java 
 	protected BoxProviderImpl javaProvider() {
 		BoxProviderImpl provider = createProvider("java");
-		provider.setDefaultSettingsCatalog(Arrays.asList("Default", "OnClick", "GreyGradient", "Java_v_20"));
+		provider.setDefaultSettingsCatalog(Arrays.asList("Default", "Whitebox", "RainbowDrops", "OnClick", "GreyGradient", "Java_v_20"));
 		if (provider.getEditorsBoxSettings().getFileNames() == null)
 			provider.getEditorsBoxSettings().setFileNames(Arrays.asList("*.java", "*.class"));
 		return provider;
@@ -98,7 +104,7 @@ public class BoxProviderRegistry {
 
 	protected BoxProviderImpl pythonProvider() {
 		BoxProviderImpl provider = createProvider("python");
-		provider.setDefaultSettingsCatalog(Arrays.asList("Default", "Whitebox"));
+		provider.setDefaultSettingsCatalog(Arrays.asList("Default", "Whitebox", "RainbowDrops"));
 		if (provider.getEditorsBoxSettings().getFileNames() == null)
 			provider.getEditorsBoxSettings().setFileNames(Arrays.asList("*.py"));
 		return provider;
@@ -106,11 +112,12 @@ public class BoxProviderRegistry {
 	
 	protected BoxProviderImpl textProvider() {
 		BoxProviderImpl provider = createProvider("text");
-		provider.setDefaultSettingsCatalog(Arrays.asList("Default", "Whitebox"));
+		provider.setDefaultSettingsCatalog(Arrays.asList("Default", "Whitebox", "RainbowDrops"));
 		if (provider.getEditorsBoxSettings().getFileNames() == null)
 			provider.getEditorsBoxSettings().setFileNames(Arrays.asList("*.txt", "*.*"));
 		return provider;
 	}
+	//}
 
 	protected Map<String, Class> defaultBuilders() {
 		Map<String, Class> result = new HashMap<String, Class>();

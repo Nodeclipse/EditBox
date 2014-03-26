@@ -35,6 +35,10 @@ import pm.eclipse.editbox.IBoxProvider;
 import pm.eclipse.editbox.IBoxSettings;
 import pm.eclipse.editbox.IBoxSettingsStore;
 
+/**
+ * @author Piotr Metel
+ * @author Paul Verest
+ */
 public class BoxSettingsTab {
 
 	protected IWorkbench workbench;
@@ -80,6 +84,9 @@ public class BoxSettingsTab {
 	public BoxSettingsTab() {
 	}
 
+	/** 
+	 * Create Tab Control
+	 * */
 	public Control createContro(Composite parent, IBoxProvider provider0) {
 		provider = provider0;
 		if (provider == null) {
@@ -200,7 +207,7 @@ public class BoxSettingsTab {
 				String s = combo.getText();
 				if (s != null && s.length() > 0) {
 					decorator.enableUpdates(false);
-					store.load(s, settings);
+					store.load(s, settings); 					//: get themes list
 					updateContents();
 					decorator.enableUpdates(true);
 				}

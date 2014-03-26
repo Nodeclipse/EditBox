@@ -19,6 +19,13 @@ And emailed the author. Whether author will answer or not, having project on Git
 
 **Black Eclipse themes support:** Download [RainbowDrops.eb inside Moonrise theme](https://github.com/guari/eclipse-ui-theme/blob/master/com.github.eclipseuitheme.themes.plugin/bin/color-scheme/RainbowDrops.eb?raw=true) (by right-clicking the link and selecting ```Save link as...```), then import it with Eclipse EditBox Plugin.
 
+All themes are inside `pm.eclipse.editbox\src`
+
+## Development
+
+Default themes for a Category are defined in `pm.eclipse.editbox\src\pm\eclipse\editbox\impl\BoxProviderRegistry.java`
+
+
 ### Convertion to git notes
 
 Converted with `git svn clone -s http://svn.code.sf.net/p/editbox/code/ editbox3 --trunk=plugin`
