@@ -18,12 +18,15 @@ import pm.eclipse.editbox.IBoxProvider;
 
 /**
  * @author Piotr Metel
- * @author Paul Verest : added "RainbowDrops" and more
+ * @author Paul Verest : added "RainbowDrops" and ALL_THEMES_LIST to be used in every category
  */
 public class BoxProviderRegistry {
 
 	private static final String PROIVDERS = "proivders";
 	private static final String PROVIDER_ID_ = "pm.eclipse.editbox.provider.";
+	//+
+	private static final List<String> ALL_THEMES_LIST = Arrays.asList(
+			"Default", "Whitebox", "RainbowDrops", "OnClick", "GreyGradient", "Java_v_20");
 
 	protected Collection<IBoxProvider> providers;
 	protected Map<IWorkbenchPart, IBoxDecorator> decorators;
@@ -66,17 +69,34 @@ public class BoxProviderRegistry {
 		}
 	}
 	
+	//{ defaults :
 	protected Collection<IBoxProvider> defaultProviders() {
 		List<IBoxProvider> result = new ArrayList<IBoxProvider>();
-		// order important (see supports())
+		// order important (see BoxProviderImpl.supports())
+		/*
+		result.add(cppProvider());
 		result.add(javaProvider());
 		result.add(jsProvider());
 		result.add(markupProvider());
 		result.add(pythonProvider());
+		result.add(rubyProvider());
 		result.add(textProvider());
+		*/
+		//DONE 1  refactor to use this more generic method
+		result.add(createProviderForNameAndExtentions("c++",	Arrays.asList("*.c", "*.cpp", "*.h", "*.hpp") ) ); 
+		result.add(createProviderForNameAndExtentions("java",	Arrays.asList("*.java", "*.class", "*.groovy", "*.scala") ) );
+		result.add(createProviderForNameAndExtentions("js",		Arrays.asList("*.js", "*.jjs", "*.jshintrc", "*.mjs", "*.njs", "*.pjs", "*.vjs", "*.ts", "*.coffee", "*.dart") ) );
+		result.add(createProviderForNameAndExtentions("markup", Arrays.asList("*.*ml", "*.jsp", "*.html", "*.hjs", "*.css", "*.less") ) );
+		result.add(createProviderForNameAndExtentions("php",	Arrays.asList("*.php") ) );
+		result.add(createProviderForNameAndExtentions("python", Arrays.asList("*.py") ) );
+		result.add(createProviderForNameAndExtentions("ruby",	Arrays.asList("*.rb", "*.ruby") ) );
+		result.add(createProviderForNameAndExtentions("text",	Arrays.asList("*.txt", "*.*") ) ); // "*.*" makes default to every file
 		return result;
 	}
 
+	/**
+	 * is used in createProviderForNameAndExtentions() and providerForName()
+	 */
 	protected BoxProviderImpl createProvider(String name) {
 		BoxProviderImpl provider = new BoxProviderImpl();
 		provider.setId(PROVIDER_ID_ + name);
@@ -86,50 +106,74 @@ public class BoxProviderRegistry {
 		return provider;
 	}
 
-	protected BoxProviderImpl markupProvider() {
-		BoxProviderImpl provider = createProvider("markup");
-		provider.setDefaultSettingsCatalog(Arrays.asList("Default", "Whitebox", "RainbowDrops")); //+ added
+	//DONE 1 refactor to use this more generic method
+	protected BoxProviderImpl createProviderForNameAndExtentions(String name, List<String> extentions) {
+		BoxProviderImpl provider = createProvider(name);
+		provider.setDefaultSettingsCatalog(ALL_THEMES_LIST);
 		if (provider.getEditorsBoxSettings().getFileNames() == null)
-			provider.getEditorsBoxSettings().setFileNames(Arrays.asList("*.*ml", "*.jsp"));
+			provider.getEditorsBoxSettings().setFileNames(extentions);
+		return provider;
+	}
+	/*
+	protected BoxProviderImpl cppProvider() {
+		BoxProviderImpl provider = createProvider("c++");
+		provider.setDefaultSettingsCatalog(ALL_THEMES_LIST);
+		if (provider.getEditorsBoxSettings().getFileNames() == null)
+			provider.getEditorsBoxSettings().setFileNames(Arrays.asList("*.c", "*.cpp", "*.h", "*.hpp"));
 		return provider;
 	}
 
-	//{ + added "RainbowDrops" to all 3 and "Whitebox" to Java 
 	protected BoxProviderImpl javaProvider() {
 		BoxProviderImpl provider = createProvider("java");
-		provider.setDefaultSettingsCatalog(Arrays.asList("Default", "Whitebox", "RainbowDrops", "OnClick", "GreyGradient", "Java_v_20"));
+		provider.setDefaultSettingsCatalog(ALL_THEMES_LIST);
 		if (provider.getEditorsBoxSettings().getFileNames() == null)
-			provider.getEditorsBoxSettings().setFileNames(Arrays.asList("*.java", "*.class"));
+			provider.getEditorsBoxSettings().setFileNames(Arrays.asList("*.java", "*.class", "*.groovy", "*.scala"));
 		return provider;
 	}
 
-	//+ added like javaProvider()
 	protected BoxProviderImpl jsProvider() {
 		BoxProviderImpl provider = createProvider("js");
-		provider.setDefaultSettingsCatalog(Arrays.asList("Default", "Whitebox", "RainbowDrops", "OnClick", "GreyGradient", "Java_v_20"));
+		provider.setDefaultSettingsCatalog(ALL_THEMES_LIST);
 		if (provider.getEditorsBoxSettings().getFileNames() == null)
 			// as in Nodeclipse JSHint settings file com.eclipsesource.jshint.ui.prefs
 			// included=//*.jjs\://*.js\://*.jshintrc\://*.mjs\://*.njs\://*.pjs\://*.vjs			
 			provider.getEditorsBoxSettings().setFileNames(Arrays.asList(
-					"*.js", "*.jjs", "*.jshintrc", "*.mjs", "*.njs", "*.pjs", "*.vjs"));
+					"*.js", "*.jjs", "*.jshintrc", "*.mjs", "*.njs", "*.pjs", "*.vjs", "*.ts", "*.coffee"));
 		return provider;
 	}
 	
+	protected BoxProviderImpl markupProvider() {
+		BoxProviderImpl provider = createProvider("markup");
+		provider.setDefaultSettingsCatalog(ALL_THEMES_LIST);
+		if (provider.getEditorsBoxSettings().getFileNames() == null)
+			provider.getEditorsBoxSettings().setFileNames(Arrays.asList("*.*ml", "*.jsp", "*.md"));
+		return provider;
+	}
+
 	protected BoxProviderImpl pythonProvider() {
 		BoxProviderImpl provider = createProvider("python");
-		provider.setDefaultSettingsCatalog(Arrays.asList("Default", "Whitebox", "RainbowDrops"));
+		provider.setDefaultSettingsCatalog(ALL_THEMES_LIST);
 		if (provider.getEditorsBoxSettings().getFileNames() == null)
 			provider.getEditorsBoxSettings().setFileNames(Arrays.asList("*.py"));
 		return provider;
 	}
 	
+	protected BoxProviderImpl rubyProvider() {
+		BoxProviderImpl provider = createProvider("ruby");
+		provider.setDefaultSettingsCatalog(ALL_THEMES_LIST);
+		if (provider.getEditorsBoxSettings().getFileNames() == null)
+			provider.getEditorsBoxSettings().setFileNames(Arrays.asList("*.rb", "*.ruby"));
+		return provider;
+	}
+
 	protected BoxProviderImpl textProvider() {
 		BoxProviderImpl provider = createProvider("text");
-		provider.setDefaultSettingsCatalog(Arrays.asList("Default", "Whitebox", "RainbowDrops"));
+		provider.setDefaultSettingsCatalog(ALL_THEMES_LIST);
 		if (provider.getEditorsBoxSettings().getFileNames() == null)
 			provider.getEditorsBoxSettings().setFileNames(Arrays.asList("*.txt", "*.*"));
 		return provider;
 	}
+	*/
 	//}
 
 	protected Map<String, Class> defaultBuilders() {
