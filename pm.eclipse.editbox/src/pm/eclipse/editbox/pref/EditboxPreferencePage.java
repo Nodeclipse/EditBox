@@ -220,7 +220,7 @@ public class EditboxPreferencePage extends PreferencePage implements IWorkbenchP
 
 		@Override
 		public void widgetSelected(SelectionEvent e) {
-			InputDialog dialog = new InputDialog(getShell(), "New Catagory", "Name:", null, new IInputValidator() {
+			InputDialog dialog = new InputDialog(getShell(), "New Category", "Name:", null, new IInputValidator() {
 				public String isValid(String newText) {
 					if (newText != null && newText.trim().length() > 0 && !contains(categoryList.getItems(), newText))
 						return null;
