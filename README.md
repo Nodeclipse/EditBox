@@ -17,7 +17,7 @@ Named as 0.22 Alpha.
 Paul Verest has discovered about EditBox though "Added EditBox support #52" <https://github.com/guari/eclipse-ui-theme/pull/52>.
 And emailed the author. Whether author will answer or not, having project on GitHub hopefully will revive it.
 
-UPDATE: In one day 2014-03-26 converted to git nad mavenized; added RainbowDrops.es by @Vexatos;  
+UPDATE: In one day 2014-03-26 converted to git and mavenized; added RainbowDrops.es by @Vexatos;  
  on second day 2014-03-27 changed default theme list to include all themes, add major languages as category,
  make default configuration in [10 lines](https://github.com/Nodeclipse/EditBox/blob/master/pm.eclipse.editbox/src/pm/eclipse/editbox/impl/BoxProviderRegistry.java#L85-95).
 
@@ -33,7 +33,7 @@ in `BoxProviderRegistry.java` "Default", "Whitebox", "RainbowDrops", "OnClick", 
 
 - Default is like on image above, differs for java, markup, python, text
 - [Whitebox][2] - only border highlight for mouse-over
-- [RainbowDrops][4] - for black background themes, e.g. Moonrise, Black by Jeeeyuk, Dark in Eclipse 4.4
+- [RainbowDrops][4] - for black background themes, e.g. Moonrise, Black by Jeeeyul, Dark in Eclipse 4.4
 - [OnClick][3] - border highlight for mouse-over, and the current block highlight like Default when clicking inside
 - GreyGradient
 - Java_v_20 
