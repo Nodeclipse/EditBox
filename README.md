@@ -23,7 +23,8 @@ UPDATE: In one day 2014-03-26 converted to git and mavenized; added RainbowDrops
 
 	mvn -Dtycho.mode=maven org.eclipse.tycho:tycho-versions-plugin:set-version -DnewVersion=0.50.0-SNAPSHOT
 
-While it is nice to play with colors, there are Nodeclipse core projects to do.
+While it is nice to play with colors, there are Nodeclipse core projects to do.  
+If there are updates here, they will be released together with [Nodeclipse train](http://www.nodeclipse.org/history).
 
 ## Themes
 
