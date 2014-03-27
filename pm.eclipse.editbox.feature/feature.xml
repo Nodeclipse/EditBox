@@ -2,18 +2,24 @@
 <feature
       id="pm.eclipse.editbox.feature"
       label="EditBox"
-      version="0.0.22.qualifier"
-      provider-name="Piotr Metel">
+      version="0.50.0.qualifier"
+      provider-name="Nodeclipse">
 
-   <description url="http://editbox.sourceforge.net">
+   <description url="https://github.com/Nodeclipse/editbox">
       EditBox is the Eclipse plugin for source code background highlighting.
 While most of plugins highlight the syntax of the source code,
 EditBox highlights the selected block of the code by changing
 its background color and drawing border around it.
+
+Created by Piotr Metel
+http://editbox.sourceforge.net
+Hoping to revive on
+https://github.com/Nodeclipse/editbox
    </description>
 
    <copyright url="http://editbox.sourceforge.net">
-      Copyright © editbox.sourceforge.net All Rights Reserved
+      Copyright 2009-2011 © editbox.sourceforge.net All Rights Reserved
+Copyright 2014 Nodeclipse, Paul Verest
    </copyright>
 
    <license url="http://www.eclipse.org/legal/epl-v10.html">
@@ -107,7 +113,7 @@ This Agreement is governed by the laws of the State of New York and the intellec
    </license>
 
    <url>
-      <update label="EditBox Update Site" url="http://editbox.sourceforge.net/updates"/>
+      <update label="Nodeclipse EditBox Update Site" url="http://www.nodeclipse.org/updates/"/>
    </url>
 
    <plugin

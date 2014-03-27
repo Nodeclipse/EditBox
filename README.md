@@ -1,5 +1,9 @@
 # EditBox Eclipse plugin
 
+[![Build Status](https://secure.travis-ci.org/Nodeclipse/nodeclipse-1.png)](http://travis-ci.org/Nodeclipse/nodeclipse-1)
+<a href="http://marketplace.eclipse.org/marketplace-client-intro?mpc_install=759140" title="Drag and drop into a running Eclipse
+ to install Nodeclipse"><img src="http://marketplace.eclipse.org/sites/all/modules/custom/marketplace/images/installbutton.png"/></a>
+
 This is converted to git and mavenized EditBox Eclipse plugin created by Piotr Metel.
 <http://editbox.sourceforge.net/>
 
@@ -13,9 +17,11 @@ Named as 0.22 Alpha.
 Paul Verest has discovered about EditBox though "Added EditBox support #52" <https://github.com/guari/eclipse-ui-theme/pull/52>.
 And emailed the author. Whether author will answer or not, having project on GitHub hopefully will revive it.
 
-UPDATE: In one day 2014-03-26 converted to git nad mavenized; added RainbowDrops.es;
+UPDATE: In one day 2014-03-26 converted to git nad mavenized; added RainbowDrops.es by @Vexatos;  
  on second day 2014-03-27 changed default theme list to include all themes, add major languages as category,
  make default configuration in [10 lines](https://github.com/Nodeclipse/EditBox/blob/master/pm.eclipse.editbox/src/pm/eclipse/editbox/impl/BoxProviderRegistry.java#L85-95).
+
+	mvn -Dtycho.mode=maven org.eclipse.tycho:tycho-versions-plugin:set-version -DnewVersion=0.50.0-SNAPSHOT
 
 While it is nice to play with colors, there are Nodeclipse core projects to do.
 
@@ -37,10 +43,6 @@ in `BoxProviderRegistry.java` "Default", "Whitebox", "RainbowDrops", "OnClick", 
   [4]: https://raw.githubusercontent.com/Nodeclipse/EditBox/master/pm.eclipse.editbox/src/RainbowDrops.eb
   
 ![](https://camo.githubusercontent.com/1baa2b61ed624e6cac336a675737c280d5bddb1a/687474703a2f2f7075752e73682f3742636e442f653131373166633065652e706e67)
-
-It is included in newer version.
-For EditBox version <=0.22 download [RainbowDrops.eb inside Moonrise theme](https://github.com/guari/eclipse-ui-theme/blob/master/com.github.eclipseuitheme.themes.plugin/bin/color-scheme/RainbowDrops.eb?raw=true)
- (by right-clicking the link and selecting ```Save link as...```), then import it with Eclipse EditBox Plugin.
 
 Text Category included '*.*' file mask. Remove it for better customization.
 

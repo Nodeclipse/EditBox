@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-   <feature url="features/pm.eclipse.editbox.feature_0.0.22.jar" id="pm.eclipse.editbox.feature" version="0.0.22.qualifier">
+   <feature url="features/pm.eclipse.editbox.feature_0.50.0.jar" id="pm.eclipse.editbox.feature" version="0.50.0.qualifier">
       <category name="pm.eclipse.editbox"/>
    </feature>
    <category-def name="pm.eclipse.editbox" label="EditBox">

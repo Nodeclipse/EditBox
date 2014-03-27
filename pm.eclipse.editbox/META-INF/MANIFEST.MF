@@ -2,9 +2,9 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Editbox Plug-in
 Bundle-SymbolicName: pm.eclipse.editbox;singleton:=true
-Bundle-Version: 0.0.22.qualifier
+Bundle-Version: 0.50.0.qualifier
 Bundle-Activator: pm.eclipse.editbox.EditBox
-Bundle-Vendor: Piotr Metel
+Bundle-Vendor: Nodeclipse
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.eclipse.ui.editors,
