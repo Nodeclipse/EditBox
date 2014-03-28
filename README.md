@@ -1,17 +1,15 @@
 # EditBox Eclipse plugin
 
 [![Build Status](https://secure.travis-ci.org/Nodeclipse/EditBox.png)](http://travis-ci.org/Nodeclipse/EditBox)
-<a href="http://marketplace.eclipse.org/marketplace-client-intro?mpc_install=759140" title="Drag and drop into a running Eclipse
- to install Nodeclipse"><img src="http://marketplace.eclipse.org/sites/all/modules/custom/marketplace/images/installbutton.png"/></a>
-
-This is converted to git and mavenized EditBox Eclipse plugin created by Piotr Metel.
-<http://editbox.sourceforge.net/>
+<a href="http://marketplace.eclipse.org/marketplace-client-intro?mpc_install=1582059" title="Drag and drop into a running Eclipse
+ to install Nodeclipse EditBox"><img src="http://marketplace.eclipse.org/sites/all/modules/custom/marketplace/images/installbutton.png"/></a>
 
 EditBox is using background colors theme to highlight code blocks.
 
 ![](http://editbox.sourceforge.net/i/sample-01.png)  
 
-The author was working for project in 2009-2011. Latest version released by Piotr Metel is 0.0.22.
+This is converted to git and mavenized EditBox Eclipse plugin [created by Piotr Metel](http://editbox.sourceforge.net/).
+The author was working for project in 2009-2011. Latest version released by Piotr Metel was 0.0.22.
 Named as 0.22 Alpha.
 
 Paul Verest has discovered about EditBox though "Added EditBox support #52" <https://github.com/guari/eclipse-ui-theme/pull/52>.
@@ -19,7 +17,12 @@ And emailed the author. Whether author will answer or not, having project on Git
 
 UPDATE: In one day 2014-03-26 converted to git and mavenized; added RainbowDrops.es by @Vexatos;  
  on second day 2014-03-27 changed default theme list to include all themes, add major languages as category,
- make default configuration in [10 lines](https://github.com/Nodeclipse/EditBox/blob/master/pm.eclipse.editbox/src/pm/eclipse/editbox/impl/BoxProviderRegistry.java#L85-95).
+ make default configuration in [10 lines](https://github.com/Nodeclipse/EditBox/blob/master/pm.eclipse.editbox/src/pm/eclipse/editbox/impl/BoxProviderRegistry.java#L85-95),
+ for example
+
+	result.add(createProviderForNameAndExtentions("c++",	Arrays.asList("*.c", "*.cpp", "*.h", "*.hpp") ) ); 
+	
+Latest released version is 0.50.0.	 
 
 	mvn -Dtycho.mode=maven org.eclipse.tycho:tycho-versions-plugin:set-version -DnewVersion=0.50.0-SNAPSHOT
 
