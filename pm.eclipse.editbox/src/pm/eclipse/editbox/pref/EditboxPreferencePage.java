@@ -53,11 +53,11 @@ public class EditboxPreferencePage extends PreferencePage implements IWorkbenchP
 		Composite c = new Composite(parent, SWT.NONE);
 		c.setLayout(new GridLayout(1, false));
 		Link link = new Link(c, SWT.NONE);
-		link.setText("Turn off current line highlighting <A>here</A>.");
+		link.setText("Configure print margin and current line highlighting <A>here</A>.");
 		FontData[] fontData = link.getFont().getFontData();
 		for (FontData fd : fontData) {
 			fd.setHeight(10);
-			fd.setStyle(SWT.BOLD);
+			//-fd.setStyle(SWT.BOLD);
 		}
 		link.setFont(new Font(getShell().getDisplay(), fontData));
 		link.addSelectionListener(new SelectionAdapter() {
