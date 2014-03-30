@@ -22,6 +22,8 @@ UPDATE: In one day 2014-03-26 converted to git and mavenized; added RainbowDrops
 
 	result.add(createProviderForNameAndExtentions("c++",	Arrays.asList("*.c", "*.cpp", "*.h", "*.hpp") ) ); 
 	
+For example [`c27b6d2`](https://github.com/Nodeclipse/EditBox/commit/c27b6d2bf82315c6a79b0f2f2f38255cb68c86fb)	
+	
 Latest released version is 0.50.0.	 
 
 	mvn -Dtycho.mode=maven org.eclipse.tycho:tycho-versions-plugin:set-version -DnewVersion=0.50.0-SNAPSHOT
@@ -30,6 +32,8 @@ While it is nice to play with colors, there are Nodeclipse core projects to do.
 If there are updates here, they will be released together with [Nodeclipse train](http://www.nodeclipse.org/history).
 
 ## Themes
+
+Text Category included `*.*` file mask. Remove it for better customization.
 
 All themes are inside [pm.eclipse.editbox/src](https://github.com/Nodeclipse/EditBox/tree/master/pm.eclipse.editbox/src)
 
@@ -50,19 +54,17 @@ Not yet released:
 - [BlueToDeepBlue][6]
 ![](pm.eclipse.editbox/docs/BlueToDeepBlueTheme.png)
 
-Hints:
-- Before modifying or importing a theme change name
-- (for themes with gradient) Adjust "Alpha blending" to make theme lighter or darker.
-
   [2]: https://raw.githubusercontent.com/Nodeclipse/EditBox/master/pm.eclipse.editbox/src/Whitebox.eb
   [3]: https://raw.githubusercontent.com/Nodeclipse/EditBox/master/pm.eclipse.editbox/src/OnClick.eb
   [4]: https://raw.githubusercontent.com/Nodeclipse/EditBox/master/pm.eclipse.editbox/src/RainbowDrops.eb
   [5]: https://raw.githubusercontent.com/Nodeclipse/EditBox/master/pm.eclipse.editbox/src/OrangeToRed.eb
   [6]: https://raw.githubusercontent.com/Nodeclipse/EditBox/master/pm.eclipse.editbox/src/BlueToDeepBlue.eb
 
-  
+Hints:
+- Before modifying or importing a theme change name
+- (for themes with gradient) Adjust "Alpha blending" to make theme lighter or darker.
 
-Text Category included `*.*` file mask. Remove it for better customization.
+Add themes like [Blue & Red](https://github.com/Nodeclipse/EditBox/commit/6dea8079a3c77a91deaee8b35cd399a007971dff)
 
 ## Development
 
