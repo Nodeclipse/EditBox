@@ -518,7 +518,8 @@ public class BoxSettingsTab {
 		spinner.setLayoutData(gd);
 
 		newLabel(c, "Color levels");
-		levels = newCombo(c, new String[] { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14" }, new SelectionAdapter() {
+		levels = newCombo(c, new String[] { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14" }, 
+				new SelectionAdapter() { // EditBox helps to signal that there are too long strings
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				settings.setColorsSize(levels.getSelectionIndex());
