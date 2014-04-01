@@ -53,18 +53,21 @@ Not yet released:
 ![](pm.eclipse.editbox/docs/OrangeToRedTheme.png)
 - [BlueToDeepBlue][6]
 ![](pm.eclipse.editbox/docs/BlueToDeepBlueTheme.png)
+- [BlueGradient22WithDarkBoldLeftBorder][7]
+![](pm.eclipse.editbox/docs/BlueGradient22WithDarkBoldLeftBorderTheme.png)
 
   [2]: https://raw.githubusercontent.com/Nodeclipse/EditBox/master/pm.eclipse.editbox/src/Whitebox.eb
   [3]: https://raw.githubusercontent.com/Nodeclipse/EditBox/master/pm.eclipse.editbox/src/OnClick.eb
   [4]: https://raw.githubusercontent.com/Nodeclipse/EditBox/master/pm.eclipse.editbox/src/RainbowDrops.eb
   [5]: https://raw.githubusercontent.com/Nodeclipse/EditBox/master/pm.eclipse.editbox/src/OrangeToRed.eb
   [6]: https://raw.githubusercontent.com/Nodeclipse/EditBox/master/pm.eclipse.editbox/src/BlueToDeepBlue.eb
+  [7]: https://raw.githubusercontent.com/Nodeclipse/EditBox/master/pm.eclipse.editbox/src/BlueGradient22WithDarkBoldLeftBorder.eb
 
 Hints:
 - Before modifying or importing a theme change name
 - (for themes with gradient) Adjust "Alpha blending" to make theme lighter or darker.
 
-Add themes like [Blue & Red](https://github.com/Nodeclipse/EditBox/commit/6dea8079a3c77a91deaee8b35cd399a007971dff)
+Add your themes like [Blue & Red](https://github.com/Nodeclipse/EditBox/commit/6dea8079a3c77a91deaee8b35cd399a007971dff) commit.
 
 ## Development
 

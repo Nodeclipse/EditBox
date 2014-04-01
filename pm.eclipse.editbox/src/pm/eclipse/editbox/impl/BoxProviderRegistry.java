@@ -27,7 +27,7 @@ public class BoxProviderRegistry {
 	//+
 	private static final List<String> ALL_THEMES_LIST = Arrays.asList(
 			"Default", "Whitebox", "RainbowDrops", "OnClick", "GreyGradient", "Java_v_20",
-			"BlueToDeepBlue", "OrangeToRed"
+			"BlueToDeepBlue", "OrangeToRed", "BlueGradient22WithDarkBoldLeftBorder"
 			);
 
 	protected Collection<IBoxProvider> providers;
