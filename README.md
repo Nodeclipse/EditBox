@@ -22,7 +22,7 @@ UPDATE: In one day 2014-03-26 converted to git and mavenized; added RainbowDrops
 
 	result.add(createProviderForNameAndExtentions("c++",	Arrays.asList("*.c", "*.cpp", "*.h", "*.hpp") ) ); 
 	
-For example [`c27b6d2`](https://github.com/Nodeclipse/EditBox/commit/c27b6d2bf82315c6a79b0f2f2f38255cb68c86fb)	
+For example [add Blue Light theme](https://github.com/Nodeclipse/EditBox/commit/b7ceed8f1c391b691f39ee7f45b5613651ab91ca)	
 	
 Latest released version is 0.50.0.	 
 
@@ -53,7 +53,7 @@ Not yet released:
 ![](pm.eclipse.editbox/docs/OrangeToRedTheme.png)
 - [BlueToDeepBlue][6]
 ![](pm.eclipse.editbox/docs/BlueToDeepBlueTheme.png)
-- [BlueGradient22WithDarkBoldLeftBorder][7]
+- [Blue Light | BlueGradient22WithDarkBoldLeftBorder][7]  
 ![](pm.eclipse.editbox/docs/BlueGradient22WithDarkBoldLeftBorderTheme.png)
 
   [2]: https://raw.githubusercontent.com/Nodeclipse/EditBox/master/pm.eclipse.editbox/src/Whitebox.eb
