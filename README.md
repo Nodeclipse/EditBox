@@ -53,8 +53,10 @@ Not yet released:
 ![](pm.eclipse.editbox/docs/OrangeToRedTheme.png)
 - [BlueToDeepBlue][6]
 ![](pm.eclipse.editbox/docs/BlueToDeepBlueTheme.png)
-- [Blue Light | BlueGradient22WithDarkBoldLeftBorder][7]  
+- [BlueGradient22WithDarkBoldLeftBorder][7]  
 ![](pm.eclipse.editbox/docs/BlueGradient22WithDarkBoldLeftBorderTheme.png)
+- [BlueLight][8]  
+![](pm.eclipse.editbox/docs/BlueLight.PNG)
 
   [2]: https://raw.githubusercontent.com/Nodeclipse/EditBox/master/pm.eclipse.editbox/src/Whitebox.eb
   [3]: https://raw.githubusercontent.com/Nodeclipse/EditBox/master/pm.eclipse.editbox/src/OnClick.eb
@@ -62,6 +64,7 @@ Not yet released:
   [5]: https://raw.githubusercontent.com/Nodeclipse/EditBox/master/pm.eclipse.editbox/src/OrangeToRed.eb
   [6]: https://raw.githubusercontent.com/Nodeclipse/EditBox/master/pm.eclipse.editbox/src/BlueToDeepBlue.eb
   [7]: https://raw.githubusercontent.com/Nodeclipse/EditBox/master/pm.eclipse.editbox/src/BlueGradient22WithDarkBoldLeftBorder.eb
+  [8]: https://raw.githubusercontent.com/Nodeclipse/EditBox/master/pm.eclipse.editbox/src/BlueLight.eb
 
 Hints:
 - Before modifying or importing a theme change name

@@ -1,0 +1,27 @@
+#Editbox Eclipse Plugin Settings
+#Thu Apr 10 16:05:28 CST 2014 by Paul Verest BlueToDeepBlue17-3-3.eb
+HighlightOne=true
+FillGradient=true
+FillSelected=true
+RoundBox=false
+BorderColorType=0
+Name=BlueLight
+ExpandBox=false
+BorderDrawLine=true
+FillOnMove=true
+Alpha=15
+HighlightWidth=3
+BorderWidth=3
+HighlightColor=000000
+BorderColor=00bbbb
+FillKeyModifier=Alt
+HighlightColorType=0
+FillGradientColor=0000a0
+Builder=Java
+HighlightDrawLine=false
+FillSelectedColor=80ffff
+BorderLineStyle=0
+Colors=null-d0dd9b-cdd8b9-e9f58b-null-null-null-null-null-null
+HighlightLineStyle=0
+NoBackground=false
+CirculateLevelColors=false
