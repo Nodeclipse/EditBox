@@ -41,11 +41,11 @@ in `BoxProviderRegistry.java` "Default", "Whitebox", "RainbowDrops", "OnClick", 
 
 - Default is like on image above, differs for java, markup, python, text
 - [Whitebox][2] - only border highlight for mouse-over
-- [RainbowDrops][4] - for black background themes, e.g. Moonrise, Black by Jeeeyul, Dark in Eclipse 4.4
-![](https://camo.githubusercontent.com/1baa2b61ed624e6cac336a675737c280d5bddb1a/687474703a2f2f7075752e73682f3742636e442f653131373166633065652e706e67)
 - [OnClick][3] - border highlight for mouse-over, and the current block highlight like Default when clicking inside
 - GreyGradient
 - Java_v_20 
+- [RainbowDrops][4] - for black background themes, e.g. Moonrise, Black by Jeeeyul, Dark in Eclipse 4.4  
+![](https://camo.githubusercontent.com/1baa2b61ed624e6cac336a675737c280d5bddb1a/687474703a2f2f7075752e73682f3742636e442f653131373166633065652e706e67)
 
 Not yet released:
 

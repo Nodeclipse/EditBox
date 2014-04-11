@@ -1,0 +1,27 @@
+#Editbox Eclipse Plugin Settings
+#Made for the MoonRise UI Theme by @Vexatos; BorderDrawLine=true; FillOnMove=true
+HighlightOne=true
+FillGradient=false
+FillSelected=true
+RoundBox=false
+BorderColorType=0
+Name=RainbowDropsLineFill
+ExpandBox=false
+BorderDrawLine=true
+FillOnMove=true
+Alpha=0
+HighlightWidth=1
+BorderWidth=1
+HighlightColor=00ff00
+BorderColor=00bbbb
+FillKeyModifier=
+HighlightColorType=0
+FillGradientColor=null
+Builder=Java
+HighlightDrawLine=false
+FillSelectedColor=000080
+BorderLineStyle=1
+Colors=202020-null
+HighlightLineStyle=0
+NoBackground=false
+CirculateLevelColors=false

@@ -26,7 +26,8 @@ public class BoxProviderRegistry {
 	private static final String PROVIDER_ID_ = "pm.eclipse.editbox.provider.";
 	//+
 	private static final List<String> ALL_THEMES_LIST = Arrays.asList(
-			"Default", "Whitebox", "RainbowDrops", "OnClick", "GreyGradient", "Java_v_20",
+			"Default", "Whitebox", "OnClick", "GreyGradient", "Java_v_20",
+			"RainbowDrops", "RainbowDropsLine", "RainbowDropsLineFill", 
 			"BlueToDeepBlue", "OrangeToRed", "BlueGradient22WithDarkBoldLeftBorder", "BlueLight"
 			);
 
