@@ -57,6 +57,8 @@ Not yet released:
 ![](pm.eclipse.editbox/docs/BlueGradient22WithDarkBoldLeftBorderTheme.png)
 - [BlueLight][8]  
 ![](pm.eclipse.editbox/docs/BlueLight.PNG)
+- [RainDropsLine][9]  
+![](pm.eclipse.editbox/docs/RainDropsLineOnSublimeEclipseColorTheme.png)
 
   [2]: https://raw.githubusercontent.com/Nodeclipse/EditBox/master/pm.eclipse.editbox/src/Whitebox.eb
   [3]: https://raw.githubusercontent.com/Nodeclipse/EditBox/master/pm.eclipse.editbox/src/OnClick.eb
@@ -65,6 +67,7 @@ Not yet released:
   [6]: https://raw.githubusercontent.com/Nodeclipse/EditBox/master/pm.eclipse.editbox/src/BlueToDeepBlue.eb
   [7]: https://raw.githubusercontent.com/Nodeclipse/EditBox/master/pm.eclipse.editbox/src/BlueGradient22WithDarkBoldLeftBorder.eb
   [8]: https://raw.githubusercontent.com/Nodeclipse/EditBox/master/pm.eclipse.editbox/src/BlueLight.eb
+  [9]: https://raw.githubusercontent.com/Nodeclipse/EditBox/master/pm.eclipse.editbox/src/RainbowDropsLine.eb
 
 Hints:
 - Before modifying or importing a theme change name
