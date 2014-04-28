@@ -7,7 +7,7 @@
 	<parent>
 		<groupId>pm.eclipse.editbox</groupId>
 		<artifactId>pm.eclipse.editbox.parent</artifactId>
-		<version>0.50.0-SNAPSHOT</version>
+		<version>0.55.0-SNAPSHOT</version>
 	</parent>
 	
 	<artifactId>pm.eclipse.editbox</artifactId>

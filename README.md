@@ -24,9 +24,9 @@ UPDATE: In one day 2014-03-26 converted to git and mavenized; added RainbowDrops
 	
 For example [add Blue Light theme](https://github.com/Nodeclipse/EditBox/commit/b7ceed8f1c391b691f39ee7f45b5613651ab91ca)	
 	
-Latest released version is 0.50.0.	 
+Latest released version is 0.55.0.	 
 
-	mvn -Dtycho.mode=maven org.eclipse.tycho:tycho-versions-plugin:set-version -DnewVersion=0.50.0-SNAPSHOT
+	mvn -Dtycho.mode=maven org.eclipse.tycho:tycho-versions-plugin:set-version -DnewVersion=0.55.0-SNAPSHOT
 
 While it is nice to play with colors, there are Nodeclipse core projects to do.  
 If there are updates here, they will be released together with [Nodeclipse train](http://www.nodeclipse.org/history).
@@ -88,9 +88,9 @@ see `pm.eclipse.editbox\docs` for an example.
 
 ### Terms
 
-Provider is Category.  
+Provider `BoxProviderImpl` is Category .  
 Catalog is list of Themes.  
-Theme is set of colors.  
+Theme `BoxSettingsImpl` is set of colors .  
 
 ### Build
 
