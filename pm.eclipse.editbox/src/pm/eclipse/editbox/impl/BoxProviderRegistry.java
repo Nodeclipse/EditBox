@@ -8,6 +8,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.ui.IPartListener2;
 import org.eclipse.ui.IPartService;
 import org.eclipse.ui.IWorkbenchPart;
@@ -17,12 +18,15 @@ import pm.eclipse.editbox.IBoxDecorator;
 import pm.eclipse.editbox.IBoxProvider;
 
 /**
+ * Default settings
  * @author Piotr Metel
  * @author Paul Verest : added "RainbowDrops" and ALL_THEMES_LIST to be used in every category
  */
 public class BoxProviderRegistry {
 
-	private static final String PROIVDERS = "proivders";
+	//used to get Preferences, if changed, user preferences are gone after update
+	private static final String PROVIDERS = "proivders";  
+	// always added. Is it useless?
 	private static final String PROVIDER_ID_ = "pm.eclipse.editbox.provider.";
 	//+
 	private static final List<String> ALL_THEMES_LIST = Arrays.asList(
@@ -35,24 +39,47 @@ public class BoxProviderRegistry {
 	protected Map<IWorkbenchPart, IBoxDecorator> decorators;
 	protected Map<IPartService, IPartListener2> partListeners;
 
+	// 
 	public Collection<IBoxProvider> getBoxProviders() {
-		if (providers == null)
-			providers = loadProviders();
-		if (providers == null)
+		if (providers == null){
+			providers = loadProvidersFromPreferences();
+		}	
+		if (providers == null){
 			providers = defaultProviders();
+		}else{
+			// comparing providers from Preferences with defaultProviders
+			// can be here
+			// proivders=java,python,markup,text,js
+			// createProvider(String name)
+			//
+		}
 		return providers;
 	}
 
-	protected Collection<IBoxProvider> loadProviders() {
+	//{ like in BoxSettingsStoreImpl
+	protected IPreferenceStore store;
+	protected IPreferenceStore getStore(){
+		if (store == null)
+			store = EditBox.getDefault().getPreferenceStore();
+		return store;
+	}
+	//}
+	
+	// Preferences have string like
+	// proivders=java,python,markup,text,js
+	// calls createProvider(name)
+	protected Collection<IBoxProvider> loadProvidersFromPreferences() {
 		List<IBoxProvider> result = null;
-		String pSetting = EditBox.getDefault().getPreferenceStore().getString(PROIVDERS);
+		String pSetting = getStore().getString(PROVIDERS);
 		if (pSetting != null && pSetting.length() > 0) {
 			String[] split = pSetting.split(",");
 			if (split.length > 0)
 				result = new ArrayList<IBoxProvider>();
-			for (String s : split)
-				if (s.trim().length() > 0)
-					result.add(createProvider(s.trim()));
+			for (String s : split){
+				String name = s.trim();
+				if (name.length() > 0)
+					result.add(createProvider(name));
+			}	
 		}
 		return result;
 	}
@@ -68,7 +95,7 @@ public class BoxProviderRegistry {
 				if (sb.length()!=0) sb.append(",");
 				sb.append(p.getName());
 			}
-			EditBox.getDefault().getPreferenceStore().setValue(PROIVDERS,sb.toString());
+			getStore().setValue(PROVIDERS,sb.toString());
 		}
 	}
 	
@@ -93,14 +120,15 @@ public class BoxProviderRegistry {
 	}
 
 	/**
-	 * is used in createProviderForNameAndExtentions() and providerForName()
+	 * is used in createProviderForNameAndExtentions(), providerForName() 
+	 * and loadProviders() to load from Preferences 
 	 */
 	protected BoxProviderImpl createProvider(String name) {
 		BoxProviderImpl provider = new BoxProviderImpl();
 		provider.setId(PROVIDER_ID_ + name);
 		provider.setName(name);
 		provider.setBuilders(defaultBuilders());
-		provider.setDefaultSettingsCatalog(Arrays.asList("Default"));
+		provider.setDefaultSettingsCatalog(ALL_THEMES_LIST); // was Arrays.asList("Default")
 		return provider;
 	}
 

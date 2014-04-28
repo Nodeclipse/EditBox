@@ -82,6 +82,16 @@ Default themes for a Category are defined in `pm.eclipse.editbox\src\pm\eclipse\
 In eclipse with PDE (e.g. Enide Studio)
 open `plugin.xml` , click `Launch an Eclipse application`.
 
+Preferences are saved to file
+`<workspace>\.metadata\.plugins\org.eclipse.core.runtime\.settings\pm.eclipse.editbox.prefs`  
+see `pm.eclipse.editbox\docs` for an example. 
+
+### Terms
+
+Provider is Category.  
+Catalog is list of Themes.  
+Theme is set of colors.  
+
 ### Build
 
 `mvn package` to make update site and zip archive.
