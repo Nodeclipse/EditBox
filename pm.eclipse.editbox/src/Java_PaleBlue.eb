@@ -1,0 +1,27 @@
+#Editbox Eclipse Plugin Settings
+#by Robin Martin Fri Nov 02 13:52:36 CAT 2012 http://sourceforge.net/p/editbox/discussion/1036090/thread/b4091a55/
+HighlightOne=false
+FillGradient=true
+FillSelected=true
+RoundBox=false
+BorderColorType=0
+Name=VeryLightBlue
+ExpandBox=false
+BorderDrawLine=false
+FillOnMove=false
+Alpha=0
+HighlightWidth=1
+BorderWidth=1
+HighlightColor=ddf4ff
+BorderColor=ddf4ff
+FillKeyModifier=null
+HighlightColorType=0
+FillGradientColor=e4f1f1
+Builder=Java
+HighlightDrawLine=true
+FillSelectedColor=ffffff
+BorderLineStyle=0
+Colors=ffffff-fffff8-fffff1-ffffea-ffffe3
+HighlightLineStyle=0
+NoBackground=false
+CirculateLevelColors=false

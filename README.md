@@ -47,8 +47,6 @@ in `BoxProviderRegistry.java` "Default", "Whitebox", "RainbowDrops", "OnClick", 
 - [RainbowDrops][4] - for black background themes, e.g. Moonrise, Black by Jeeeyul, Dark in Eclipse 4.4  
 ![](https://camo.githubusercontent.com/1baa2b61ed624e6cac336a675737c280d5bddb1a/687474703a2f2f7075752e73682f3742636e442f653131373166633065652e706e67)
 
-Not yet released:
-
 - [OrangeToRed][5]
 ![](pm.eclipse.editbox/docs/OrangeToRedTheme.png)
 - [BlueToDeepBlue][6]
@@ -60,6 +58,11 @@ Not yet released:
 - [RainDropsLine][9]  
 ![](pm.eclipse.editbox/docs/RainDropsLineOnSublimeEclipseColorTheme.png)
 
+Not yet released:
+
+- [Java_PaleBlue](10) by Robin Martin
+![](pm.eclipse.editbox/docs/PaleBlueTheme.jpg)
+
   [2]: https://raw.githubusercontent.com/Nodeclipse/EditBox/master/pm.eclipse.editbox/src/Whitebox.eb
   [3]: https://raw.githubusercontent.com/Nodeclipse/EditBox/master/pm.eclipse.editbox/src/OnClick.eb
   [4]: https://raw.githubusercontent.com/Nodeclipse/EditBox/master/pm.eclipse.editbox/src/RainbowDrops.eb
@@ -68,6 +71,7 @@ Not yet released:
   [7]: https://raw.githubusercontent.com/Nodeclipse/EditBox/master/pm.eclipse.editbox/src/BlueGradient22WithDarkBoldLeftBorder.eb
   [8]: https://raw.githubusercontent.com/Nodeclipse/EditBox/master/pm.eclipse.editbox/src/BlueLight.eb
   [9]: https://raw.githubusercontent.com/Nodeclipse/EditBox/master/pm.eclipse.editbox/src/RainbowDropsLine.eb
+  [10]: https://raw.githubusercontent.com/Nodeclipse/EditBox/master/pm.eclipse.editbox/src/Java_PaleBlue.eb
 
 Hints:
 - Before modifying or importing a theme change name
