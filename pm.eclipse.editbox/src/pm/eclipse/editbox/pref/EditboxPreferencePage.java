@@ -70,7 +70,7 @@ public class EditboxPreferencePage extends PreferencePage implements IWorkbenchP
 		folder = new TabFolder(c, SWT.NONE);
 		folder.setLayoutData(new GridData(GridData.FILL_BOTH));
 		TabItem ti = new TabItem(folder, SWT.NONE);
-		ti.setText("Themes");
+		ti.setText("Categories");
 		ti.setControl(createCategoryControl(folder));
 		folder.pack();
 		return c;
@@ -81,7 +81,7 @@ public class EditboxPreferencePage extends PreferencePage implements IWorkbenchP
 		c.setLayout(new GridLayout(2, true));
 
 		Label categoryLabel = new Label(c, SWT.NONE);
-		categoryLabel.setText("Themes");
+		categoryLabel.setText("Categories");
 
 		Label namesLabel = new Label(c, SWT.NONE);
 		namesLabel.setText("Associated file names");
