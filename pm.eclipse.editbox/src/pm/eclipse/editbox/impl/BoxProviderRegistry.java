@@ -76,16 +76,7 @@ public class BoxProviderRegistry {
 	protected Collection<IBoxProvider> defaultProviders() {
 		List<IBoxProvider> result = new ArrayList<IBoxProvider>();
 		// order important (see BoxProviderImpl.supports())
-		/*
-		result.add(cppProvider());
-		result.add(javaProvider());
-		result.add(jsProvider());
-		result.add(markupProvider());
-		result.add(pythonProvider());
-		result.add(rubyProvider());
-		result.add(textProvider());
-		*/
-		//DONE 1  refactor to use this more generic method
+		// refactored to use this more generic method
 		result.add(createProviderForNameAndExtentions("c++",	Arrays.asList("*.c", "*.cpp", "*.h", "*.hpp") ) ); 
 		result.add(createProviderForNameAndExtentions("java",	Arrays.asList("*.java", "*.class", "*.groovy", "*.scala") ) );
 		result.add(createProviderForNameAndExtentions("js",		Arrays.asList("*.js", "*.jjs", "*.jshintrc", "*.mjs", "*.njs", "*.pjs", "*.vjs", "*.ts", "*.coffee", "*.dart") ) );
@@ -94,7 +85,10 @@ public class BoxProviderRegistry {
 		result.add(createProviderForNameAndExtentions("php",	Arrays.asList("*.php") ) );
 		result.add(createProviderForNameAndExtentions("python", Arrays.asList("*.py") ) );
 		result.add(createProviderForNameAndExtentions("ruby",	Arrays.asList("*.rb", "*.ruby") ) );
-		result.add(createProviderForNameAndExtentions("text",	Arrays.asList("*.txt", "*.*") ) ); // "*.*" makes default to every file
+		result.add(createProviderForNameAndExtentions("text",	Arrays.asList("*.txt", "*.") ) );
+		result.add(createProviderForNameAndExtentions("xml",	Arrays.asList("*.xml", "*.launch", "*.project", "*.classpath") ) );
+		result.add(createProviderForNameAndExtentions("exclude", Arrays.asList("*.ascii") ) );
+		result.add(createProviderForNameAndExtentions("others",	Arrays.asList("*.*") ) ); // "*.*" makes default to every file
 		return result;
 	}
 
@@ -110,7 +104,7 @@ public class BoxProviderRegistry {
 		return provider;
 	}
 
-	//DONE 1 refactor to use this more generic method
+	// refactored to use this more generic method
 	protected BoxProviderImpl createProviderForNameAndExtentions(String name, List<String> extentions) {
 		BoxProviderImpl provider = createProvider(name);
 		provider.setDefaultSettingsCatalog(ALL_THEMES_LIST);
@@ -118,67 +112,6 @@ public class BoxProviderRegistry {
 			provider.getEditorsBoxSettings().setFileNames(extentions);
 		return provider;
 	}
-	/*
-	protected BoxProviderImpl cppProvider() {
-		BoxProviderImpl provider = createProvider("c++");
-		provider.setDefaultSettingsCatalog(ALL_THEMES_LIST);
-		if (provider.getEditorsBoxSettings().getFileNames() == null)
-			provider.getEditorsBoxSettings().setFileNames(Arrays.asList("*.c", "*.cpp", "*.h", "*.hpp"));
-		return provider;
-	}
-
-	protected BoxProviderImpl javaProvider() {
-		BoxProviderImpl provider = createProvider("java");
-		provider.setDefaultSettingsCatalog(ALL_THEMES_LIST);
-		if (provider.getEditorsBoxSettings().getFileNames() == null)
-			provider.getEditorsBoxSettings().setFileNames(Arrays.asList("*.java", "*.class", "*.groovy", "*.scala"));
-		return provider;
-	}
-
-	protected BoxProviderImpl jsProvider() {
-		BoxProviderImpl provider = createProvider("js");
-		provider.setDefaultSettingsCatalog(ALL_THEMES_LIST);
-		if (provider.getEditorsBoxSettings().getFileNames() == null)
-			// as in Nodeclipse JSHint settings file com.eclipsesource.jshint.ui.prefs
-			// included=//*.jjs\://*.js\://*.jshintrc\://*.mjs\://*.njs\://*.pjs\://*.vjs			
-			provider.getEditorsBoxSettings().setFileNames(Arrays.asList(
-					"*.js", "*.jjs", "*.jshintrc", "*.mjs", "*.njs", "*.pjs", "*.vjs", "*.ts", "*.coffee"));
-		return provider;
-	}
-	
-	protected BoxProviderImpl markupProvider() {
-		BoxProviderImpl provider = createProvider("markup");
-		provider.setDefaultSettingsCatalog(ALL_THEMES_LIST);
-		if (provider.getEditorsBoxSettings().getFileNames() == null)
-			provider.getEditorsBoxSettings().setFileNames(Arrays.asList("*.*ml", "*.jsp", "*.md"));
-		return provider;
-	}
-
-	protected BoxProviderImpl pythonProvider() {
-		BoxProviderImpl provider = createProvider("python");
-		provider.setDefaultSettingsCatalog(ALL_THEMES_LIST);
-		if (provider.getEditorsBoxSettings().getFileNames() == null)
-			provider.getEditorsBoxSettings().setFileNames(Arrays.asList("*.py"));
-		return provider;
-	}
-	
-	protected BoxProviderImpl rubyProvider() {
-		BoxProviderImpl provider = createProvider("ruby");
-		provider.setDefaultSettingsCatalog(ALL_THEMES_LIST);
-		if (provider.getEditorsBoxSettings().getFileNames() == null)
-			provider.getEditorsBoxSettings().setFileNames(Arrays.asList("*.rb", "*.ruby"));
-		return provider;
-	}
-
-	protected BoxProviderImpl textProvider() {
-		BoxProviderImpl provider = createProvider("text");
-		provider.setDefaultSettingsCatalog(ALL_THEMES_LIST);
-		if (provider.getEditorsBoxSettings().getFileNames() == null)
-			provider.getEditorsBoxSettings().setFileNames(Arrays.asList("*.txt", "*.*"));
-		return provider;
-	}
-	*/
-	//}
 
 	protected Map<String, Class> defaultBuilders() {
 		Map<String, Class> result = new HashMap<String, Class>();
