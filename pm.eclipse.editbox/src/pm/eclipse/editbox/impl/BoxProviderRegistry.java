@@ -105,7 +105,7 @@ public class BoxProviderRegistry {
 		// order important (see BoxProviderImpl.supports())
 		// refactored to use this more generic method
 		result.add(createProviderForNameAndExtentions("c++",	Arrays.asList("*.c", "*.cpp", "*.h", "*.hpp") ) ); 
-		result.add(createProviderForNameAndExtentions("java",	Arrays.asList("*.java", "*.class", "*.groovy", "*.scala") ) );
+		result.add(createProviderForNameAndExtentions("java",	Arrays.asList("*.java", "*.class", "*.gradle", "*.groovy", "*.scala") ) );
 		result.add(createProviderForNameAndExtentions("js",		Arrays.asList("*.js", "*.jjs", "*.jshintrc", "*.mjs", "*.njs", "*.pjs", "*.vjs", "*.ts", "*.coffee", "*.dart") ) );
 		result.add(createProviderForNameAndExtentions("lua",	Arrays.asList("*.lua") ) );
 		result.add(createProviderForNameAndExtentions("markup", Arrays.asList("*.*ml", "*.jsp", "*.html", "*.hjs", "*.jade", "*.css", "*.less") ) );
