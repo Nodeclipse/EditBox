@@ -24,9 +24,9 @@ UPDATE: In one day 2014-03-26 converted to git and mavenized; added RainbowDrops
 	
 For example [add Blue Light theme](https://github.com/Nodeclipse/EditBox/commit/b7ceed8f1c391b691f39ee7f45b5613651ab91ca)	
 	
-Latest released version is 0.55.0.	 
+Latest released version is 0.60.0.	 
 
-	mvn -Dtycho.mode=maven org.eclipse.tycho:tycho-versions-plugin:set-version -DnewVersion=0.55.0-SNAPSHOT
+	mvn -Dtycho.mode=maven org.eclipse.tycho:tycho-versions-plugin:set-version -DnewVersion=0.60.0-SNAPSHOT
 
 While it is nice to play with colors, there are Nodeclipse core projects to do.  
 If there are updates here, they will be released together with [Nodeclipse train](http://www.nodeclipse.org/history).
@@ -57,11 +57,12 @@ in `BoxProviderRegistry.java` "Default", "Whitebox", "RainbowDrops", "OnClick", 
 ![](pm.eclipse.editbox/docs/BlueLight.PNG)
 - [RainDropsLine][9]  
 ![](pm.eclipse.editbox/docs/RainDropsLineOnSublimeEclipseColorTheme.png)
+- [Java_PaleBlue](10) by Robin Martin
+![](pm.eclipse.editbox/docs/PaleBlueTheme.jpg)
 
 Not yet released:
 
-- [Java_PaleBlue](10) by Robin Martin
-![](pm.eclipse.editbox/docs/PaleBlueTheme.jpg)
+	`<none>`
 
   [2]: https://raw.githubusercontent.com/Nodeclipse/EditBox/master/pm.eclipse.editbox/src/Whitebox.eb
   [3]: https://raw.githubusercontent.com/Nodeclipse/EditBox/master/pm.eclipse.editbox/src/OnClick.eb
