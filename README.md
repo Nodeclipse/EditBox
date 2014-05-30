@@ -50,7 +50,7 @@ in `BoxProviderRegistry.java` "Default", "Whitebox", "RainbowDrops", "OnClick", 
 
 - [OrangeToRed][5]
 ![](pm.eclipse.editbox/docs/OrangeToRedTheme.png)
-- [BlueToDeepBlue][6]
+- [BlueToDeepBlue][6]  
 ![](pm.eclipse.editbox/docs/BlueToDeepBlueTheme.png)
 - [BlueGradient22WithDarkBoldLeftBorder][7]  
 ![](pm.eclipse.editbox/docs/BlueGradient22WithDarkBoldLeftBorderTheme.png)
