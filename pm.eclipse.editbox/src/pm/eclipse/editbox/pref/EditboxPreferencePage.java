@@ -21,6 +21,7 @@ import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
@@ -34,6 +35,7 @@ import org.eclipse.ui.preferences.IWorkbenchPreferenceContainer;
 
 import pm.eclipse.editbox.EditBox;
 import pm.eclipse.editbox.IBoxProvider;
+import pm.eclipse.editbox.impl.BoxProviderRegistry;
 
 
 /**
@@ -49,6 +51,7 @@ public class EditboxPreferencePage extends PreferencePage implements IWorkbenchP
 	private Button bAddFile;
 	private boolean providersChanged;
 	
+	//+
 	public EditboxPreferencePage(){
 		super("EditBox (Nodeclipse)");
 		String pathSuffix = "icons/";
@@ -61,6 +64,10 @@ public class EditboxPreferencePage extends PreferencePage implements IWorkbenchP
 		} catch (MalformedURLException e) {
 			//e.printStackTrace();
 		}
+	}
+	
+	@Override
+	public void init(IWorkbench workbench) {
 	}
 
 	@Override
@@ -79,7 +86,7 @@ public class EditboxPreferencePage extends PreferencePage implements IWorkbenchP
 		link.setFont(new Font(getShell().getDisplay(), fontData));
 		link.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
-				IWorkbenchPreferenceContainer container= (IWorkbenchPreferenceContainer)getContainer();
+				IWorkbenchPreferenceContainer container= (IWorkbenchPreferenceContainer) getContainer();
 				container.openPage("org.eclipse.ui.preferencePages.GeneralTextEditor", null);
 			}
 		});		
@@ -92,10 +99,49 @@ public class EditboxPreferencePage extends PreferencePage implements IWorkbenchP
 		folder.pack();
 		return c;
 	}
+	
+
+	private void updateAllTabsWithSelectedTheme(String theme) {
+		IBoxProvider provider = EditBox.getDefault().getProviderRegistry().providerForName(theme);
+		
+		TabItem[] tabItemas = folder.getItems();
+		for (TabItem item: tabItemas){
+			Object obj = item.getData();
+			if (obj == null){
+				continue;
+			}
+			BoxSettingsTab bst = (BoxSettingsTab) obj;
+			bst.setProvider(provider);
+		}		
+	}
+	
 
 	protected Control createCategoryControl(Composite parent) {
 		Composite c = new Composite(parent, SWT.NONE);
 		c.setLayout(new GridLayout(2, true));
+		
+		//+ apply theme globally {
+		Label comboLabel = new Label(c, SWT.NONE);
+		comboLabel.setText("Select one of bundled themes to apply to all categories (you can refine on respective Tab)");		
+		
+		Combo combo = new Combo(c, SWT.DROP_DOWN);
+		GridData gd = new GridData(GridData.BEGINNING);
+		gd.widthHint = 150;
+		gd.horizontalSpan = 2;
+		gd.horizontalAlignment = SWT.LEFT;
+		combo.setLayoutData(gd);
+		//TODO disable text editing, only selection
+		//combo.setEnabled(false);
+		combo.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				String s = combo.getText();
+				if (s != null && s.length() > 0) {
+					updateAllTabsWithSelectedTheme(s);
+				}
+			}
+		});
+		combo.setItems(BoxProviderRegistry.ALL_THEMES_ARRAY);
+		//}
 
 		Label categoryLabel = new Label(c, SWT.NONE);
 		categoryLabel.setText("Categories");
@@ -141,38 +187,27 @@ public class EditboxPreferencePage extends PreferencePage implements IWorkbenchP
 
 	protected void loadData() {
 		Collection<IBoxProvider> boxProviders = EditBox.getDefault().getProviderRegistry().getBoxProviders();
-		for (IBoxProvider provider : boxProviders)
+		for (IBoxProvider provider : boxProviders){
 			newTab(provider.getName());
+		}
 	}
 
-	public void init(IWorkbench workbench) {
-	}
-
-	protected boolean contains(String[] items, String newText) {
-		if (items == null || items.length == 0)
-			return false;
-		for (String s : items)
-			if (s.equalsIgnoreCase(newText))
-				return true;
-		return false;
-	}
-
-	protected void newTab(String value) {
-		categoryList.add(value);
+	protected void newTab(String categoryName) {
+		categoryList.add(categoryName);
 		TabItem item = new TabItem(folder, SWT.NONE);
-		item.setText(value);
-		BoxSettingsTab p = new BoxSettingsTab();
-		IBoxProvider provider = EditBox.getDefault().getProviderRegistry().providerForName(value);
+		item.setText(categoryName);
+		BoxSettingsTab bst = new BoxSettingsTab();
+		IBoxProvider provider = EditBox.getDefault().getProviderRegistry().providerForName(categoryName);
 		//: see BoxProviderRegistry
-		item.setControl(p.createContro(folder, provider));			
-		item.setData(p);
+		item.setControl(bst.createContro(folder, provider));			
+		item.setData(bst);
 		if (categoryFiles == null)
 			categoryFiles = new LinkedHashMap<String, LinkedHashSet<String>>();
-		Collection<String> fileNames = p.getSettings().getFileNames();
+		Collection<String> fileNames = bst.getSettings().getFileNames();
 		if (fileNames == null)
 			fileNames = Collections.emptyList();
-		categoryFiles.put(value, new LinkedHashSet<String>(fileNames));
-		categoryList.setSelection(new String[] { value });
+		categoryFiles.put(categoryName, new LinkedHashSet<String>(fileNames));
+		categoryList.setSelection(new String[] { categoryName });
 		namesList.setItems(fileNames.toArray(new String[0]));
 		bAddFile.setEnabled(true);
 	}
@@ -233,6 +268,16 @@ public class EditboxPreferencePage extends PreferencePage implements IWorkbenchP
 		return true;
 	}
 
+	// used in AddCategory
+	protected boolean contains(String[] items, String newText) {
+		if (items == null || items.length == 0)
+			return false;
+		for (String s : items)
+			if (s.equalsIgnoreCase(newText))
+				return true;
+		return false;
+	}
+	
 	class AddCategory extends SelectionAdapter {
 
 		@Override

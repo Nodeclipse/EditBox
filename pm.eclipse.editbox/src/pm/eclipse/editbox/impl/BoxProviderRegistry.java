@@ -29,11 +29,10 @@ public class BoxProviderRegistry {
 	// always added. Is it useless?
 	private static final String PROVIDER_ID_ = "pm.eclipse.editbox.provider.";
 	//+
-	private static final List<String> ALL_THEMES_LIST = Arrays.asList(
-			"Default", "Whitebox", "OnClick", "GreyGradient", "Java_v_20",
-			"RainbowDrops", "RainbowDropsLine", "RainbowDropsLineFill", 
-			"BlueToDeepBlue", "OrangeToRed", "BlueGradient22WithDarkBoldLeftBorder", "BlueLight", "PaleBlue"
-			);
+	public static final String[] ALL_THEMES_ARRAY = {"Default", "Whitebox", "OnClick", "GreyGradient", "Java_v_20",
+		"RainbowDrops", "RainbowDropsLine", "RainbowDropsLineFill", 
+		"BlueToDeepBlue", "OrangeToRed", "BlueGradient22WithDarkBoldLeftBorder", "BlueLight", "PaleBlue"}; 
+	private static final List<String> ALL_THEMES_LIST = Arrays.asList(ALL_THEMES_ARRAY);
 
 	protected Collection<IBoxProvider> providers;
 	protected Map<IWorkbenchPart, IBoxDecorator> decorators;

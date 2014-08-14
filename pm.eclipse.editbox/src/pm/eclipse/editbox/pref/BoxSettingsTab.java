@@ -83,10 +83,23 @@ public class BoxSettingsTab {
 
 	public BoxSettingsTab() {
 	}
+	
+	// called from EditboxPreferencePage
+	public void setProvider(IBoxProvider provider) {
+		//this.provider = provider;		
+		
+		// as logic not clean to use object, made as inside combo widgetSelected()
+		decorator.enableUpdates(false);
+		store.load(provider.getName(), settings); 					//: get themes list
+		updateContents();
+		decorator.enableUpdates(true);
+	}
+	
 
 	/** 
 	 * Create Tab Control
 	 * */
+	// called from EditboxPreferencePage.newTab(String categoryName) 
 	public Control createContro(Composite parent, IBoxProvider provider0) {
 		provider = provider0;
 		if (provider == null) {
@@ -194,7 +207,7 @@ public class BoxSettingsTab {
 		gd.horizontalSpan = 4;
 		importConfig.setLayoutData(gd);
 		
-		newLabel(c, "Enter/select theme");
+		newLabel(c, "Rename/select theme");
 		combo = new Combo(c, SWT.DROP_DOWN);
 		gd = new GridData(GridData.BEGINNING);
 		gd.widthHint = 150;
@@ -641,7 +654,7 @@ public class BoxSettingsTab {
 		return l;
 	}
 
-
+	/** update content from settings */
 	protected void updateContents() {
 		enabled.setSelection(settings.getEnabled());
 		combo.setItems(store.getCatalog().toArray(new String[0]));
@@ -772,4 +785,5 @@ public class BoxSettingsTab {
 			store.loadDefaults(provider.getEditorsBoxSettings());
 		}
 	}
+
 }
