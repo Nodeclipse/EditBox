@@ -1,5 +1,7 @@
 package pm.eclipse.editbox.pref;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -10,6 +12,7 @@ import java.util.Map;
 import org.eclipse.jface.dialogs.IInputValidator;
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.preference.PreferencePage;
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -45,6 +48,20 @@ public class EditboxPreferencePage extends PreferencePage implements IWorkbenchP
 	private List namesList;
 	private Button bAddFile;
 	private boolean providersChanged;
+	
+	public EditboxPreferencePage(){
+		super("EditBox (Nodeclipse)");
+		String pathSuffix = "icons/";
+		URL ICON_BASE_URL = EditBox.getDefault().getBundle().getEntry(pathSuffix);
+		URL url;
+		try {
+			url = new URL(ICON_BASE_URL, "editbox.png");
+			ImageDescriptor imd = ImageDescriptor.createFromURL(url);
+			setImageDescriptor(imd);
+		} catch (MalformedURLException e) {
+			//e.printStackTrace();
+		}
+	}
 
 	@Override
 	protected Control createContents(Composite parent) {

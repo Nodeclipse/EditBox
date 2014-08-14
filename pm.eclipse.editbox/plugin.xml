@@ -41,7 +41,7 @@
 			            label="EditBox" 
 						toolbarPath="EditBox"
 						style="toggle"
-						icon="icons/editbox.gif" 
+						icon="icons/editbox.png" 
 						tooltip="Editbox on/off"  
 						class="pm.eclipse.editbox.actions.EnableEditBox"
 						definitionId="pm.eclipse.editbox.actions.EnableEditBoxCmd" >
