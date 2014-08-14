@@ -58,12 +58,8 @@ in `BoxProviderRegistry.java` "Default", "Whitebox", "RainbowDrops", "OnClick", 
 ![](pm.eclipse.editbox/docs/BlueLight.PNG)
 - [RainDropsLine][9]  
 ![](pm.eclipse.editbox/docs/RainDropsLineOnSublimeEclipseColorTheme.png)
-- [Java_PaleBlue](10) by Robin Martin
+- [PaleBlue](10) by Robin Martin
 ![](pm.eclipse.editbox/docs/PaleBlueTheme.jpg)
-
-Not yet released:
-
-	`<none>`
 
   [2]: https://raw.githubusercontent.com/Nodeclipse/EditBox/master/pm.eclipse.editbox/src/Whitebox.eb
   [3]: https://raw.githubusercontent.com/Nodeclipse/EditBox/master/pm.eclipse.editbox/src/OnClick.eb
@@ -73,7 +69,7 @@ Not yet released:
   [7]: https://raw.githubusercontent.com/Nodeclipse/EditBox/master/pm.eclipse.editbox/src/BlueGradient22WithDarkBoldLeftBorder.eb
   [8]: https://raw.githubusercontent.com/Nodeclipse/EditBox/master/pm.eclipse.editbox/src/BlueLight.eb
   [9]: https://raw.githubusercontent.com/Nodeclipse/EditBox/master/pm.eclipse.editbox/src/RainbowDropsLine.eb
-  [10]: https://raw.githubusercontent.com/Nodeclipse/EditBox/master/pm.eclipse.editbox/src/Java_PaleBlue.eb
+  [10]: https://raw.githubusercontent.com/Nodeclipse/EditBox/master/pm.eclipse.editbox/src/PaleBlue.eb
 
 Hints:
 - Before modifying or importing a theme change name
