@@ -124,7 +124,7 @@ public class EditboxPreferencePage extends PreferencePage implements IWorkbenchP
 		Label comboLabel = new Label(c, SWT.NONE);
 		comboLabel.setText("Select one of bundled themes to apply to all categories (you can refine on respective Tab)");		
 		
-		Combo combo = new Combo(c, SWT.DROP_DOWN);
+		final Combo combo = new Combo(c, SWT.DROP_DOWN);
 		GridData gd = new GridData(GridData.BEGINNING);
 		gd.widthHint = 150;
 		gd.horizontalSpan = 2;
