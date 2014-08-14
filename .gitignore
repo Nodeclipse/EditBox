@@ -1,3 +1,5 @@
 *.bak
 *~
 target
+#GFMV generated
+.*.html

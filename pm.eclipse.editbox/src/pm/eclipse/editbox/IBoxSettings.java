@@ -10,11 +10,14 @@ import org.eclipse.swt.graphics.RGB;
 
 
 
+/**
+ * Theme settings
+ */
 public interface IBoxSettings {
 	enum PropertiesKeys {
 		ALL,Enabled, Name, BorderColor, HighlightColor, BorderWidth, HighlightWidth, RoundBox, HighlightOne, FillSelected, FillSelectedColor, Builder, Colors, Color,
 		HighlightDrawLine, BorderDrawLine, FillGradient, FillGradientColor, FillOnMove, CirculateLevelColors, FillKeyModifier, FileNames, HighlightColorType, BorderColorType,
-		HighlightLineStyle,BorderLineStyle,NoBackground,ExpandBox,Alpha,
+		HighlightLineStyle, BorderLineStyle, NoBackground, ExpandBox, Alpha,
 	};
 	
 	void addPropertyChangeListener(IPropertyChangeListener listener);

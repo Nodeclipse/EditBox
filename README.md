@@ -90,8 +90,8 @@ see `pm.eclipse.editbox\docs` for an example.
 
 ### Terms
 
-Provider `BoxProviderImpl` is Category .  
 Catalog is list of Themes.  
+Provider `BoxProviderImpl` is Category . Provider is holding theme (Settings object). 
 Theme `BoxSettingsImpl` is set of colors .  
 
 ### Build
