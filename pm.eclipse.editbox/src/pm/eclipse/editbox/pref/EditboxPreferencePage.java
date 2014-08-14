@@ -1,7 +1,5 @@
 package pm.eclipse.editbox.pref;
 
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -12,7 +10,6 @@ import java.util.Map;
 import org.eclipse.jface.dialogs.IInputValidator;
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.preference.PreferencePage;
-import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -51,19 +48,9 @@ public class EditboxPreferencePage extends PreferencePage implements IWorkbenchP
 	private Button bAddFile;
 	private boolean providersChanged;
 	
-	//+
 	public EditboxPreferencePage(){
 		super("EditBox (Nodeclipse)");
-		String pathSuffix = "icons/";
-		URL ICON_BASE_URL = EditBox.getDefault().getBundle().getEntry(pathSuffix);
-		URL url;
-		try {
-			url = new URL(ICON_BASE_URL, "editbox.png");
-			ImageDescriptor imd = ImageDescriptor.createFromURL(url);
-			setImageDescriptor(imd);
-		} catch (MalformedURLException e) {
-			//e.printStackTrace();
-		}
+		setImageDescriptor(EditBox.getImageDescriptor("icons/editbox.png"));
 	}
 	
 	@Override
@@ -100,22 +87,6 @@ public class EditboxPreferencePage extends PreferencePage implements IWorkbenchP
 		return c;
 	}
 	
-
-	private void updateAllTabsWithSelectedTheme(String theme) {
-		IBoxProvider provider = EditBox.getDefault().getProviderRegistry().providerForName(theme);
-		
-		TabItem[] tabItemas = folder.getItems();
-		for (TabItem item: tabItemas){
-			Object obj = item.getData();
-			if (obj == null){
-				continue;
-			}
-			BoxSettingsTab bst = (BoxSettingsTab) obj;
-			bst.setProvider(provider);
-		}		
-	}
-	
-
 	protected Control createCategoryControl(Composite parent) {
 		Composite c = new Composite(parent, SWT.NONE);
 		c.setLayout(new GridLayout(2, true));
@@ -124,14 +95,12 @@ public class EditboxPreferencePage extends PreferencePage implements IWorkbenchP
 		Label comboLabel = new Label(c, SWT.NONE);
 		comboLabel.setText("Select one of bundled themes to apply to all categories (you can refine on respective Tab)");		
 		
-		final Combo combo = new Combo(c, SWT.DROP_DOWN);
+		final Combo combo = new Combo(c, SWT.DROP_DOWN | SWT.READ_ONLY );
 		GridData gd = new GridData(GridData.BEGINNING);
 		gd.widthHint = 150;
 		gd.horizontalSpan = 2;
 		gd.horizontalAlignment = SWT.LEFT;
 		combo.setLayoutData(gd);
-		//TODO disable text editing, only selection
-		//combo.setEnabled(false);
 		combo.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				String s = combo.getText();
@@ -180,24 +149,37 @@ public class EditboxPreferencePage extends PreferencePage implements IWorkbenchP
 		bRemoveFile.setLayoutData(new GridData(GridData.FILL_BOTH));
 		bRemoveFile.addSelectionListener(new RemoveFile());
 
-		loadData();
+		loadDataFromProviderRegistryAndCreateTabs();
 
 		return c;
+	}	
+
+	private void updateAllTabsWithSelectedTheme(String theme) {
+		IBoxProvider provider = EditBox.getDefault().getProviderRegistry().providerForName(theme);
+		
+		TabItem[] tabItemas = folder.getItems();
+		for (TabItem item: tabItemas){
+			BoxSettingsTab bst = (BoxSettingsTab) item.getData();
+			if (bst == null){
+				continue;
+			}
+			bst.setProvider(provider);
+		}		
 	}
 
-	protected void loadData() {
+	protected void loadDataFromProviderRegistryAndCreateTabs() {
 		Collection<IBoxProvider> boxProviders = EditBox.getDefault().getProviderRegistry().getBoxProviders();
 		for (IBoxProvider provider : boxProviders){
 			newTab(provider.getName());
 		}
 	}
 
-	protected void newTab(String categoryName) {
-		categoryList.add(categoryName);
+	protected void newTab(String providerName) {
+		categoryList.add(providerName);
 		TabItem item = new TabItem(folder, SWT.NONE);
-		item.setText(categoryName);
+		item.setText(providerName);
 		BoxSettingsTab bst = new BoxSettingsTab();
-		IBoxProvider provider = EditBox.getDefault().getProviderRegistry().providerForName(categoryName);
+		IBoxProvider provider = EditBox.getDefault().getProviderRegistry().providerForName(providerName);
 		//: see BoxProviderRegistry
 		item.setControl(bst.createContro(folder, provider));			
 		item.setData(bst);
@@ -206,8 +188,8 @@ public class EditboxPreferencePage extends PreferencePage implements IWorkbenchP
 		Collection<String> fileNames = bst.getSettings().getFileNames();
 		if (fileNames == null)
 			fileNames = Collections.emptyList();
-		categoryFiles.put(categoryName, new LinkedHashSet<String>(fileNames));
-		categoryList.setSelection(new String[] { categoryName });
+		categoryFiles.put(providerName, new LinkedHashSet<String>(fileNames));
+		categoryList.setSelection(new String[] { providerName });
 		namesList.setItems(fileNames.toArray(new String[0]));
 		bAddFile.setEnabled(true);
 	}
