@@ -27,10 +27,18 @@ For example [add Blue Light theme](https://github.com/Nodeclipse/EditBox/commit/
 	
 Latest released version is 0.60.0.	 
 
-	mvn -Dtycho.mode=maven org.eclipse.tycho:tycho-versions-plugin:set-version -DnewVersion=0.60.0-SNAPSHOT
+	mvn -Dtycho.mode=maven org.eclipse.tycho:tycho-versions-plugin:set-version -DnewVersion=0.65.0-SNAPSHOT
 
 While it is nice to play with colors, there are Nodeclipse core projects to do.  
 If there are updates here, they will be released together with [Nodeclipse train](http://www.nodeclipse.org/history).
+
+### History
+
+0.50
+0.55
+0.60
+0.65 (2014-08) change icon; combo to apply one of bundled themes to all categories
+	(this is done for case when switching to black themes and back)
 
 ## Themes
 
@@ -89,6 +97,17 @@ Preferences are saved to file
 see `pm.eclipse.editbox\docs` for an example. 
 
 ### Terms
+
+Looking at code and .prefs file
+
+```
+pm.eclipse.editbox.provider.java_Default=\#COMMENT\r\n\#Mon Jun 30 17\:24\:47 CST 2014\r\nHighlightOne\=false\r\nFillGradient\=false\r\nFillSelected\=true\r\nRoundBox\=true\r\nBorderColorType\=1\r\nName\=Default\r\nExpandBox\=false\r\nBorderDrawLine\=false\r\nFillOnMove\=true\r\nAlpha\=0\r\nHighlightWidth\=1\r\nBorderWidth\=1\r\nHighlightColor\=acb3b7\r\nBorderColor\=c0c0c0\r\nFillKeyModifier\=Alt\r\nHighlightColorType\=3\r\nFillGradientColor\=dadcc2\r\nBuilder\=Java\r\nHighlightDrawLine\=false\r\nFillSelectedColor\=ffffff\r\nBorderLineStyle\=2\r\nColors\=ffffff-c5d0ac-d9e3b7-e8ecd9\r\nHighlightLineStyle\=0\r\nNoBackground\=false\r\nCirculateLevelColors\=false\r\n
+pm.eclipse.editbox.provider.java_RainbowDrops=\#COMMENT\r\n\#Wed Jul 09 17\:06\:50 CST 2014\r\nHighlightOne\=true\r\nFillGradient\=false\r\nFillSelected\=false\r\nRoundBox\=false\r\nBorderColorType\=0\r\nName\=RainbowDrops\r\nExpandBox\=false\r\nBorderDrawLine\=true\r\nFillOnMove\=false\r\nAlpha\=0\r\nHighlightWidth\=1\r\nBorderWidth\=1\r\nHighlightColor\=00ff00\r\nBorderColor\=00bbbb\r\nFillKeyModifier\=Alt\r\nHighlightColorType\=0\r\nFillGradientColor\=null\r\nBuilder\=Java\r\nHighlightDrawLine\=true\r\nFillSelectedColor\=202020\r\nBorderLineStyle\=1\r\nColors\=202020-null\r\nHighlightLineStyle\=0\r\nNoBackground\=false\r\nCirculateLevelColors\=false\r\n
+pm.eclipse.editbox.provider.java_catalog=Default,Whitebox,OnClick,GreyGradient,Java_v_20,RainbowDropsLine,RainbowDropsLineFill,BlueToDeepBlue,OrangeToRed,BlueGradient22WithDarkBoldLeftBorder,BlueLight,Java_PaleBlue,RainbowDrops
+pm.eclipse.editbox.provider.java_default=RainbowDrops
+pm.eclipse.editbox.provider.java_enabled=true
+pm.eclipse.editbox.provider.java_fileNames=*.java,*.class,*.gradle,*.groovy,*.scala
+```
 
 Catalog is list of Themes.  
 Provider `BoxProviderImpl` is Category . Provider is holding theme (Settings object). 

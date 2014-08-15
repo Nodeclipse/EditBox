@@ -24,7 +24,7 @@ import pm.eclipse.editbox.IBoxProvider;
  */
 public class BoxProviderRegistry {
 
-	//used to get Preferences, if changed, user preferences are gone after update
+	//used to get Preferences, if this misspelled value is changed, user preferences are gone after update
 	private static final String PROVIDERS = "proivders";  
 	// always added. Is it useless?
 	private static final String PROVIDER_ID_ = "pm.eclipse.editbox.provider.";
@@ -46,11 +46,7 @@ public class BoxProviderRegistry {
 		if (providers == null){
 			providers = defaultProviders();
 		}else{
-			// comparing providers from Preferences with defaultProviders
-			// can be here
-			// proivders=java,python,markup,text,js
-			// createProvider(String name)
-			//
+			// comparing providers from Preferences with defaultProviders can be here
 		}
 		return providers;
 	}

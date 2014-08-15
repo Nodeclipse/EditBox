@@ -42,9 +42,9 @@ import pm.eclipse.editbox.IBoxSettingsStore;
 public class BoxSettingsTab {
 
 	protected IWorkbench workbench;
-	protected IBoxProvider provider;
+	protected IBoxProvider provider; // stored theme settings ?
 	protected IBoxSettingsStore store;
-	protected IBoxSettings settings;
+	protected IBoxSettings settings; // current theme settings ?
 	protected IBoxDecorator decorator;
 	
 	private Button enabled;
@@ -85,22 +85,28 @@ public class BoxSettingsTab {
 	}
 	
 	// called from EditboxPreferencePage
-	public void setProvider(IBoxProvider provider) {
-		//this.provider = provider;		
-		
-		// as logic not clean to use object, made as inside combo widgetSelected()
+	public void loadSettingsForName(String name){
 		decorator.enableUpdates(false);
-		store.load(provider.getName(), settings); 					//: get themes list
-		updateContents();
+		store.load(name, settings);
+		updateContentFromSettings();
 		decorator.enableUpdates(true);
 	}
+//	public void setProvider(IBoxProvider provider) {
+//	//this.provider = provider;		
+//	
+//	// as logic not clean to use object, made as inside combo widgetSelected()
+//	decorator.enableUpdates(false);
+//	store.load(provider.getName(), settings); 					//: get themes list
+//	updateContentsFromSettings();
+//	decorator.enableUpdates(true);
+//}
 	
 
 	/** 
 	 * Create Tab Control
 	 * */
 	// called from EditboxPreferencePage.newTab(String categoryName) 
-	public Control createContro(Composite parent, IBoxProvider provider0) {
+	public Control createControlsWithContent(Composite parent, IBoxProvider provider0) {
 		provider = provider0;
 		if (provider == null) {
 			Label l = new Label(parent, SWT.NONE);
@@ -111,8 +117,8 @@ public class BoxSettingsTab {
 		settings = provider.createSettings();
 		decorator = provider.createDecorator();
 		decorator.setSettings(settings);
-		Control result = createContents0(parent);
-		updateContents();
+		Control result = createControls(parent);
+		updateContentFromSettings();
 		decorator.setStyledText(st);
 		decorator.decorate(true);
 		decorator.enableUpdates(true);
@@ -130,7 +136,7 @@ public class BoxSettingsTab {
 	}
 
 
-	protected Control createContents0(Composite parent) {
+	protected Control createControls(Composite parent) {
 		int N = 6;
 		Composite c = new Composite(parent, SWT.NONE);
 		this.composite = c;
@@ -191,7 +197,7 @@ public class BoxSettingsTab {
 						newSettings.load(new FileInputStream(file));
 						newSettings.setEnabled(settings.getEnabled());
 						settings.copyFrom(newSettings);
-						updateContents();
+						updateContentFromSettings();
 					}catch(Exception ex){
 						EditBox.logError(this, "Failed to import EditBox setttings", ex);
 						MessageBox mb = new MessageBox(getShell(),SWT.ICON_ERROR);
@@ -219,10 +225,7 @@ public class BoxSettingsTab {
 			public void widgetSelected(SelectionEvent e) {
 				String s = combo.getText();
 				if (s != null && s.length() > 0) {
-					decorator.enableUpdates(false);
-					store.load(s, settings); 					//: get themes list
-					updateContents();
-					decorator.enableUpdates(true);
+					loadSettingsForName(s);
 				}
 			}
 		});
@@ -655,7 +658,7 @@ public class BoxSettingsTab {
 	}
 
 	/** update content from settings */
-	protected void updateContents() {
+	protected void updateContentFromSettings() {
 		enabled.setSelection(settings.getEnabled());
 		combo.setItems(store.getCatalog().toArray(new String[0]));
 		if (settings.getName() != null) {
@@ -746,7 +749,7 @@ public class BoxSettingsTab {
 		return gradient;
 	}
 	
-	String generateIndentText(int n){
+	private String generateIndentText(int n){
 		StringBuilder sb = new StringBuilder(); 
 		for (int i = 0;i<n;i++){
 			for (int j=0;j<i;j++)

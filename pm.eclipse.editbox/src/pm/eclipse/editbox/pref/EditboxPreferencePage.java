@@ -155,15 +155,15 @@ public class EditboxPreferencePage extends PreferencePage implements IWorkbenchP
 	}	
 
 	private void updateAllTabsWithSelectedTheme(String theme) {
-		IBoxProvider provider = EditBox.getDefault().getProviderRegistry().providerForName(theme);
-		
+		//IBoxProvider provider = EditBox.getDefault().getProviderRegistry().providerForName(theme);		
 		TabItem[] tabItemas = folder.getItems();
 		for (TabItem item: tabItemas){
 			BoxSettingsTab bst = (BoxSettingsTab) item.getData();
 			if (bst == null){
 				continue;
 			}
-			bst.setProvider(provider);
+			//bst.setProvider(provider);
+			bst.loadSettingsForName(theme);
 		}		
 	}
 
@@ -181,7 +181,7 @@ public class EditboxPreferencePage extends PreferencePage implements IWorkbenchP
 		BoxSettingsTab bst = new BoxSettingsTab();
 		IBoxProvider provider = EditBox.getDefault().getProviderRegistry().providerForName(providerName);
 		//: see BoxProviderRegistry
-		item.setControl(bst.createContro(folder, provider));			
+		item.setControl(bst.createControlsWithContent(folder, provider));			
 		item.setData(bst);
 		if (categoryFiles == null)
 			categoryFiles = new LinkedHashMap<String, LinkedHashSet<String>>();

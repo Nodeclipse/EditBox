@@ -44,9 +44,9 @@ public class EditBox extends AbstractUIPlugin {
 	}
 
 	public boolean isEnabled() {
-		if (getPreferenceStore().contains(ENABLED))
+		//if (getPreferenceStore().contains(ENABLED))
 			return getPreferenceStore().getBoolean(ENABLED);
-		return false;
+		//return false;
 	}
 	
 	public void setEnabled(boolean flag){

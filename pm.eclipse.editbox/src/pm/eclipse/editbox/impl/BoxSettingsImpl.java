@@ -18,6 +18,10 @@ import org.eclipse.swt.graphics.RGB;
 import pm.eclipse.editbox.EditBox;
 import pm.eclipse.editbox.IBoxSettings;
 
+/**
+ * Utils to handle theme, including serialization
+ *
+ */
 public class BoxSettingsImpl implements IBoxSettings {
 
 	private static final BoxSettingsImpl DEFAULT = new BoxSettingsImpl(){{
@@ -35,9 +39,10 @@ public class BoxSettingsImpl implements IBoxSettings {
 		fillKeyModifier = "Alt";
 	}};
 
+	// this is actually domain model class Theme { //TODO extract into class ?
 	protected boolean enabled;
 	protected String name;
-	protected String text;
+	protected String text; //?
 
 	protected Color borderColor;
 	protected Color highlightColor;
@@ -49,7 +54,6 @@ public class BoxSettingsImpl implements IBoxSettings {
 	protected boolean roundBox;
 	protected String builder;
 	protected Color[] boxColors;
-	protected ArrayList<IPropertyChangeListener> listeners;
 	protected boolean highlightDrawLine;
 	protected Color fillGradientColor;
 	protected boolean fillGradient;
@@ -65,6 +69,8 @@ public class BoxSettingsImpl implements IBoxSettings {
 	protected boolean noBackground;
 	protected boolean expandBox;
 	protected int alpha;
+	//}
+	protected ArrayList<IPropertyChangeListener> listeners;
 
 	private transient Color[] borderColors;
 	private transient Color[] highlightColors;

@@ -37,7 +37,7 @@ public class BoxProviderImpl implements IBoxProvider {
 
 	public IBoxSettings getEditorsBoxSettings() {
 		if (editorsSettings == null) {
-			editorsSettings = createSettings0();
+			editorsSettings = createEmptySettings();
 			getSettingsStore().loadDefaults(editorsSettings);
 			editorsSettings.addPropertyChangeListener(new IPropertyChangeListener() {
 				public void propertyChange(PropertyChangeEvent event) {
@@ -132,12 +132,12 @@ public class BoxProviderImpl implements IBoxProvider {
 	}
 	
 	public IBoxSettings createSettings() {
-		BoxSettingsImpl result = createSettings0();
+		BoxSettingsImpl result = createEmptySettings();
 		result.copyFrom(getEditorsBoxSettings());
 		return result;
 	}
 
-	protected BoxSettingsImpl createSettings0() {
+	protected BoxSettingsImpl createEmptySettings() {
 		return new BoxSettingsImpl();
 	}
 

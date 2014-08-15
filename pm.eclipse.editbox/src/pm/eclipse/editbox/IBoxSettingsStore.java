@@ -3,6 +3,10 @@ package pm.eclipse.editbox;
 import java.util.Set;
 
 
+/**
+ * How this provider is saved into several lines of Eclipse preferences
+ * see BoxSettingsStoreImpl
+ */
 public interface IBoxSettingsStore {
 
 	void setProviderId(String id);
