@@ -18,6 +18,7 @@ import pm.eclipse.editbox.IBoxProvider;
 import pm.eclipse.editbox.impl.BoxProviderRegistry;
 
 //keep it stateless since called from commands
+/** this is actually state toggler as both execute() and run() apply opposite state */
 public class EnableEditBox extends AbstractHandler implements IWorkbenchWindowActionDelegate {
 
 	public static final String COMMAND_ID = "pm.eclipse.editbox.actions.EnableEditBoxCmd";

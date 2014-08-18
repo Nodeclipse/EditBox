@@ -28,11 +28,24 @@ public class BoxProviderRegistry {
 	private static final String PROVIDERS = "proivders";  
 	// always added. Is it useless?
 	private static final String PROVIDER_ID_ = "pm.eclipse.editbox.provider.";
-	//+
+	//+ {
 	public static final String[] ALL_THEMES_ARRAY = {"Default", "Whitebox", "OnClick", "GreyGradient", "Java_v_20",
 		"RainbowDrops", "RainbowDropsLine", "RainbowDropsLineFill", 
 		"BlueToDeepBlue", "OrangeToRed", "BlueGradient22WithDarkBoldLeftBorder", "BlueLight", "PaleBlue"}; 
 	private static final List<String> ALL_THEMES_LIST = Arrays.asList(ALL_THEMES_ARRAY);
+	public static final String DEFAULT_THEME = "PaleBlue";
+	
+	/** return index within ALL_THEMES_ARRAY or -1 if not found */
+	public static int getThemeIndex(String preferedThemeName) {
+		for (int i = 0; i<ALL_THEMES_ARRAY.length; i++){
+			if (ALL_THEMES_ARRAY[i].equalsIgnoreCase(preferedThemeName)){
+				return i;
+			}
+		}
+		return -1; 
+	}
+	//}
+	
 
 	protected Collection<IBoxProvider> providers;
 	protected Map<IWorkbenchPart, IBoxDecorator> decorators;
@@ -99,7 +112,7 @@ public class BoxProviderRegistry {
 		List<IBoxProvider> result = new ArrayList<IBoxProvider>();
 		// order important (see BoxProviderImpl.supports())
 		// refactored to use this more generic method
-		result.add(createProviderForNameAndExtentions("c++",	Arrays.asList("*.c", "*.cpp", "*.h", "*.hpp") ) ); 
+		result.add(createProviderForNameAndExtentions("c++",	Arrays.asList("*.c", "*.cpp", "*.h", "*.hpp", "*.go") ) ); 
 		result.add(createProviderForNameAndExtentions("java",	Arrays.asList("*.java", "*.class", "*.gradle", "*.groovy", "*.scala") ) );
 		result.add(createProviderForNameAndExtentions("js",		Arrays.asList("*.js", "*.jjs", "*.jshintrc", "*.mjs", "*.njs", "*.pjs", "*.vjs", "*.ts", "*.coffee", "*.dart") ) );
 		result.add(createProviderForNameAndExtentions("lua",	Arrays.asList("*.lua") ) );
@@ -215,4 +228,5 @@ public class BoxProviderRegistry {
 		if (oldListener != null)
 			partService.removePartListener(oldListener);
 	}
+
 }

@@ -19,6 +19,7 @@ import pm.eclipse.editbox.EditBox;
 
 public class EditBoxStartup implements IStartup {
 
+	@Override
 	public void earlyStartup() {
 		if (!EditBox.getDefault().isEnabled())
 			return;
@@ -37,7 +38,8 @@ public class EditBoxStartup implements IStartup {
 					if (handlerService != null)
 						try {
 							handlerService.executeCommand(new ParameterizedCommand(command, null), null);
-							toggle(window);
+							EditBox.toggleToolBarItem(window, true);
+							//EditBox.toggleToolBarItemInAllWindows(enabled); //no need as there is to be only one window
 						} catch (Exception e) {
 							EditBox.logError(this, "Failed to enable EditBox at startup", e);
 						}
@@ -45,25 +47,6 @@ public class EditBoxStartup implements IStartup {
 			}
 
 		});
-	}
-
-	protected void toggle(IWorkbenchWindow window) {
-		// any better way to toggle toolbar button in 3.2?
-		if (window instanceof ApplicationWindow) {
-			CoolBarManager coolBarManager = ((ApplicationWindow) window).getCoolBarManager();
-			if (coolBarManager != null) {
-				IContributionItem item = coolBarManager.find("pm.eclipse.editbox.ActionSetId");
-				if (item instanceof ToolBarContributionItem) {
-					IToolBarManager tbMgr2 = ((ToolBarContributionItem) item).getToolBarManager();
-					if (tbMgr2 != null) {
-						IContributionItem item2 = tbMgr2.find("pm.eclipse.editbox.EnableEditboxActionId");
-						if (item2 instanceof ActionContributionItem) {
-							((ActionContributionItem) item2).getAction().setChecked(true);
-						}
-					}
-				}
-			}
-		}
 	}
 
 }

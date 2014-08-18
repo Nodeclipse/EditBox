@@ -37,7 +37,9 @@ If there are updates here, they will be released together with [Nodeclipse train
 0.50
 0.55
 0.60
-0.65 (2014-08) change icon; combo to apply one of bundled themes to all categories
+0.65 (2014-08) change icon; 
+	Checkbox "Plugin enabled";
+	combo to apply one of bundled themes to all categories	
 	(this is done for case when switching to black themes and back)
 
 ## Themes
@@ -109,9 +111,12 @@ pm.eclipse.editbox.provider.java_enabled=true
 pm.eclipse.editbox.provider.java_fileNames=*.java,*.class,*.gradle,*.groovy,*.scala
 ```
 
-Catalog is list of Themes.  
-Provider `BoxProviderImpl` is Category . Provider is holding theme (Settings object). 
-Theme `BoxSettingsImpl` is set of colors .  
+
+Theme `BoxSettingsImpl` is set of colors .
+Provider is theme applied to some category. Provider is holding current theme (Settings object).
+Provider `BoxProviderImpl` is associated with category String (aka Provider name).  
+Catalog is list of Themes, that provider has.  
+
 
 ### Build
 

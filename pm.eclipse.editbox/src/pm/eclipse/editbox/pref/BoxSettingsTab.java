@@ -150,10 +150,9 @@ public class BoxSettingsTab {
 		enabled = new Button(c, SWT.CHECK);
 		GridData gd = new GridData();
 		enabled.setLayoutData(gd);
-		enabled.setText("Enabled");
+		enabled.setText("Provider enabled");
 		enabled.setAlignment(SWT.RIGHT);
 		enabled.addSelectionListener(new SelectionAdapter() {
-
 			public void widgetSelected(SelectionEvent e) {
 				settings.setEnabled(enabled.getSelection());
 			}
