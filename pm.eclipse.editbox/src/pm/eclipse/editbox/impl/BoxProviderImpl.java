@@ -17,29 +17,32 @@ import pm.eclipse.editbox.IBoxDecorator;
 import pm.eclipse.editbox.IBoxProvider;
 import pm.eclipse.editbox.IBoxSettings;
 
+/**
+ * Provider
+ */
 public class BoxProviderImpl implements IBoxProvider {
 
 	protected String id;
 	protected String name;
-	protected IBoxSettings editorsSettings;
-	protected BoxSettingsStoreImpl settingsStore;
+	protected IBoxSettings theme;
+	protected BoxSettingsStoreImpl providerStore;
 	protected Map<String,Class> builders;
 	protected Collection<String> defaultSettingsCatalog;
 	private ArrayList<Matcher> matchers;
 
 	public BoxSettingsStoreImpl getSettingsStore() {
-		if (settingsStore == null) {
-			settingsStore = createSettingsStore();
-			settingsStore.setProviderId(id);
+		if (providerStore == null) {
+			providerStore = createSettingsStore();
+			providerStore.setProviderId(id);
 		}
-		return settingsStore;
+		return providerStore;
 	}
 
 	public IBoxSettings getEditorsBoxSettings() {
-		if (editorsSettings == null) {
-			editorsSettings = createEmptySettings();
-			getSettingsStore().loadDefaults(editorsSettings);
-			editorsSettings.addPropertyChangeListener(new IPropertyChangeListener() {
+		if (theme == null) {
+			theme = createEmptySettings();
+			getSettingsStore().loadDefaults(theme);
+			theme.addPropertyChangeListener(new IPropertyChangeListener() {
 				public void propertyChange(PropertyChangeEvent event) {
 					String p = event.getProperty();
 					if (p!=null && (p.equals(IBoxSettings.PropertiesKeys.FileNames.name()) || 
@@ -47,7 +50,7 @@ public class BoxProviderImpl implements IBoxProvider {
 						matchers = null;
 				}});
 		}
-		return editorsSettings;
+		return theme;
 	}
 
 	public IBoxDecorator decorate(IWorkbenchPart editorPart) {
@@ -122,9 +125,9 @@ public class BoxProviderImpl implements IBoxProvider {
 
 
 	protected BoxSettingsStoreImpl createSettingsStore() {
-		BoxSettingsStoreImpl result = new BoxSettingsStoreImpl();
-		result.setDefaultSettingsCatalog(defaultSettingsCatalog);
-		return result;
+		BoxSettingsStoreImpl pstore = new BoxSettingsStoreImpl();
+		pstore.setDefaultSettingsCatalog(defaultSettingsCatalog);
+		return pstore;
 	}
 	
 	public void setDefaultSettingsCatalog(Collection<String> cat){
@@ -132,9 +135,9 @@ public class BoxProviderImpl implements IBoxProvider {
 	}
 	
 	public IBoxSettings createSettings() {
-		BoxSettingsImpl result = createEmptySettings();
-		result.copyFrom(getEditorsBoxSettings());
-		return result;
+		BoxSettingsImpl theme = createEmptySettings();
+		theme.copyFrom(getEditorsBoxSettings());
+		return theme;
 	}
 
 	protected BoxSettingsImpl createEmptySettings() {
@@ -142,9 +145,9 @@ public class BoxProviderImpl implements IBoxProvider {
 	}
 
 	public IBoxDecorator createDecorator() {
-		BoxDecoratorImpl result = new BoxDecoratorImpl();
-		result.setProvider(this);
-		return result;
+		BoxDecoratorImpl decorator = new BoxDecoratorImpl();
+		decorator.setProvider(this);
+		return decorator;
 	}
 
 	public Collection<String> getBuilders() {

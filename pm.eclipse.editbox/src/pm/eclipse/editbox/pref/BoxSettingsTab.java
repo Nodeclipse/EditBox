@@ -43,8 +43,8 @@ public class BoxSettingsTab {
 
 	protected IWorkbench workbench;
 	protected IBoxProvider provider; // stored theme settings ?
-	protected IBoxSettingsStore store;
-	protected IBoxSettings settings; // current theme settings ?
+	protected IBoxSettingsStore providerStore;
+	protected IBoxSettings theme; // current theme settings ?
 	protected IBoxDecorator decorator;
 	
 	private Button enabled;
@@ -84,24 +84,6 @@ public class BoxSettingsTab {
 	public BoxSettingsTab() {
 	}
 	
-	// called from EditboxPreferencePage
-	public void loadSettingsForName(String name){
-		decorator.enableUpdates(false);
-		store.load(name, settings);
-		updateContentFromSettings();
-		decorator.enableUpdates(true);
-	}
-//	public void setProvider(IBoxProvider provider) {
-//	//this.provider = provider;		
-//	
-//	// as logic not clean to use object, made as inside combo widgetSelected()
-//	decorator.enableUpdates(false);
-//	store.load(provider.getName(), settings); 					//: get themes list
-//	updateContentsFromSettings();
-//	decorator.enableUpdates(true);
-//}
-	
-
 	/** 
 	 * Create Tab Control
 	 * */
@@ -113,22 +95,22 @@ public class BoxSettingsTab {
 			l.setText("Error - cannot make configuration");
 			return l;
 		}
-		store = provider.getSettingsStore();
-		settings = provider.createSettings();
+		providerStore = provider.getSettingsStore();
+		theme = provider.createSettings();
 		decorator = provider.createDecorator();
-		decorator.setSettings(settings);
+		decorator.setSettings(theme);
 		Control result = createControls(parent);
-		updateContentFromSettings();
+		updateContentFromTheme();
 		decorator.setStyledText(st);
 		decorator.decorate(true);
 		decorator.enableUpdates(true);
-		settings.addPropertyChangeListener(new IPropertyChangeListener() {
+		theme.addPropertyChangeListener(new IPropertyChangeListener() {
 			public void propertyChange(PropertyChangeEvent event) {
 				changed = true;
 				if (event.getProperty().equals(IBoxSettings.PropertiesKeys.Color.name()))
 					updateFromToColors();
 				
-				provider.getEditorsBoxSettings().copyFrom(settings);
+				provider.getEditorsBoxSettings().copyFrom(theme);
 			}
 		});
 		
@@ -150,11 +132,11 @@ public class BoxSettingsTab {
 		enabled = new Button(c, SWT.CHECK);
 		GridData gd = new GridData();
 		enabled.setLayoutData(gd);
-		enabled.setText("Provider enabled");
+		enabled.setText("Enabled");
 		enabled.setAlignment(SWT.RIGHT);
 		enabled.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
-				settings.setEnabled(enabled.getSelection());
+				theme.setEnabled(enabled.getSelection());
 			}
 		});
 		
@@ -162,13 +144,13 @@ public class BoxSettingsTab {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				FileDialog dialog = new FileDialog(getShell(), SWT.SAVE);
-				dialog.setFileName(settings.getName());
+				dialog.setFileName(theme.getName());
 				dialog.setFilterExtensions(new String[]{"*.eb"});
 				dialog.setText("Editbox settings");
 				String file = dialog.open();
 				if(file != null) {
 					try{
-						settings.export(new FileOutputStream(file));
+						theme.export(new FileOutputStream(file));
 					}catch(Exception ex){
 						EditBox.logError(this, "Failed to export EditBox setttings", ex);
 						MessageBox mb = new MessageBox(getShell(),SWT.ICON_ERROR);
@@ -186,7 +168,7 @@ public class BoxSettingsTab {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				FileDialog dialog = new FileDialog(getShell(), SWT.OPEN);
-				dialog.setFileName(settings.getName());
+				dialog.setFileName(theme.getName());
 				dialog.setFilterExtensions(new String[]{"*.eb"});
 				dialog.setText("Editbox settings");
 				String file = dialog.open();
@@ -194,9 +176,9 @@ public class BoxSettingsTab {
 					try{
 						IBoxSettings newSettings = provider.createSettings();
 						newSettings.load(new FileInputStream(file));
-						newSettings.setEnabled(settings.getEnabled());
-						settings.copyFrom(newSettings);
-						updateContentFromSettings();
+						newSettings.setEnabled(theme.getEnabled());
+						theme.copyFrom(newSettings);
+						updateContentFromTheme();
 					}catch(Exception ex){
 						EditBox.logError(this, "Failed to import EditBox setttings", ex);
 						MessageBox mb = new MessageBox(getShell(),SWT.ICON_ERROR);
@@ -239,7 +221,7 @@ public class BoxSettingsTab {
 					int si = combo.indexOf(t);
 					if (si > -1) {
 						combo.remove(si);
-						store.remove(t);
+						providerStore.remove(t);
 					} else {
 						combo.setText("");
 					}
@@ -265,7 +247,7 @@ public class BoxSettingsTab {
 		borderLineStyle = newCombo(c1, new String[]{"Solid","Dot","Dash","DashDot", "DashDotDot"}, new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				settings.setBorderLineStyle(borderLineStyle.getSelectionIndex());
+				theme.setBorderLineStyle(borderLineStyle.getSelectionIndex());
 			}
 		});
 		borderLineStyle.select(0);
@@ -282,7 +264,7 @@ public class BoxSettingsTab {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				int idx = borderColorType.getSelectionIndex();
-				settings.setBorderColorType(idx);
+				theme.setBorderColorType(idx);
 				borderColorSelector.getButton().setEnabled(idx == 0);
 			}
 		});
@@ -291,7 +273,7 @@ public class BoxSettingsTab {
 		borderColorSelector = new ColorSelector(c);
 		borderColorSelector.addListener(new IPropertyChangeListener() {
 			public void propertyChange(PropertyChangeEvent event) {
-				settings.setBorderRGB(borderColorSelector.getColorValue());
+				theme.setBorderRGB(borderColorSelector.getColorValue());
 			}
 		});
 		
@@ -301,7 +283,7 @@ public class BoxSettingsTab {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				settings.setBorderWidth(borderWidth.getSelectionIndex());
+				theme.setBorderWidth(borderWidth.getSelectionIndex());
 			}
 		});
 
@@ -310,7 +292,7 @@ public class BoxSettingsTab {
 		bordertDrawLine.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				settings.setBorderDrawLine(bordertDrawLine.getSelection());
+				theme.setBorderDrawLine(bordertDrawLine.getSelection());
 			}
 		});
 		
@@ -333,7 +315,7 @@ public class BoxSettingsTab {
 		highlightLineStyle = newCombo(c3, new String[]{"Solid","Dot","Dash","DashDot", "DashDotDot"}, new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				settings.setHighlightLineStyle(highlightLineStyle.getSelectionIndex());
+				theme.setHighlightLineStyle(highlightLineStyle.getSelectionIndex());
 			}
 		});
 		highlightLineStyle.select(0);
@@ -351,7 +333,7 @@ public class BoxSettingsTab {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				int idx = highlightColorType.getSelectionIndex();
-				settings.setHighlightColorType(idx);
+				theme.setHighlightColorType(idx);
 				highlightColorSelector.getButton().setEnabled(idx == 0);
 			}
 		});
@@ -360,7 +342,7 @@ public class BoxSettingsTab {
 		highlightColorSelector = new ColorSelector(c);
 		highlightColorSelector.addListener(new IPropertyChangeListener() {
 			public void propertyChange(PropertyChangeEvent event) {
-				settings.setHighlightRGB(highlightColorSelector.getColorValue());
+				theme.setHighlightRGB(highlightColorSelector.getColorValue());
 			}
 		});
 
@@ -370,7 +352,7 @@ public class BoxSettingsTab {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				settings.setHighlightWidth(highlightWidth.getSelectionIndex());
+				theme.setHighlightWidth(highlightWidth.getSelectionIndex());
 			}
 		});
 
@@ -379,7 +361,7 @@ public class BoxSettingsTab {
 		highlightDrawLine.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				settings.setHighlightDrawLine(highlightDrawLine.getSelection());
+				theme.setHighlightDrawLine(highlightDrawLine.getSelection());
 			}
 		});
 
@@ -389,10 +371,10 @@ public class BoxSettingsTab {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				settings.setRoundBox(roundBox.getSelection());
+				theme.setRoundBox(roundBox.getSelection());
 				if (roundBox.getSelection()){
 					fillGradient.setSelection(false);
-					settings.setFillGradient(false);
+					theme.setFillGradient(false);
 				}
 			}
 		});
@@ -402,7 +384,7 @@ public class BoxSettingsTab {
 		highlightOne.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				settings.setHighlightOne(highlightOne.getSelection());
+				theme.setHighlightOne(highlightOne.getSelection());
 			}
 		});
 
@@ -411,7 +393,7 @@ public class BoxSettingsTab {
 		eolBox.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				settings.setExpandBox(eolBox.getSelection());
+				theme.setExpandBox(eolBox.getSelection());
 			}
 		});
 
@@ -424,7 +406,7 @@ public class BoxSettingsTab {
 		noBackground.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				settings.setNoBackground(noBackground.getSelection());
+				theme.setNoBackground(noBackground.getSelection());
 			}
 		});
 
@@ -438,14 +420,14 @@ public class BoxSettingsTab {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				settings.setFillSelected(fillSelected.getSelection());
+				theme.setFillSelected(fillSelected.getSelection());
 			}
 		});
 		
 		fillSelectedColor = new ColorSelector(c);
 		fillSelectedColor.addListener(new IPropertyChangeListener() {
 			public void propertyChange(PropertyChangeEvent e) {
-				settings.setFillSelectedRGB(fillSelectedColor.getColorValue());
+				theme.setFillSelectedRGB(fillSelectedColor.getColorValue());
 			}
 		});
 		fillSelectedColor.getButton().setLayoutData(new GridData(GridData.BEGINNING));
@@ -455,7 +437,7 @@ public class BoxSettingsTab {
 		fillOnMove.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				settings.setFillOnMove(fillOnMove.getSelection());
+				theme.setFillOnMove(fillOnMove.getSelection());
 			}
 		});
 
@@ -466,7 +448,7 @@ public class BoxSettingsTab {
 
 		fillKey = newCombo(c, new String[]{"","Alt","Ctrl","Shift"}, new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
-				settings.setFillKeyModifier(fillKey.getText());
+				theme.setFillKeyModifier(fillKey.getText());
 			}
 		});
 		
@@ -476,10 +458,10 @@ public class BoxSettingsTab {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				settings.setFillGradient(fillGradient.getSelection());
+				theme.setFillGradient(fillGradient.getSelection());
 				if (fillGradient.getSelection()) {
 					roundBox.setSelection(false);
-					settings.setRoundBox(false);
+					theme.setRoundBox(false);
 				}
 			}
 		});
@@ -488,7 +470,7 @@ public class BoxSettingsTab {
 		fillGradientColor.addListener(new IPropertyChangeListener() {
 			
 			public void propertyChange(PropertyChangeEvent event) {
-				settings.setFillGradientColorRGB(fillGradientColor.getColorValue());				
+				theme.setFillGradientColorRGB(fillGradientColor.getColorValue());				
 			}
 		}); 
 
@@ -512,7 +494,7 @@ public class BoxSettingsTab {
 			public void widgetSelected(SelectionEvent e) {
 				int alpha = scale.getSelection() * 255/100;
 				spinner.setSelection(alpha);
-				settings.setAlpha(alpha);
+				theme.setAlpha(alpha);
 			}
 		});
 		
@@ -524,7 +506,7 @@ public class BoxSettingsTab {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				scale.setSelection(spinner.getSelection() * 100/255);
-				settings.setAlpha(spinner.getSelection());
+				theme.setAlpha(spinner.getSelection());
 			}
 		});
 		
@@ -537,8 +519,8 @@ public class BoxSettingsTab {
 				new SelectionAdapter() { // EditBox helps to signal that there are too long strings
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				settings.setColorsSize(levels.getSelectionIndex());
-				st.setText(generateIndentText(settings.getColorsSize() +1));
+				theme.setColorsSize(levels.getSelectionIndex());
+				st.setText(generateIndentText(theme.getColorsSize() +1));
 			}
 		});
 
@@ -547,7 +529,7 @@ public class BoxSettingsTab {
 		circulateColors.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				settings.setCirculateLevelColors(circulateColors.getSelection());
+				theme.setCirculateLevelColors(circulateColors.getSelection());
 			}
 		});
 		
@@ -565,7 +547,7 @@ public class BoxSettingsTab {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				settings.setBuilder(builderCombo.getText());
+				theme.setBuilder(builderCombo.getText());
 			}
 		});
 
@@ -601,10 +583,10 @@ public class BoxSettingsTab {
 			public void widgetSelected(SelectionEvent e) {
 				if (fromColorLab.getColorValue() == null || toColorLab.getColorValue()==null)
 					return;
-				Color[] colors = settings.getColors();
+				Color[] colors = theme.getColors();
 				if (colors == null || colors.length < 2)
 					return;
-				settings.setColorsRGB(rgbGradient(colors));
+				theme.setColorsRGB(rgbGradient(colors));
 			}
 		});
 
@@ -655,58 +637,67 @@ public class BoxSettingsTab {
 			l.setBackground(new Color(null, bc.getRGB()));
 		return l;
 	}
+	
+	// called from EditboxPreferencePage
+	public void loadSettingsForName(String name){
+		decorator.enableUpdates(false);
+		providerStore.load(name, theme);
+		updateContentFromTheme();
+		decorator.enableUpdates(true);
+	}
 
 	/** update content from settings */
-	protected void updateContentFromSettings() {
-		enabled.setSelection(settings.getEnabled());
-		combo.setItems(store.getCatalog().toArray(new String[0]));
-		if (settings.getName() != null) {
-			int idx = combo.indexOf(settings.getName());
+	protected void updateContentFromTheme() {
+		enabled.setSelection(theme.getEnabled()); // enable is applied from provider!
+		
+		combo.setItems(providerStore.getCatalog().toArray(new String[0]));
+		if (theme.getName() != null) {
+			int idx = combo.indexOf(theme.getName());
 			if (idx > -1)
 				combo.select(idx);
-			else combo.setText(settings.getName());
+			else combo.setText(theme.getName());
 		}
-		if (settings.getBorderColor() != null)
-			borderColorSelector.setColorValue(settings.getBorderColor().getRGB());
-		borderWidth.select(settings.getBorderWidth());
-		roundBox.setSelection(settings.getRoundBox());
-		if (settings.getHighlightColor() != null)
-			highlightColorSelector.setColorValue(settings.getHighlightColor().getRGB());
-		highlightWidth.select(settings.getHighlightWidth());
-		highlightOne.setSelection(settings.getHighlightOne());
-		fillSelected.setSelection(settings.getFillSelected());
-		if (settings.getFillSelectedColor() != null)
-			fillSelectedColor.setColorValue(settings.getFillSelectedColor().getRGB());
+		if (theme.getBorderColor() != null)
+			borderColorSelector.setColorValue(theme.getBorderColor().getRGB());
+		borderWidth.select(theme.getBorderWidth());
+		roundBox.setSelection(theme.getRoundBox());
+		if (theme.getHighlightColor() != null)
+			highlightColorSelector.setColorValue(theme.getHighlightColor().getRGB());
+		highlightWidth.select(theme.getHighlightWidth());
+		highlightOne.setSelection(theme.getHighlightOne());
+		fillSelected.setSelection(theme.getFillSelected());
+		if (theme.getFillSelectedColor() != null)
+			fillSelectedColor.setColorValue(theme.getFillSelectedColor().getRGB());
 		builderCombo.setItems(provider.getBuilders().toArray(new String[0]));
 		int i = -1;
-		if (settings.getBuilder() != null)
-			i = builderCombo.indexOf(settings.getBuilder());
+		if (theme.getBuilder() != null)
+			i = builderCombo.indexOf(theme.getBuilder());
 		builderCombo.select(i == -1 ? 0 : i);
-		st.setText(generateIndentText(settings.getColorsSize() +1));
+		st.setText(generateIndentText(theme.getColorsSize() +1));
 		updateFromToColors();
-		bordertDrawLine.setSelection(settings.getBorderDrawLine());
-		highlightDrawLine.setSelection(settings.getHighlightDrawLine());
-		fillGradient.setSelection(settings.getFillGradient());
-		if (settings.getFillGradientColor() != null)
-			fillGradientColor.setColorValue(settings.getFillGradientColor().getRGB());
-		fillOnMove.setSelection(settings.getFillOnMove());
-		circulateColors.setSelection(settings.getCirculateLevelColors());
-		levels.select(settings.getColorsSize());
-		fillKey.setText(settings.getFillKeyModifier()==null?"":settings.getFillKeyModifier());
-		borderColorType.select(settings.getBorderColorType());
-		highlightColorType.select(settings.getHighlightColorType());
-		highlightColorSelector.getButton().setEnabled(settings.getHighlightColorType() == 0);
-		borderColorSelector.getButton().setEnabled(settings.getBorderColorType() == 0);
-		borderLineStyle.select(settings.getBorderLineStyle());
-		highlightLineStyle.select(settings.getHighlightLineStyle());
-		noBackground.setSelection(settings.getNoBackground());
-		eolBox.setSelection(settings.getExpandBox());
-		spinner.setSelection(settings.getAlpha());
-		scale.setSelection(settings.getAlpha() * 100/255);
+		bordertDrawLine.setSelection(theme.getBorderDrawLine());
+		highlightDrawLine.setSelection(theme.getHighlightDrawLine());
+		fillGradient.setSelection(theme.getFillGradient());
+		if (theme.getFillGradientColor() != null)
+			fillGradientColor.setColorValue(theme.getFillGradientColor().getRGB());
+		fillOnMove.setSelection(theme.getFillOnMove());
+		circulateColors.setSelection(theme.getCirculateLevelColors());
+		levels.select(theme.getColorsSize());
+		fillKey.setText(theme.getFillKeyModifier()==null?"":theme.getFillKeyModifier());
+		borderColorType.select(theme.getBorderColorType());
+		highlightColorType.select(theme.getHighlightColorType());
+		highlightColorSelector.getButton().setEnabled(theme.getHighlightColorType() == 0);
+		borderColorSelector.getButton().setEnabled(theme.getBorderColorType() == 0);
+		borderLineStyle.select(theme.getBorderLineStyle());
+		highlightLineStyle.select(theme.getHighlightLineStyle());
+		noBackground.setSelection(theme.getNoBackground());
+		eolBox.setSelection(theme.getExpandBox());
+		spinner.setSelection(theme.getAlpha());
+		scale.setSelection(theme.getAlpha() * 100/255);
 	}
 
 	private void updateFromToColors() {
-		Color[] c = settings.getColors();
+		Color[] c = theme.getColors();
 		if (c != null && c.length > 1) {
 			updateBackground(fromColorLab, c[0]);
 			updateBackground(toColorLab, c[c.length - 1]);
@@ -727,8 +718,8 @@ public class BoxSettingsTab {
 	}
 
 	public void dispose() {
-		if (settings != null)
-			settings.dispose();
+		if (theme != null)
+			theme.dispose();
 	}
 
 	private RGB[] rgbGradient(Color[] c) {
@@ -764,12 +755,12 @@ public class BoxSettingsTab {
 	}
 
 	public IBoxSettings getSettings() {
-		return settings;
+		return theme;
 	}
 
 	public String validate() {
-		settings.setName(combo.getText());
-		if (settings.getName() == null || settings.getName().length() == 0) {
+		theme.setName(combo.getText());
+		if (theme.getName() == null || theme.getName().length() == 0) {
 			return "Enter configuration name";
 		}
 		return null;
@@ -777,14 +768,14 @@ public class BoxSettingsTab {
 
 	public void save() {
 		if (changed) {
-			store.saveDefaults(settings);
-			provider.getEditorsBoxSettings().copyFrom(settings);
+			providerStore.saveDefaults(theme);
+			provider.getEditorsBoxSettings().copyFrom(theme);
 		}
 	}
 
 	public void cancel() {
 		if (changed) {
-			store.loadDefaults(provider.getEditorsBoxSettings());
+			providerStore.loadDefaults(provider.getEditorsBoxSettings());
 		}
 	}
 

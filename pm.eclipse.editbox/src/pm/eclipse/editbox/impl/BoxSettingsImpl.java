@@ -76,7 +76,6 @@ public class BoxSettingsImpl implements IBoxSettings {
 	private transient Color[] highlightColors;
 
 
-
 	public void copyFrom(IBoxSettings other) {
 		BoxSettingsImpl o = (BoxSettingsImpl) other;
 		name = o.getName();
@@ -138,38 +137,6 @@ public class BoxSettingsImpl implements IBoxSettings {
 		if (old != null)
 			old.dispose();
 		return newColor == null ? null : new Color(null, newColor.getRGB());
-	}
-
-	public String export() {
-		return new StringExternalization().export(this);
-	}
-
-	public void load(String string) {
-		StringExternalization ext = new StringExternalization();
-		boolean error = false;
-		if (string != null)
-			try {
-				ext.load(string, this);
-			} catch (Exception e) {
-				EditBox.logError(this, "Cannot load EditBox settings from string: "+string, e);
-				error = true;
-			}
-		if (error || string == null) {
-			this.copyFrom(DEFAULT);
-		}
-		notifyChange(PropertiesKeys.ALL.name(), null, null);
-	}
-
-	public void export(OutputStream stream) throws Exception{
-		new StringExternalization().export(stream,this);
-	}
-
-	public void load(InputStream stream) throws Exception{
-		if (stream==null) 
-			load((String)null);
-		else
-			new StringExternalization().load(stream,this);
-		notifyChange(PropertiesKeys.ALL.name(), null, null);
 	}
 
 	public boolean getEnabled() {
@@ -533,34 +500,86 @@ public class BoxSettingsImpl implements IBoxSettings {
 			return SWT.SHIFT;
 		return 0;
 	}
+	
+	//save/restore related {
+	private StringExternalization ext = new StringExternalization();	
+	
+	public String export() {
+		return ext.exportToString(this);
+	}
+	public void export(OutputStream stream) throws Exception{
+		ext.export(stream,this);
+	}
 
+	public void load(String string) {
+		//StringExternalization ext = new StringExternalization();
+		boolean error = false;
+		if (string != null){			
+			try {
+				ext.loadFromString(string, this);
+			} catch (Exception e) {
+				EditBox.logError(this, "Cannot load EditBox settings from string: "+string, e);
+				error = true;
+			}
+		}
+		if (error || string == null) {
+			this.copyFrom(DEFAULT);
+		}
+		notifyChange(PropertiesKeys.ALL.name(), null, null);
+	}
+	public void load(InputStream stream) throws Exception{
+		if (stream==null) 
+			load((String)null);
+		else
+			ext.loadFromStream(stream,this);
+		notifyChange(PropertiesKeys.ALL.name(), null, null);
+	}
+
+	// could have all methods static, but it just has too many methods to change
+	/**
+	 * using Properties store and load methods
+	 */
 	class StringExternalization {
 
 		private static final String COMMENT = "Editbox Eclipse Plugin Settings";
 
-		public String export(BoxSettingsImpl b) {
-			Properties p = toProperies(b);
-			return propertiesToString(p);
-		}
-
-		public void load(InputStream stream, BoxSettingsImpl b) throws Exception {
-			Properties p = new Properties();
-			p.load(stream);
-			load(p,b);
-		}
-
 		public void export(OutputStream stream, BoxSettingsImpl b) throws Exception {
 			Properties p = toProperies(b);
 			p.store(stream, COMMENT);
-
+		}
+		public String exportToString(BoxSettingsImpl b) {
+			Properties p = toProperies(b);
+//			return exportPropertiesToString(p);
+//		}
+//		private String exportPropertiesToString(Properties p) {
+			try {
+				ByteArrayOutputStream bo = new ByteArrayOutputStream();
+				p.store(bo, "COMMENT");
+				return bo.toString();
+			} catch (IOException e) {
+				EditBox.logError(this, "Cannot convert propeties to sring", e);
+			}
+			return "";
+		}
+		//		private Properties loadProperties(String s) throws IOException {
+		//		Properties p = new Properties();
+		//		p.load(new StringBufferInputStream(s));
+		//		return p;
+		//	}
+		public void loadFromString(String s, BoxSettingsImpl b) throws Exception {
+			//Properties p = loadProperties(s);
+			Properties p = new Properties();
+			p.load(new StringBufferInputStream(s));			
+			fromProperties(p,b);
+		}
+		public void loadFromStream(InputStream stream, BoxSettingsImpl b) throws Exception {
+			Properties p = new Properties();
+			p.load(stream);
+			fromProperties(p,b);
 		}
 
-		public void load(String s, BoxSettingsImpl b) throws Exception {
-			Properties p = loadProperties(s);
-			load(p,b);
-		}
 
-		private void load(Properties p, BoxSettingsImpl b) {
+		private void fromProperties(Properties p, BoxSettingsImpl b) {
 			b.name = parseString(p.get(PropertiesKeys.Name.name()));
 			b.borderColor = parseColor(p.get(PropertiesKeys.BorderColor.name()));
 			b.highlightColor = parseColor(p.get(PropertiesKeys.HighlightColor.name()));
@@ -616,23 +635,6 @@ public class BoxSettingsImpl implements IBoxSettings {
 			p.put(PropertiesKeys.ExpandBox.name(), toS(b.expandBox));
 			p.put(PropertiesKeys.Alpha.name(), toS(b.alpha));
 			return p;
-		}
-
-		private Properties loadProperties(String s) throws IOException {
-			Properties p = new Properties();
-			p.load(new StringBufferInputStream(s));
-			return p;
-		}
-
-		private String propertiesToString(Properties p) {
-			try {
-				ByteArrayOutputStream bo = new ByteArrayOutputStream();
-				p.store(bo, "COMMENT");
-				return bo.toString();
-			} catch (IOException e) {
-				EditBox.logError(this, "Cannot convert propeties to sring", e);
-			}
-			return "";
 		}
 
 
@@ -717,7 +719,9 @@ public class BoxSettingsImpl implements IBoxSettings {
 			return s == null ? "null" : s;
 		}
 	}
-
+	//}
+	
+	//{
 	public void addPropertyChangeListener(IPropertyChangeListener listener) {
 		if (listeners == null)
 			listeners = new ArrayList<IPropertyChangeListener>();
@@ -735,6 +739,7 @@ public class BoxSettingsImpl implements IBoxSettings {
 				listener.propertyChange(e);
 		}
 	}
+	//}
 
 	public void setBorderLineStyle(int selectionIndex) {
 		this.borderLineStyle = selectionIndex;

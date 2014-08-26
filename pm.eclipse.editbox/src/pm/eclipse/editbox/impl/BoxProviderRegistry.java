@@ -16,9 +16,10 @@ import org.eclipse.ui.IWorkbenchPart;
 import pm.eclipse.editbox.EditBox;
 import pm.eclipse.editbox.IBoxDecorator;
 import pm.eclipse.editbox.IBoxProvider;
+import pm.eclipse.editbox.IBoxSettings;
 
 /**
- * Default settings
+ * Registry keeps Providers list and initialize them or restores from preferences
  * @author Piotr Metel
  * @author Paul Verest : added "RainbowDrops" and ALL_THEMES_LIST to be used in every category
  */
@@ -46,7 +47,15 @@ public class BoxProviderRegistry {
 	}
 	//}
 	
-
+	//{ like in BoxSettingsStoreImpl
+	protected IPreferenceStore store = EditBox.getDefault().getPreferenceStore();
+//	protected IPreferenceStore store{
+//		if (store == null)
+//			store = EditBox.getDefault().getPreferenceStore();
+//		return store;
+//	}
+	//}
+	
 	protected Collection<IBoxProvider> providers;
 	protected Map<IWorkbenchPart, IBoxDecorator> decorators;
 	protected Map<IPartService, IPartListener2> partListeners;
@@ -58,27 +67,16 @@ public class BoxProviderRegistry {
 		}	
 		if (providers == null){
 			providers = defaultProviders();
-		}else{
-			// comparing providers from Preferences with defaultProviders can be here
 		}
 		return providers;
 	}
 
-	//{ like in BoxSettingsStoreImpl
-	protected IPreferenceStore store;
-	protected IPreferenceStore getStore(){
-		if (store == null)
-			store = EditBox.getDefault().getPreferenceStore();
-		return store;
-	}
-	//}
-	
 	// Preferences have string like
 	// proivders=java,python,markup,text,js
 	// calls createProvider(name)
 	protected Collection<IBoxProvider> loadProvidersFromPreferences() {
 		List<IBoxProvider> result = null;
-		String pSetting = getStore().getString(PROVIDERS);
+		String pSetting = store.getString(PROVIDERS);
 		if (pSetting != null && pSetting.length() > 0) {
 			String[] split = pSetting.split(",");
 			if (split.length > 0)
@@ -103,7 +101,7 @@ public class BoxProviderRegistry {
 				if (sb.length()!=0) sb.append(",");
 				sb.append(p.getName());
 			}
-			getStore().setValue(PROVIDERS,sb.toString());
+			store.setValue(PROVIDERS,sb.toString());
 		}
 	}
 	
@@ -122,7 +120,7 @@ public class BoxProviderRegistry {
 		result.add(createProviderForNameAndExtentions("ruby",	Arrays.asList("*.rb", "*.ruby") ) );
 		result.add(createProviderForNameAndExtentions("text",	Arrays.asList("*.txt", "*.") ) );
 		result.add(createProviderForNameAndExtentions("xml",	Arrays.asList("*.xml", "*.launch", "*.project", "*.classpath") ) );
-		result.add(createProviderForNameAndExtentions("exclude", Arrays.asList("*.ascii") ) );
+		result.add(createProviderForNameAndExtentionsDisabled("exclude", Arrays.asList("*.ascii") ) );
 		result.add(createProviderForNameAndExtentions("others",	Arrays.asList("*.*") ) ); // "*.*" makes default to every file
 		return result;
 	}
@@ -147,6 +145,13 @@ public class BoxProviderRegistry {
 		if (provider.getEditorsBoxSettings().getFileNames() == null)
 			provider.getEditorsBoxSettings().setFileNames(extentions);
 		return provider;
+	}
+	protected BoxProviderImpl createProviderForNameAndExtentionsDisabled(String name, List<String> extentions) {
+		BoxProviderImpl provider = createProviderForNameAndExtentions(name, extentions);
+		// no effect :-(
+		//		IBoxSettings theme = provider.getEditorsBoxSettings();
+		//		theme.setEnabled(false); //this fires PropertyChangeListener
+		return provider;		
 	}
 
 	protected Map<String, Class> defaultBuilders() {

@@ -30,8 +30,6 @@ import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
-import org.eclipse.ui.IWorkbenchWindow;
-import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.preferences.IWorkbenchPreferenceContainer;
 
 import pm.eclipse.editbox.EditBox;
@@ -46,16 +44,16 @@ import pm.eclipse.editbox.impl.BoxProviderRegistry;
  */
 public class EditboxPreferencePage extends PreferencePage implements IWorkbenchPreferencePage {
 
-	private Button enabled;
-	private Combo combo;
+	private Button pluginEnabled;
+	private Combo themeCombo;
 	private List categoryList;
 	private TabFolder tabFolder;
 	private Map<String, LinkedHashSet<String>> categoryFiles;
 	private List namesList;
 	private Button bAddFile;
 	private boolean providersChanged;
+	private IPreferenceStore store = EditBox.getDefault().getPreferenceStore();
 	private BoxProviderRegistry providerRegistry = EditBox.getDefault().getProviderRegistry();
-	private IPreferenceStore preferenceStore = EditBox.getDefault().getPreferenceStore();
 	
 	public EditboxPreferencePage(){
 		super("EditBox (Nodeclipse)", EditBox.getImageDescriptor("icons/editbox.png"));
@@ -73,17 +71,16 @@ public class EditboxPreferencePage extends PreferencePage implements IWorkbenchP
 		c.setLayout(new GridLayout(1, false));
 		
 		//+ {
-		enabled = new Button(c, SWT.CHECK);
+		pluginEnabled = new Button(c, SWT.CHECK);
 		GridData gd = new GridData();
-		enabled.setLayoutData(gd);
-		enabled.setText("Plugin enabled");
-		enabled.setAlignment(SWT.RIGHT);
-		enabled.addSelectionListener(new SelectionAdapter() {
+		pluginEnabled.setLayoutData(gd);
+		pluginEnabled.setText("Plugin enabled");
+		pluginEnabled.setAlignment(SWT.RIGHT);
+		pluginEnabled.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
-				Boolean isEnabled = enabled.getSelection();
-				//preferenceStore.setValue(EditBox.PREF_ENABLED, isEnabled );
-				
-				// decorators
+				Boolean isEnabled = pluginEnabled.getSelection();
+				//store.setValue(EditBox.PREF_ENABLED, isEnabled ); // no need
+				// decorators are updated when state is toggled within Command Handler
 				EnableEditBox toggleHandler = new EnableEditBox();
 				try {
 					toggleHandler.execute(null);
@@ -91,13 +88,10 @@ public class EditboxPreferencePage extends PreferencePage implements IWorkbenchP
 					EditBox.logError(this, ex.getLocalizedMessage(), ex);
 				}
 				// toolbar item
-				EditBox.toggleToolBarItemInAllWindows(isEnabled);
-				
+				EditBox.toggleToolBarItemInAllWindows(isEnabled);				
 			}
 		});
-		//enabled.setSelection(EditBox.getDefault().isEnabled()); //-> NPE
-		//enabled.setSelection(EditBox.getDefault()!=null); //if not null, then it is running
-		enabled.setSelection(preferenceStore.getBoolean(EditBox.PREF_ENABLED));
+		pluginEnabled.setSelection(store.getBoolean(EditBox.PREF_ENABLED));
 		//}		
 		
 		Link link = new Link(c, SWT.NONE);
@@ -132,25 +126,24 @@ public class EditboxPreferencePage extends PreferencePage implements IWorkbenchP
 		Label comboLabel = new Label(c, SWT.NONE);
 		comboLabel.setText("Select one of bundled themes to apply to all categories (you can refine on respective Tab)");		
 		
-		combo = new Combo(c, SWT.DROP_DOWN | SWT.READ_ONLY );
+		themeCombo = new Combo(c, SWT.DROP_DOWN | SWT.READ_ONLY );
 		GridData gd = new GridData(GridData.BEGINNING);
 		gd.widthHint = 150;
 		gd.horizontalSpan = 2;
 		gd.horizontalAlignment = SWT.LEFT;
-		combo.setLayoutData(gd);
-		combo.addSelectionListener(new SelectionAdapter() {
+		themeCombo.setLayoutData(gd);
+		themeCombo.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
-				String s = combo.getText();
+				String s = themeCombo.getText();
 				if (s != null && s.length() > 0) {
-					preferenceStore.setValue(EditBox.PREF_DEFAULT_THEME, s);
-					//preferenceStore.
+					store.setValue(EditBox.PREF_DEFAULT_THEME, s);
 					updateAllTabsWithSelectedTheme(s);
 				}
 			}
 		});
-		combo.setItems(BoxProviderRegistry.ALL_THEMES_ARRAY);
-		String preferedThemeName = preferenceStore .getString(EditBox.PREF_DEFAULT_THEME);
-		combo.select( BoxProviderRegistry.getThemeIndex(preferedThemeName) );
+		themeCombo.setItems(BoxProviderRegistry.ALL_THEMES_ARRAY);
+		String preferedThemeName = store.getString(EditBox.PREF_DEFAULT_THEME);
+		themeCombo.select( BoxProviderRegistry.getThemeIndex(preferedThemeName) );
 		//}
 
 		Label categoryLabel = new Label(c, SWT.NONE);
@@ -225,7 +218,7 @@ public class EditboxPreferencePage extends PreferencePage implements IWorkbenchP
 		item.setData(bst);
 		if (categoryFiles == null)
 			categoryFiles = new LinkedHashMap<String, LinkedHashSet<String>>();
-		Collection<String> fileNames = bst.getSettings().getFileNames();
+		Collection<String> fileNames = bst.getSettings().getFileNames(); //XXX should be from Provider
 		if (fileNames == null)
 			fileNames = Collections.emptyList();
 		categoryFiles.put(providerName, new LinkedHashSet<String>(fileNames));
