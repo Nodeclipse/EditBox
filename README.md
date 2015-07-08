@@ -1,3 +1,5 @@
+![](pm.eclipse.editbox/icons/editbox.png)
+
 # EditBox Eclipse plugin
 
 [![Build Status](https://secure.travis-ci.org/Nodeclipse/EditBox.png)](http://travis-ci.org/Nodeclipse/EditBox)
