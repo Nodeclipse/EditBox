@@ -1,7 +1,6 @@
 
-# EditBox Eclipse plugin
+# ![](pm.eclipse.editbox/icons/editbox.png) EditBox Eclipse plugin
 
-![](pm.eclipse.editbox/icons/editbox.png)
 [![Build Status](https://secure.travis-ci.org/Nodeclipse/EditBox.png)](http://travis-ci.org/Nodeclipse/EditBox)
 <a href="http://marketplace.eclipse.org/marketplace-client-intro?mpc_install=1582059" title="Drag and drop into a running Eclipse
  to install Nodeclipse EditBox"><img src="http://marketplace.eclipse.org/sites/all/modules/custom/marketplace/images/installbutton.png"/></a>
