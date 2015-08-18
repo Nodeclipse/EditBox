@@ -35,14 +35,14 @@ If there are updates here, they will be released together with [Nodeclipse train
 
 ### History
 
-0.50
-0.55
-0.60
-0.65 (2014-08) change icon; 
+- 0.50
+- 0.55
+- 0.60
+- 0.65 (2014-08) change icon; 
 	Checkbox "Plugin enabled";
 	combo to apply one of bundled themes to all categories	
 	(this is done for case when switching to black themes and back)
-0.70 (2015-8) refresh release; known issues: [#14](https://github.com/Nodeclipse/EditBox/issues/14)	
+- 0.70 (2015-8) refresh release; known issues: [#14](https://github.com/Nodeclipse/EditBox/issues/14)	
 
 ## Themes
 
