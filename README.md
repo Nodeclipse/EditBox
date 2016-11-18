@@ -83,6 +83,8 @@ in `BoxProviderRegistry.java` "Default", "Whitebox", "RainbowDrops", "OnClick", 
   [9]: https://raw.githubusercontent.com/Nodeclipse/EditBox/master/pm.eclipse.editbox/src/RainbowDropsLine.eb
   [10]: https://raw.githubusercontent.com/Nodeclipse/EditBox/master/pm.eclipse.editbox/src/PaleBlue.eb
 
+[Youtube video where EditBox is used, but not mentioned](https://www.youtube.com/watch?v=KX_tHp_KQkE)
+
 Hints:
 - Before modifying or importing a theme change name
 - (for themes with gradient) Adjust "Alpha blending" to make theme lighter or darker.
