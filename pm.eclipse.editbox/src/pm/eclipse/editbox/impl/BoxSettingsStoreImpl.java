@@ -174,7 +174,7 @@ public class BoxSettingsStoreImpl implements IBoxSettingsStore {
 	 */
 	protected Collection<String> getFileNames() {
 		String fileNames = store.getString(providerKey(FILE_NAMES));
-		if (fileNames == null) {
+		if (fileNames == null || fileNames.equals("")) {
 			return null;
 		}		
 		List<String> list = new ArrayList<String>();
