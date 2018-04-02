@@ -138,16 +138,17 @@ Converted with `git svn clone -s http://svn.code.sf.net/p/editbox/code/ editbox3
 <http://stackoverflow.com/questions/9211405/how-to-migrate-code-from-svn-to-git-without-losing-commits-history>
 
 https://sourceforge.net/p/editbox/code/HEAD/tree/plugin/
-
+```
 svn checkout svn://svn.code.sf.net/p/editbox/code/ editbox-code
 
 git svn clone -s svn://svn.code.sf.net/p/editbox/code/
-
+```
 
 https://sourceforge.net/p/editbox/code/HEAD/tree/
-
+```
 svn checkout http://svn.code.sf.net/p/editbox/code/ editbox-code
 
 git svn clone -s http://svn.code.sf.net/p/editbox/code/
 git svn clone -s http://svn.code.sf.net/p/editbox/code/ editbox3 --trunk=plugin
+```
 OK
