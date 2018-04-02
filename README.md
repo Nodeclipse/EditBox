@@ -4,7 +4,12 @@
 [![Build Status](https://secure.travis-ci.org/Nodeclipse/EditBox.png)](http://travis-ci.org/Nodeclipse/EditBox)
 <a href="http://marketplace.eclipse.org/marketplace-client-intro?mpc_install=1582059" title="Drag and drop into a running Eclipse
  to install Nodeclipse EditBox"><img src="http://marketplace.eclipse.org/sites/all/modules/custom/marketplace/images/installbutton.png"/></a>
-or use `http://www.nodeclipse.org/updates/`
+Use 
+<!--
+`https://nodeclipse.github.io/updates/editbox/`  
+or 
+-->
+direct update site `http://nodeclipse.github.io/dev.updates/editbox-1.0.0/`
 
 EditBox is using background colors theme to highlight code blocks.
 
