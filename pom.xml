@@ -5,7 +5,7 @@
 
 	<groupId>pm.eclipse.editbox</groupId>
 	<artifactId>pm.eclipse.editbox.parent</artifactId>
-	<version>0.70.0-SNAPSHOT</version>
+	<version>1.0.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>EditBox (parent)</name>
 
@@ -25,7 +25,7 @@
 		<contributor>
 			<name>Paul Verest</name>
 			<organization>Nodeclipse organization</organization>
-			<organizationUrl>http://www.nodeclipse.org/</organizationUrl>
+			<organizationUrl>https://nodeclipse.github.io/</organizationUrl>
 			<timezone>+8</timezone>
 		</contributor>
 	</contributors>
@@ -35,7 +35,7 @@
 	</prerequisites>
 
 	<properties>
-		<tycho-version>0.19.0</tycho-version>
+		<tycho-version>1.1.0</tycho-version>
 
 		<!-- PROJECT SETTINGS -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -51,9 +51,9 @@
 
 	<repositories>
 		<repository>
-			<id>oxygen</id>
+			<id>kepler</id>
 			<layout>p2</layout>
-			<url>http://download.eclipse.org/releases/oxygen</url>
+			<url>http://download.eclipse.org/releases/kepler</url>
 		</repository>
 		 
 	</repositories>

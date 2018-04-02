@@ -2,7 +2,7 @@
 <feature
       id="pm.eclipse.editbox.feature"
       label="EditBox"
-      version="0.70.0.qualifier"
+      version="1.0.0.qualifier"
       provider-name="Nodeclipse">
 
    <description url="https://github.com/Nodeclipse/editbox">
