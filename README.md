@@ -75,7 +75,7 @@ in `BoxProviderRegistry.java` "Default", "Whitebox", "RainbowDrops", "OnClick", 
 ![](pm.eclipse.editbox/docs/BlueLight.PNG)
 - [RainDropsLine][9]  
 ![](pm.eclipse.editbox/docs/RainDropsLineOnSublimeEclipseColorTheme.png)
-- [PaleBlue][10] by Robin Martin
+- [PaleBlue][10] by Robin Martin  
 ![](pm.eclipse.editbox/docs/PaleBlueTheme.jpg)
 
   [2]: https://raw.githubusercontent.com/Nodeclipse/EditBox/master/pm.eclipse.editbox/src/Whitebox.eb
