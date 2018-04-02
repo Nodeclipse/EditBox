@@ -6,8 +6,5 @@ Bundle-Version: 0.70.0.qualifier
 Bundle-Activator: pm.eclipse.editbox.EditBox
 Bundle-Vendor: Nodeclipse
 Require-Bundle: org.eclipse.ui,
- org.eclipse.core.runtime,
- org.eclipse.ui.editors,
- org.eclipse.jface.text,
- org.eclipse.jdt.ui
+ org.eclipse.core.runtime
 Eclipse-LazyStart: true
